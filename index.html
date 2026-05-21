@@ -249,8 +249,33 @@
         </div>
       </div>
 
+      <!-- สถิติวิเคราะห์ข้อมูลการลงทะเบียน (Dashboard Analytics) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+        <!-- 5 อันดับโรงเรียนที่ลงทะเบียนสูงสุด -->
+        <div class="glassmorphism rounded-2xl p-6 shadow-lg border border-teal-100/50 hover:shadow-xl transition-all duration-300">
+          <h3 class="text-base font-bold text-slate-700 mb-4 flex items-center">
+            <i data-lucide="trophy" class="w-5 h-5 mr-2 text-amber-500 animate-bounce"></i>
+            5 อันดับโรงเรียนที่ลงทะเบียนสูงสุด (Top 5 Schools)
+          </h3>
+          <div id="school-ranking-list" class="space-y-4">
+            <div class="text-center py-6 text-slate-400 text-sm">กำลังประมวลผลข้อมูล...</div>
+          </div>
+        </div>
+
+        <!-- สัดส่วนระดับชั้นเรียน -->
+        <div class="glassmorphism rounded-2xl p-6 shadow-lg border border-teal-100/50 hover:shadow-xl transition-all duration-300">
+          <h3 class="text-base font-bold text-slate-700 mb-4 flex items-center">
+            <i data-lucide="graduation-cap" class="w-5 h-5 mr-2 text-teal-600"></i>
+            สัดส่วนการลงทะเบียนแยกตามระดับชั้น (Grade Distribution)
+          </h3>
+          <div id="grade-distribution-list" class="space-y-4">
+            <div class="text-center py-6 text-slate-400 text-sm">กำลังประมวลผลข้อมูล...</div>
+          </div>
+        </div>
+      </div>
+
       <!-- ปุ่มลงทะเบียนด่วน -->
-      <div class="text-center pt-6">
+      <div class="text-center pt-8">
         <button onclick="switchTab('register-tab')" class="relative inline-flex items-center justify-center px-10 py-4 text-xl font-bold text-white transition-all duration-300 rounded-full group bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 shadow-2xl hover:shadow-teal-500/40 hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-95 overflow-hidden animate-pulse-glow ring-4 ring-teal-200/50">
           <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></span>
           ลงทะเบียนเข้าร่วมโครงการเลย 
@@ -392,10 +417,10 @@
 
           <!-- ปุ่มกระทำแบบฟอร์ม -->
           <div class="pt-6 border-t border-teal-100 flex flex-col md:flex-row gap-4 justify-end">
-            <button type="button" onclick="cancelRegistration()" class="w-full md:w-auto px-6 py-2.5 rounded-xl border border-slate-200 font-medium text-slate-500 hover:bg-slate-50 active:bg-slate-100 transition-all text-center">
+            <button type="button" onclick="cancelRegistration()" class="w-full md:w-auto px-6 py-3 rounded-xl border border-slate-200 font-bold text-slate-500 hover:bg-slate-100/80 active:bg-slate-200/80 transition-all text-center hover:text-slate-700 shadow-sm">
               ยกเลิก
             </button>
-            <button type="submit" id="submit-btn" class="w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/25 hover:shadow-emerald-500/35 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-emerald-100/80 hover:ring-emerald-200/80 flex items-center justify-center uppercase tracking-wide">
+            <button type="submit" id="submit-btn" class="w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/30 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-teal-200/60 flex items-center justify-center uppercase tracking-wide">
               <span id="btn-text">ยืนยันลงทะเบียน</span>
               <div id="btn-spinner" class="hidden ml-2 animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
             </button>
@@ -438,6 +463,76 @@
     </section>
 
   </main>
+
+  <!-- ================= FOOTER CREDIT & VERSION ================= -->
+  <footer class="max-w-6xl mx-auto px-4 py-8 text-center text-xs text-slate-400 border-t border-teal-100/50 mt-12 space-y-1">
+    <p class="font-medium text-slate-500 text-sm">จัดทำโดย ศูนย์นวัตกรรม กลุ่มงานสุขภาพดิจิทัล สำนักงานสาธารณสุขจังหวัดสตูล 2026</p>
+    <p>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.3.0</p>
+  </footer>
+
+  <!-- ================= MODAL SHOWING REGISTRANTS FOR SELECTED VENUE ================= -->
+  <div id="registrants-modal" onclick="if(event.target === this) closeRegistrantsModal()" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
+    <div id="modal-container" class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-teal-100/50 transform scale-95 opacity-0 transition-all duration-300">
+      
+      <!-- Header Modal -->
+      <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-gradient-to-r from-teal-50 to-emerald-50/30">
+        <div>
+          <h3 class="text-lg font-bold text-teal-800 flex items-center">
+            <i data-lucide="users" class="w-5 h-5 mr-2 text-teal-600"></i>
+            รายชื่อผู้ลงทะเบียน: <span id="modal-venue-name" class="ml-1 text-slate-700 font-bold"></span>
+          </h3>
+          <p class="text-xs text-slate-500 mt-1" id="modal-venue-stats">จำนวนผู้ลงทะเบียน: 0 / 0 คน</p>
+        </div>
+        <button onclick="closeRegistrantsModal()" class="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      
+      <!-- Search & Controls -->
+      <div class="p-4 bg-slate-50/50 border-b border-slate-100 flex flex-col md:flex-row gap-3 items-center justify-between">
+        <div class="relative w-full md:w-80">
+          <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4"></i>
+          <input type="text" id="modal-search-input" oninput="filterModalRegistrants()" placeholder="ค้นหา ชื่อ, นามสกุล หรือโรงเรียน..." class="w-full rounded-xl border border-slate-200 bg-white pl-9 pr-4 py-2 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 transition-all duration-200">
+        </div>
+        <div class="text-xs text-slate-400 font-medium">
+          * ดึงข้อมูลเรียลไทม์จากระบบบันทึก Google Sheets
+        </div>
+      </div>
+      
+      <!-- Table Area -->
+      <div class="flex-grow overflow-y-auto p-6">
+        <div class="overflow-x-auto rounded-xl border border-slate-100 shadow-sm">
+          <table class="w-full border-collapse bg-white text-left text-sm text-slate-600">
+            <thead class="bg-slate-50/80 font-bold text-slate-700">
+              <tr>
+                <th class="px-4 py-3 border-b border-slate-100 w-16 text-center">#</th>
+                <th class="px-4 py-3 border-b border-slate-100">ชื่อ</th>
+                <th class="px-4 py-3 border-b border-slate-100">นามสกุล</th>
+                <th class="px-4 py-3 border-b border-slate-100">ระดับชั้น</th>
+                <th class="px-4 py-3 border-b border-slate-100">โรงเรียน</th>
+              </tr>
+            </thead>
+            <tbody id="modal-table-body" class="divide-y divide-slate-50">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Empty State in Modal -->
+        <div id="modal-empty-state" class="hidden text-center py-12 text-slate-400">
+          <i data-lucide="user-x" class="w-12 h-12 text-slate-300 mx-auto mb-2"></i>
+          <p class="font-medium text-slate-600">ไม่พบรายชื่อผู้ลงทะเบียนที่ตรงกับคำค้นหา</p>
+        </div>
+      </div>
+      
+      <!-- Footer Modal -->
+      <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+        <button onclick="closeRegistrantsModal()" class="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 font-bold text-slate-700 transition-colors text-sm">
+          ปิดหน้าต่าง
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ================= EMBEDDED SCHOOL DATA (SATUN) ================= -->
   <script>
@@ -832,6 +927,28 @@
     // เก็บประวัติแถวข้อมูลจริงทั้งหมดสำหรับการค้นหาและตรวจเช็กซ้ำในเครื่อง
     let sheetRecords = [];
 
+    // ฟังก์ชันสำหรับจัดรูปแบบเบอร์โทรศัพท์ (ใส่เลข 0 นำหน้ากรณีข้อมูลถูกตัด)
+    function normalizePhone(p) {
+      const clean = String(p || "").replace(/\D/g, "").trim();
+      if (clean.length === 9 && !clean.startsWith("0")) {
+        return "0" + clean;
+      }
+      return clean;
+    }
+
+    // ฟังก์ชันย่อยสำหรับดึงค่าความถูกต้องจากเซลล์ของ Google Sheets Visualization API
+    // โดยให้ความสำคัญกับ cell.f (Formatted value) เพื่อหลีกเลี่ยงปัญหาค่าว่างเปล่า (null) เมื่อมีประเภทข้อมูลปะปนกัน
+    function getCellValue(cell) {
+      if (!cell) return "";
+      if (cell.f !== undefined && cell.f !== null) {
+        return String(cell.f).trim();
+      }
+      if (cell.v !== undefined && cell.v !== null) {
+        return String(cell.v).trim();
+      }
+      return "";
+    }
+
     // ฟังก์ชันย่อยสำหรับแยกแยะข้อมูลดิบจาก API ของ Google Sheets Visualization
     function parseGoogleSheetJson(text) {
       try {
@@ -848,24 +965,25 @@
           if (!row || !row.c) return;
           
           // ตรวจสอบว่าเป็นแถวหัวตารางหรือไม่ (ข้ามถ้าเป็น 'ประทับเวลา')
-          if (row.c[0] && String(row.c[0].v).trim() === "ประทับเวลา") {
+          const firstColVal = getCellValue(row.c[0]);
+          if (firstColVal === "ประทับเวลา" || firstColVal.includes("เวลา")) {
             return;
           }
           
           // แมพแถวเป็น Object
           parsedRows.push({
             rowNumber: idx + 1, // หมายเลขแถวแบบ 1-indexed (มีประโยชน์สำหรับการอ้างอิงตอนแก้ไขผ่าน POST)
-            timestamp: row.c[0] ? row.c[0].v : "",
-            firstName: row.c[1] ? String(row.c[1].v).trim() : "",
-            lastName: row.c[2] ? String(row.c[2].v).trim() : "",
-            grade: row.c[3] ? String(row.c[3].v).trim() : "",
-            schoolType: row.c[4] ? String(row.c[4].v).trim() : "",
-            province: row.c[5] ? String(row.c[5].v).trim() : "",
-            district: row.c[6] ? String(row.c[6].v).trim() : "",
-            subDistrict: row.c[7] ? String(row.c[7].v).trim() : "",
-            schoolName: row.c[8] ? String(row.c[8].v).trim() : "",
-            phone: row.c[9] ? String(row.c[9].v).trim() : "",
-            site: row.c[10] ? String(row.c[10].v).trim() : ""
+            timestamp: getCellValue(row.c[0]),
+            firstName: getCellValue(row.c[1]),
+            lastName: getCellValue(row.c[2]),
+            grade: getCellValue(row.c[3]),
+            schoolType: getCellValue(row.c[4]),
+            province: getCellValue(row.c[5]),
+            district: getCellValue(row.c[6]),
+            subDistrict: getCellValue(row.c[7]),
+            schoolName: getCellValue(row.c[8]),
+            phone: normalizePhone(getCellValue(row.c[9])),
+            site: getCellValue(row.c[10])
           });
         });
         
@@ -927,6 +1045,7 @@
         if (isMockMode) {
           connectionStatus = "connected";
           updateModeBadge();
+          sheetRecords = JSON.parse(localStorage.getItem("open_house_registrations") || "[]");
           const res = getMockStats();
           processStats(res);
         } else {
@@ -974,6 +1093,7 @@
         });
         
         // แสดงข้อมูลจำลองเพื่อรักษาเลย์เอาต์หน้าจอ
+        sheetRecords = JSON.parse(localStorage.getItem("open_house_registrations") || "[]");
         processStats(getMockStats());
       } finally {
         hideGlobalLoader();
@@ -1003,6 +1123,7 @@
 
         renderVenueCards(data.venues);
         renderVenueFormOptions(data.venues);
+        updateAnalytics(sheetRecords);
       }
     }
 
@@ -1015,22 +1136,25 @@
         const percent = Math.round((venue.registered / venue.quota) * 100);
         
         // กำหนดสีของการ์ดและ progress bar ตามสถานะ (ไล่สี เขียว -> เหลือง -> แดง)
-        let progressColor = "bg-emerald-500"; // เขียว (< 60%)
+        let progressColor = "bg-gradient-to-r from-emerald-400 to-emerald-600"; // เขียว (< 60%)
         let badgeStyle = "bg-emerald-100 text-emerald-800 border-emerald-200";
         
         if (percent >= 85) {
-          progressColor = "bg-rose-500"; // แดง (>= 85%)
+          progressColor = "bg-gradient-to-r from-rose-500 to-red-600"; // แดง (>= 85%)
           badgeStyle = "bg-rose-100 text-rose-800 border-rose-200" + (percent >= 100 ? "" : " animate-pulse");
         } else if (percent >= 60) {
-          progressColor = "bg-amber-500"; // เหลือง (60% - 84%)
+          progressColor = "bg-gradient-to-r from-amber-400 to-amber-500"; // เหลือง (60% - 84%)
           badgeStyle = "bg-amber-100 text-amber-800 border-amber-200";
         }
 
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
 
         const card = document.createElement("div");
-        card.className = "glassmorphism rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative flex flex-col justify-between overflow-hidden group ring-1 ring-teal-500/5 hover:ring-2 hover:ring-teal-400/40";
+        card.className = "glassmorphism rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 relative flex flex-col justify-between overflow-hidden group ring-1 ring-teal-500/5 hover:ring-2 hover:ring-teal-400/40 cursor-pointer";
         
+        // เมื่อคลิกการ์ด ให้เปิด Modal แสดงตารางรายชื่อผู้จอง
+        card.onclick = () => openRegistrantsModal(venue.name);
+
         card.innerHTML = `
           <div>
             <div class="flex justify-between items-start mb-4">
@@ -1048,16 +1172,22 @@
           <div class="space-y-2 mt-auto">
             <div class="flex justify-between text-xs font-semibold">
               <span class="text-slate-500">อัตราการจอง</span>
-              <span class="text-slate-700">${venue.registered} / ${venue.quota} คน</span>
+              <span class="text-slate-800 text-sm font-extrabold">${venue.registered.toLocaleString()} / ${venue.quota.toLocaleString()} คน</span>
             </div>
             
-            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-              <div class="${progressColor} h-2 transition-all duration-500" style="width: ${percent}%"></div>
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden shadow-inner">
+              <div class="${progressColor} h-3 rounded-full transition-all duration-500" style="width: ${percent}%"></div>
             </div>
             
-            <div class="flex justify-between text-[11px] text-slate-400 pt-1">
-              <span>โควต้าคงเหลือ: ${venue.remaining} ที่นั่ง</span>
+            <div class="flex justify-between text-[11px] text-slate-400 pt-1 font-medium">
+              <span>โควต้าคงเหลือ: <strong class="font-extrabold text-teal-600">${venue.remaining.toLocaleString()}</strong> ที่นั่ง</span>
               <span>${percent}%</span>
+            </div>
+
+            <!-- Visual cue indicating clickable card -->
+            <div class="border-t border-slate-100/70 pt-2.5 mt-2 flex justify-between items-center text-[10px] text-slate-400 group-hover:text-teal-600 transition-colors">
+              <span class="flex items-center"><i data-lucide="users" class="w-3.5 h-3.5 mr-1 text-teal-500"></i> คลิกเพื่อดูรายชื่อผู้จอง</span>
+              <span class="font-bold flex items-center">ดูข้อมูล <i data-lucide="chevron-right" class="w-2.5 h-2.5 ml-0.5"></i></span>
             </div>
           </div>
         `;
@@ -1094,32 +1224,266 @@
         }
 
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
+        const percent = Math.round((venue.registered / venue.quota) * 100);
+
+        // กำหนดสีของแถบความคืบหน้าโควต้าภายในฟอร์มสมัคร (เขียว -> เหลือง -> แดง)
+        let progressBg = "bg-gradient-to-r from-emerald-400 to-emerald-600"; 
+        let textClass = "text-emerald-600 bg-emerald-50 border-emerald-100";
+        
+        if (percent >= 85) {
+          progressBg = "bg-gradient-to-r from-rose-500 to-red-600";
+          textClass = "text-rose-600 bg-rose-50 border-rose-100";
+        } else if (percent >= 50) {
+          progressBg = "bg-gradient-to-r from-amber-400 to-amber-500";
+          textClass = "text-amber-600 bg-amber-50 border-amber-100";
+        }
 
         const item = document.createElement("label");
         item.className = "venue-option-card relative block cursor-pointer select-none";
         item.innerHTML = `
           <input type="radio" name="venue-option" value="${venue.name}" ${isDisabled ? 'disabled' : ''} class="sr-only">
-          <div class="venue-card-content ${isDisabled ? 'bg-slate-50/50 border-slate-100 opacity-60 cursor-not-allowed' : 'bg-white/50 border-slate-200 hover:border-teal-400 hover:bg-teal-50/10 hover:shadow-sm'} border-2 rounded-2xl p-4 md:p-5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between">
-            <div class="flex items-start md:items-center space-x-3 mb-2 md:mb-0">
-              <div class="w-4 h-4 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1 md:mt-0 transition-all checked-dot-outer">
-                <div class="w-2 h-2 rounded-full bg-teal-600 scale-0 transition-transform duration-200 checked-dot-inner"></div>
-              </div>
-              <div>
-                <p class="text-sm md:text-base font-bold text-slate-700">${venue.name}</p>
-                <div class="flex flex-wrap gap-2 items-center mt-1">
-                  <span class="text-xs text-slate-400 flex items-center"><i data-lucide="calendar" class="w-3.5 h-3.5 mr-1"></i> ${dateLabel}</span>
-                  <span class="text-xs text-slate-400">โควต้า: ${venue.quota} คน</span>
+          <div class="venue-card-content ${isDisabled ? 'bg-slate-50/50 border-slate-100 opacity-60 cursor-not-allowed' : 'bg-white/50 border-slate-200 hover:border-teal-400 hover:bg-teal-50/10 hover:shadow-sm'} border-2 rounded-2xl p-4 md:p-5 transition-all duration-200 flex flex-col w-full">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div class="flex items-start md:items-center space-x-3 mb-2 md:mb-0">
+                <div class="w-4 h-4 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1 md:mt-0 transition-all checked-dot-outer">
+                  <div class="w-2 h-2 rounded-full bg-teal-600 scale-0 transition-transform duration-200 checked-dot-inner"></div>
+                </div>
+                <div>
+                  <p class="text-sm md:text-base font-bold text-slate-700">${venue.name}</p>
+                  <div class="flex flex-wrap gap-2 items-center mt-1">
+                    <span class="text-xs text-slate-400 flex items-center"><i data-lucide="calendar" class="w-3.5 h-3.5 mr-1"></i> ${dateLabel}</span>
+                    <span class="text-xs text-slate-400">โควต้า: ${venue.quota} คน</span>
+                  </div>
                 </div>
               </div>
+              <div class="flex justify-end items-center mt-2 md:mt-0">
+                ${badgeHTML}
+              </div>
             </div>
-            <div class="flex justify-end items-center mt-2 md:mt-0">
-              ${badgeHTML}
+            
+            <!-- แท่งความคืบหน้าและที่นั่งคงเหลือ (Gradient เขียว -> เหลือง -> แดง) -->
+            <div class="mt-4 w-full">
+              <div class="flex justify-between items-center text-xs font-bold mb-1.5">
+                <span class="text-slate-500">อัตราการจอง: <strong class="text-slate-700">${venue.registered}</strong> / ${venue.quota} คน</span>
+                <span class="px-2 py-0.5 rounded text-[11px] border font-bold ${textClass}">คงเหลือ ${venue.remaining} ที่นั่ง</span>
+              </div>
+              <div class="w-full bg-slate-200/50 rounded-full h-4 overflow-hidden shadow-inner relative">
+                <div class="${progressBg} h-full rounded-full transition-all duration-500 flex items-center justify-end pr-2 text-[10px] font-bold text-white shadow-sm" style="width: ${percent}%">
+                  ${percent >= 12 ? percent + '%' : ''}
+                </div>
+              </div>
             </div>
           </div>
         `;
         container.appendChild(item);
       });
       initLucide();
+    }
+
+    // ================= DASHBOARD ANALYTICS SYSTEM =================
+    function updateAnalytics(records) {
+      // 1. School Ranking (คอลัมน์ I คือ schoolName)
+      const schoolCounts = {};
+      records.forEach(r => {
+        const sch = r.schoolName || "ไม่ระบุโรงเรียน";
+        schoolCounts[sch] = (schoolCounts[sch] || 0) + 1;
+      });
+
+      // แปลงเป็น Array และเรียงลำดับจากมากไปน้อย
+      const sortedSchools = Object.keys(schoolCounts)
+        .map(name => ({ name, count: schoolCounts[name] }))
+        .sort((a, b) => b.count - a.count);
+
+      // เอา 5 อันดับแรก
+      const topSchools = sortedSchools.slice(0, 5);
+
+      const schoolListContainer = document.getElementById("school-ranking-list");
+      schoolListContainer.innerHTML = "";
+
+      if (topSchools.length === 0) {
+        schoolListContainer.innerHTML = `<div class="text-center py-6 text-slate-400 text-sm">ยังไม่มีข้อมูลผู้ลงทะเบียน</div>`;
+      } else {
+        const maxCount = topSchools[0].count; // สำหรับคำนวณสัดส่วนแถบสี
+        topSchools.forEach((school, index) => {
+          const ratioPercent = maxCount > 0 ? Math.round((school.count / maxCount) * 100) : 0;
+          
+          // กำหนดสีของถ้วย/เหรียญรางวัลตามอันดับ
+          let badgeColor = "bg-slate-100 text-slate-500";
+          let medalIcon = "";
+          if (index === 0) {
+            badgeColor = "bg-amber-100 text-amber-600 ring-2 ring-amber-300";
+            medalIcon = "🥇 ";
+          } else if (index === 1) {
+            badgeColor = "bg-slate-200 text-slate-700 ring-2 ring-slate-300";
+            medalIcon = "🥈 ";
+          } else if (index === 2) {
+            badgeColor = "bg-orange-100 text-orange-700 ring-2 ring-orange-200";
+            medalIcon = "🥉 ";
+          }
+
+          const item = document.createElement("div");
+          item.className = "space-y-1.5";
+          item.innerHTML = `
+            <div class="flex justify-between items-center text-sm">
+              <span class="font-bold text-slate-700 truncate max-w-[75%]">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold mr-1.5 ${badgeColor}">${medalIcon || (index + 1)}</span>
+                ${school.name}
+              </span>
+              <span class="text-teal-600 font-extrabold text-xs bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-100">${school.count} คน</span>
+            </div>
+            <div class="w-full bg-slate-100/80 rounded-full h-3 overflow-hidden shadow-inner">
+              <div class="bg-gradient-to-r from-teal-400 via-emerald-400 to-emerald-500 h-3 rounded-full transition-all duration-500" style="width: ${ratioPercent}%"></div>
+            </div>
+          `;
+          schoolListContainer.appendChild(item);
+        });
+      }
+
+      // 2. Grade Distribution (ระดับชั้นเรียน)
+      const grades = ["มัธยมศึกษาปีที่ 4", "มัธยมศึกษาปีที่ 5", "มัธยมศึกษาปีที่ 6"];
+      const gradeCounts = {
+        "มัธยมศึกษาปีที่ 4": 0,
+        "มัธยมศึกษาปีที่ 5": 0,
+        "มัธยมศึกษาปีที่ 6": 0
+      };
+
+      records.forEach(r => {
+        if (gradeCounts.hasOwnProperty(r.grade)) {
+          gradeCounts[r.grade]++;
+        }
+      });
+
+      const totalCount = records.length;
+      const gradeListContainer = document.getElementById("grade-distribution-list");
+      gradeListContainer.innerHTML = "";
+
+      // กำหนดสีประจำแต่ละระดับชั้นให้ดูพรีเมียมและแยกแยะง่าย
+      const gradeColors = {
+        "มัธยมศึกษาปีที่ 4": {
+          bar: "bg-gradient-to-r from-emerald-400 to-emerald-600",
+          text: "text-emerald-600 bg-emerald-50 border-emerald-100",
+          name: "มัธยมศึกษาปีที่ 4 (ม.4)"
+        },
+        "มัธยมศึกษาปีที่ 5": {
+          bar: "bg-gradient-to-r from-cyan-400 to-cyan-600",
+          text: "text-cyan-600 bg-cyan-50 border-cyan-100",
+          name: "มัธยมศึกษาปีที่ 5 (ม.5)"
+        },
+        "มัธยมศึกษาปีที่ 6": {
+          bar: "bg-gradient-to-r from-teal-500 to-teal-700",
+          text: "text-teal-700 bg-teal-50 border-teal-100",
+          name: "มัธยมศึกษาปีที่ 6 (ม.6)"
+        }
+      };
+
+      grades.forEach(grade => {
+        const count = gradeCounts[grade] || 0;
+        const percent = totalCount > 0 ? Math.round((count / totalCount) * 100) : 0;
+        const style = gradeColors[grade];
+
+        const item = document.createElement("div");
+        item.className = "space-y-1.5";
+        item.innerHTML = `
+          <div class="flex justify-between items-center text-sm">
+            <span class="font-bold text-slate-700">${style.name}</span>
+            <div class="flex space-x-2 items-center">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded border ${style.text}">${count} คน</span>
+              <span class="text-slate-400 text-xs font-bold">${percent}%</span>
+            </div>
+          </div>
+          <div class="w-full bg-slate-100/80 rounded-full h-3.5 overflow-hidden shadow-inner relative">
+            <div class="${style.bar} h-full rounded-full transition-all duration-500" style="width: ${percent}%"></div>
+          </div>
+        `;
+        gradeListContainer.appendChild(item);
+      });
+    }
+
+    // ================= MODAL CONTROL LOGIC =================
+    let activeModalVenue = "";
+
+    function openRegistrantsModal(venueName) {
+      activeModalVenue = venueName;
+      document.getElementById("modal-venue-name").innerText = venueName;
+      document.getElementById("modal-search-input").value = "";
+      
+      const modal = document.getElementById("registrants-modal");
+      const container = document.getElementById("modal-container");
+      
+      // คำนวณความคืบหน้าของโควต้าที่เลือกแสดงบน Modal
+      const venue = currentStats.venues.find(v => v.name === venueName);
+      if (venue) {
+        document.getElementById("modal-venue-stats").innerText = `ลงทะเบียนแล้ว: ${venue.registered} / ${venue.quota} คน (คงเหลือที่นั่งว่าง ${venue.remaining} ที่นั่ง)`;
+      }
+
+      // ดึงรายชื่อแสดงผลในตาราง
+      renderModalTable();
+
+      // เปิดแสดง Modal
+      modal.classList.remove("hidden");
+      setTimeout(() => {
+        container.classList.remove("scale-95", "opacity-0");
+        container.classList.add("scale-100", "opacity-100");
+      }, 50);
+      
+      initLucide();
+    }
+
+    function closeRegistrantsModal() {
+      const modal = document.getElementById("registrants-modal");
+      const container = document.getElementById("modal-container");
+      
+      container.classList.remove("scale-100", "opacity-100");
+      container.classList.add("scale-95", "opacity-0");
+      
+      setTimeout(() => {
+        modal.classList.add("hidden");
+      }, 300);
+    }
+
+    function renderModalTable() {
+      const tbody = document.getElementById("modal-table-body");
+      const emptyState = document.getElementById("modal-empty-state");
+      tbody.innerHTML = "";
+      
+      const searchVal = document.getElementById("modal-search-input").value.trim().toLowerCase();
+      
+      // กรองเฉพาะแถวผู้ลงทะเบียนที่เลือกในสถานที่จัดงานนี้
+      let filtered = sheetRecords.filter(r => r.site === activeModalVenue);
+      
+      if (searchVal) {
+        filtered = filtered.filter(r => 
+          r.firstName.toLowerCase().includes(searchVal) ||
+          r.lastName.toLowerCase().includes(searchVal) ||
+          r.grade.toLowerCase().includes(searchVal) ||
+          r.schoolName.toLowerCase().includes(searchVal)
+        );
+      }
+      
+      if (filtered.length === 0) {
+        emptyState.classList.remove("hidden");
+        tbody.closest("table").classList.add("hidden");
+      } else {
+        emptyState.classList.add("hidden");
+        tbody.closest("table").classList.remove("hidden");
+        
+        filtered.forEach((r, idx) => {
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-slate-50/80 transition-colors";
+          tr.innerHTML = `
+            <td class="px-4 py-3 border-b border-slate-100 text-center font-medium text-slate-400">${idx + 1}</td>
+            <td class="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">${r.firstName}</td>
+            <td class="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">${r.lastName}</td>
+            <td class="px-4 py-3 border-b border-slate-100 text-slate-600">${r.grade}</td>
+            <td class="px-4 py-3 border-b border-slate-100 text-slate-700 font-medium">${r.schoolName}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    function filterModalRegistrants() {
+      renderModalTable();
     }
 
     // ================= SCHOOL SELECTOR LOGIC =================
@@ -1223,7 +1587,7 @@
       const firstName = document.getElementById("first-name").value.trim();
       const lastName = document.getElementById("last-name").value.trim();
       const grade = document.getElementById("grade-select").value;
-      const phone = document.getElementById("phone-input").value.trim();
+      const phone = normalizePhone(document.getElementById("phone-input").value);
       
       const schoolType = document.querySelector('input[name="school-type"]:checked').value;
       
@@ -1427,9 +1791,9 @@
         btnText.innerText = isEditMode ? "บันทึกการแก้ไข" : "ยืนยันลงทะเบียน";
         spinner.classList.add("hidden");
         if (isEditMode) {
-          submitBtn.className = "w-full md:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 font-bold text-white shadow-lg hover:shadow-cyan-500/20 hover:scale-[1.02] active:scale-98 transition-all flex items-center justify-center";
+          submitBtn.className = "w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 hover:from-cyan-600 hover:via-blue-600 hover:to-teal-600 font-extrabold text-white shadow-xl shadow-cyan-500/30 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-cyan-200/60 flex items-center justify-center uppercase tracking-wide";
         } else {
-          submitBtn.className = "w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/25 hover:shadow-emerald-500/35 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-emerald-100/80 hover:ring-emerald-200/80 flex items-center justify-center uppercase tracking-wide";
+          submitBtn.className = "w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/30 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-teal-200/60 flex items-center justify-center uppercase tracking-wide";
         }
       }
     }
@@ -1572,7 +1936,7 @@
 
     // ================= SEARCH & EDIT SYSTEM =================
     async function performSearch() {
-      const searchPhone = document.getElementById("search-phone").value.trim();
+      const searchPhone = normalizePhone(document.getElementById("search-phone").value);
 
       if (!searchPhone) {
         Swal.fire({
