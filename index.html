@@ -832,6 +832,15 @@
     // เก็บประวัติแถวข้อมูลจริงทั้งหมดสำหรับการค้นหาและตรวจเช็กซ้ำในเครื่อง
     let sheetRecords = [];
 
+    // ฟังก์ชันสำหรับจัดรูปแบบเบอร์โทรศัพท์ (ใส่เลข 0 นำหน้ากรณีข้อมูลถูกตัด)
+    function normalizePhone(p) {
+      const clean = String(p || "").replace(/\D/g, "").trim();
+      if (clean.length === 9 && !clean.startsWith("0")) {
+        return "0" + clean;
+      }
+      return clean;
+    }
+
     // ฟังก์ชันย่อยสำหรับแยกแยะข้อมูลดิบจาก API ของ Google Sheets Visualization
     function parseGoogleSheetJson(text) {
       try {
@@ -864,7 +873,7 @@
             district: row.c[6] ? String(row.c[6].v).trim() : "",
             subDistrict: row.c[7] ? String(row.c[7].v).trim() : "",
             schoolName: row.c[8] ? String(row.c[8].v).trim() : "",
-            phone: row.c[9] ? String(row.c[9].v).trim() : "",
+            phone: row.c[9] ? normalizePhone(row.c[9].v) : "",
             site: row.c[10] ? String(row.c[10].v).trim() : ""
           });
         });
@@ -1223,7 +1232,7 @@
       const firstName = document.getElementById("first-name").value.trim();
       const lastName = document.getElementById("last-name").value.trim();
       const grade = document.getElementById("grade-select").value;
-      const phone = document.getElementById("phone-input").value.trim();
+      const phone = normalizePhone(document.getElementById("phone-input").value);
       
       const schoolType = document.querySelector('input[name="school-type"]:checked').value;
       
@@ -1572,7 +1581,7 @@
 
     // ================= SEARCH & EDIT SYSTEM =================
     async function performSearch() {
-      const searchPhone = document.getElementById("search-phone").value.trim();
+      const searchPhone = normalizePhone(document.getElementById("search-phone").value);
 
       if (!searchPhone) {
         Swal.fire({
