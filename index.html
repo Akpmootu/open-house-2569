@@ -726,7 +726,7 @@
   <footer class="max-w-6xl mx-auto px-4 py-8 text-center text-xs text-slate-400 border-t border-teal-100/50 mt-12 space-y-2">
     <p class="font-medium text-slate-500 text-sm">จัดทำโดย ศูนย์นวัตกรรม กลุ่มงานสุขภาพดิจิทัล สำนักงานสาธารณสุขจังหวัดสตูล 2026</p>
     <div class="flex justify-center items-center gap-4 flex-wrap text-slate-400 mt-1">
-      <span>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.5.0</span>
+      <span>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.7.0</span>
       <span class="text-slate-300">|</span>
       <a href="https://www.facebook.com/Mootu00" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-teal-600 hover:text-teal-700 transition-colors font-medium">
         <i data-lucide="facebook" class="w-4 h-4 mr-1.5 text-blue-600"></i>
@@ -2285,103 +2285,139 @@
       }
     }
 
+    function formatThaiDateTime(dateInput) {
+      if (!dateInput) return "-";
+      let date;
+      if (dateInput instanceof Date) {
+        date = dateInput;
+      } else {
+        date = new Date(dateInput);
+      }
+      
+      if (isNaN(date.getTime())) {
+        return String(dateInput);
+      }
+      
+      const months = [
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+      ];
+      return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear() + 543} เวลา ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} น.`;
+    }
+
+    function generateTicketHtml(record, isSuccessTitle = false) {
+      if (!record) return "";
+      const { title, firstName, lastName, grade, phone, schoolName, site, timestamp } = record;
+      const dateStr = CONFIG.QUOTAS[site]?.date || "-";
+      const thaiDateTimeStr = formatThaiDateTime(timestamp || new Date());
+
+      return `
+        <div class="ticket-container my-4 font-prompt relative overflow-hidden rounded-3xl p-6 select-none max-w-sm mx-auto text-slate-200">
+          <!-- แสงระยิบระยับหัวตั๋ว -->
+          <div class="absolute -top-12 -left-12 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl"></div>
+          <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+          
+          <!-- หัวตั๋ว (Header) -->
+          <div class="text-center pb-4 border-b border-dashed border-slate-800/80 relative">
+            <div class="flex items-center justify-center space-x-1.5 mb-1">
+              <i data-lucide="sparkles" class="w-4 h-4 text-amber-455 animate-pulse"></i>
+              <span class="text-[10px] tracking-widest font-extrabold text-amber-455 uppercase">SATUN MOPH OPEN HOUSE</span>
+              <i data-lucide="sparkles" class="w-4 h-4 text-amber-455 animate-pulse"></i>
+            </div>
+            <h3 class="text-base font-extrabold text-white tracking-wide uppercase">TICKET PASS</h3>
+            <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-450 inline-block mt-2 font-bold">
+              <i data-lucide="check" class="w-2.5 h-2.5 inline mr-1"></i>${isSuccessTitle ? 'ลงทะเบียนสำเร็จ' : 'ลงทะเบียนเรียบร้อย'}
+            </span>
+          </div>
+
+          <!-- รอยเว้าตั๋ว ซ้าย-ขวา -->
+          <div class="ticket-circle-left"></div>
+          <div class="ticket-circle-right"></div>
+
+          <!-- ข้อมูลผู้เข้าร่วม (Ticket Body) -->
+          <div class="py-5 space-y-4 text-left relative">
+            <div class="grid grid-cols-2 gap-y-3.5 gap-x-2">
+              <div class="col-span-2">
+                <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">ชื่อ - นามสกุลผู้ลงทะเบียน</label>
+                <span class="text-base font-extrabold text-white flex items-center mt-0.5">
+                  <i data-lucide="user" class="w-4 h-4 text-teal-450 mr-2 shrink-0"></i>
+                  คุณ ${title || ""}${firstName} ${lastName}
+                </span>
+              </div>
+              <div>
+                <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">ระดับชั้น</label>
+                <span class="text-xs font-bold text-slate-200 mt-0.5 block">${grade}</span>
+              </div>
+              <div>
+                <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">เบอร์โทรศัพท์</label>
+                <span class="text-xs font-bold text-slate-200 mt-0.5 block">${phone}</span>
+              </div>
+              <div class="col-span-2">
+                <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">โรงเรียน</label>
+                <span class="text-xs font-bold text-teal-300 mt-0.5 block">${schoolName}</span>
+              </div>
+            </div>
+
+            <!-- ส่วนสถานที่และวันเวลาที่จอง -->
+            <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-900/60 shadow-inner space-y-2">
+              <div>
+                <div class="flex items-center text-[10px] text-teal-450 font-extrabold tracking-wider uppercase mb-1">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1 text-rose-500 shrink-0"></i>
+                  สถานที่ศึกษาดูงาน
+                </div>
+                <p class="text-xs font-extrabold text-white leading-snug">${site}</p>
+              </div>
+              <div class="pt-2 border-t border-slate-900/60 flex items-center justify-between text-xs">
+                <span class="text-slate-400">วันนัดหมาย:</span>
+                <strong class="text-amber-400 font-extrabold bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">${dateStr}</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- เส้นประรอยฉีกตั๋ว (Ticket Separator Line) -->
+          <div class="border-t border-dashed border-slate-800/80 my-2"></div>
+
+          <!-- ท้ายตั๋ว (Ticket Footer) -->
+          <div class="pt-2 text-center relative space-y-2">
+            <div class="flex items-center justify-center space-x-1.5 text-slate-500 text-[9px]">
+              <i data-lucide="clock" class="w-3 h-3 text-teal-500 shrink-0"></i>
+              <span>บันทึกข้อมูล: ${thaiDateTimeStr}</span>
+            </div>
+            <div class="flex justify-center pt-2">
+              <!-- บาร์โค้ดจำลองสวยงาม -->
+              <div class="h-8 w-48 bg-[repeating-linear-gradient(90deg,#475569,#475569_2px,transparent_2px,transparent_6px,#94a3b8_6px,#94a3b8_10px,transparent_10px,transparent_12px)] opacity-50"></div>
+            </div>
+            <p class="text-[9px] text-rose-450 font-bold bg-rose-950/20 border border-rose-900/30 py-1.5 px-3 rounded-lg inline-block w-full">
+              ⚠️ กรุณาบันทึกภาพหน้าจอนี้ไว้เป็นหลักฐานในการเข้าร่วมงาน
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    function showTicketFromSearch(recordEscaped) {
+      const record = JSON.parse(decodeURIComponent(recordEscaped));
+      const htmlContent = generateTicketHtml(record, false);
+      
+      Swal.fire({
+        html: htmlContent,
+        confirmButtonColor: '#0d9488',
+        confirmButtonText: 'ตกลง',
+        didOpen: () => {
+          if (window.lucide) {
+            window.lucide.createIcons();
+          }
+        }
+      });
+    }
+
     function handleApiResponse(result, isEditMode, regData = null) {
       if (result.status === "success") {
         let htmlContent = `<div class="text-center font-prompt text-slate-600">${result.message}</div>`;
         
         if (regData) {
-          const { title, firstName, lastName, grade, phone, schoolName, site } = regData;
-          const dateStr = CONFIG.QUOTAS[site]?.date || "-";
-          
-          const now = new Date();
-          const months = [
-            "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-          ];
-          const thaiDateTimeStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear() + 543} เวลา ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} น.`;
-
-          htmlContent = `
-            <div class="ticket-container my-4 font-prompt relative overflow-hidden rounded-3xl p-6 select-none max-w-sm mx-auto">
-              <!-- แสงระยิบระยับหัวตั๋ว -->
-              <div class="absolute -top-12 -left-12 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl"></div>
-              <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
-              
-              <!-- หัวตั๋ว (Header) -->
-              <div class="text-center pb-4 border-b border-dashed border-slate-800/80 relative">
-                <div class="flex items-center justify-center space-x-1.5 mb-1">
-                  <i data-lucide="sparkles" class="w-4 h-4 text-amber-450 animate-pulse"></i>
-                  <span class="text-[10px] tracking-widest font-extrabold text-amber-450 uppercase">SATUN MOPH OPEN HOUSE</span>
-                  <i data-lucide="sparkles" class="w-4 h-4 text-amber-450 animate-pulse"></i>
-                </div>
-                <h3 class="text-base font-extrabold text-white tracking-wide uppercase">TICKET PASS</h3>
-                <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-450 inline-block mt-2">
-                  <i data-lucide="check" class="w-2.5 h-2.5 inline mr-1"></i>ลงทะเบียนสำเร็จ
-                </span>
-              </div>
-
-              <!-- รอยเว้าตั๋ว ซ้าย-ขวา -->
-              <div class="ticket-circle-left"></div>
-              <div class="ticket-circle-right"></div>
-
-              <!-- ข้อมูลผู้เข้าร่วม (Ticket Body) -->
-              <div class="py-5 space-y-4 text-left relative">
-                <div class="grid grid-cols-2 gap-y-3.5 gap-x-2">
-                  <div class="col-span-2">
-                    <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">ชื่อ - นามสกุลผู้ลงทะเบียน</label>
-                    <span class="text-base font-extrabold text-white flex items-center mt-0.5">
-                      <i data-lucide="user" class="w-4 h-4 text-teal-400 mr-2 shrink-0"></i>
-                      คุณ ${title || ""}${firstName} ${lastName}
-                    </span>
-                  </div>
-                  <div>
-                    <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">ระดับชั้น</label>
-                    <span class="text-xs font-bold text-slate-200 mt-0.5 block">${grade}</span>
-                  </div>
-                  <div>
-                    <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">เบอร์โทรศัพท์</label>
-                    <span class="text-xs font-bold text-slate-200 mt-0.5 block">${phone}</span>
-                  </div>
-                  <div class="col-span-2">
-                    <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">โรงเรียน</label>
-                    <span class="text-xs font-bold text-teal-300 mt-0.5 block">${schoolName}</span>
-                  </div>
-                </div>
-
-                <!-- ส่วนสถานที่และวันเวลาที่จอง -->
-                <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-900/60 shadow-inner space-y-2">
-                  <div>
-                    <div class="flex items-center text-[10px] text-teal-400 font-extrabold tracking-wider uppercase mb-1">
-                      <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1 text-rose-500 shrink-0"></i>
-                      สถานที่ศึกษาดูงาน
-                    </div>
-                    <p class="text-xs font-extrabold text-white leading-snug">${site}</p>
-                  </div>
-                  <div class="pt-2 border-t border-slate-900/60 flex items-center justify-between text-xs">
-                    <span class="text-slate-400">วันนัดหมาย:</span>
-                    <strong class="text-amber-400 font-extrabold bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">${dateStr}</strong>
-                  </div>
-                </div>
-              </div>
-
-              <!-- เส้นประรอยฉีกตั๋ว (Ticket Separator Line) -->
-              <div class="border-t border-dashed border-slate-800/80 my-2"></div>
-
-              <!-- ท้ายตั๋ว (Ticket Footer) -->
-              <div class="pt-2 text-center relative space-y-2">
-                <div class="flex items-center justify-center space-x-1.5 text-slate-500 text-[9px]">
-                  <i data-lucide="clock" class="w-3 h-3 text-teal-500 shrink-0"></i>
-                  <span>บันทึกข้อมูล: ${thaiDateTimeStr}</span>
-                </div>
-                <div class="flex justify-center pt-2">
-                  <!-- บาร์โค้ดจำลองสวยงาม -->
-                  <div class="h-8 w-48 bg-[repeating-linear-gradient(90deg,#475569,#475569_2px,transparent_2px,transparent_6px,#94a3b8_6px,#94a3b8_10px,transparent_10px,transparent_12px)] opacity-50"></div>
-                </div>
-                <p class="text-[9px] text-rose-450 font-bold bg-rose-950/20 border border-rose-900/30 py-1.5 px-3 rounded-lg inline-block w-full">
-                  ⚠️ กรุณาบันทึกภาพหน้าจอนี้ไว้เป็นหลักฐานในการเข้าร่วมงาน
-                </p>
-              </div>
-            </div>
-          `;
+          const dataForTicket = { ...regData, timestamp: regData.timestamp || new Date() };
+          htmlContent = generateTicketHtml(dataForTicket, true);
         }
 
         Swal.fire({
@@ -2678,12 +2714,15 @@
               <h4 class="text-base font-bold text-teal-800">คุณ ${record.title || ""}${record.firstName} ${record.lastName}</h4>
               <p class="text-xs text-slate-400">ระดับชั้น: ${record.grade}</p>
             </div>
-            <div class="flex space-x-2">
+            <div class="flex flex-wrap gap-2">
+              <button onclick="showTicketFromSearch('${encodeURIComponent(JSON.stringify(record))}')" class="px-3 py-1.5 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-100 rounded-lg hover:bg-amber-100 active:bg-amber-200 transition-all flex items-center shadow-sm">
+                <i data-lucide="ticket" class="w-3.5 h-3.5 mr-1.5"></i> ตั๋วลงทะเบียน
+              </button>
               <button onclick="startEditFlow('${encodeURIComponent(JSON.stringify(record))}')" class="px-3 py-1.5 text-xs font-semibold text-teal-600 bg-teal-50 border border-teal-100 rounded-lg hover:bg-teal-100 active:bg-teal-200 transition-all flex items-center shadow-sm">
                 <i data-lucide="edit-3" class="w-3.5 h-3.5 mr-1.5"></i> แก้ไข
               </button>
               <button onclick="deleteRegistration(${record.rowNumber}, '${record.firstName.replace(/'/g, "\\'")}', '${record.lastName.replace(/'/g, "\\'")}')" class="px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-lg hover:bg-rose-100 active:bg-rose-200 transition-all flex items-center shadow-sm">
-                <i data-lucide="trash-2" class="w-3.5 h-3.5 mr-1.5"></i> ลบข้อมูล
+                <i data-lucide="trash-2" class="w-3.5 h-3.5 mr-1.5"></i> ลบ
               </button>
             </div>
           </div>
