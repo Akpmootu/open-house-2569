@@ -1160,8 +1160,8 @@
               <span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded-full border ${badgeStyle}">
                 ${venue.status === "เต็ม" ? "เต็ม" : (venue.status === "ใกล้เต็ม" ? "ใกล้เต็ม" : "ว่าง")}
               </span>
-              <div class="text-xs text-slate-400 font-medium flex items-center">
-                <i data-lucide="calendar" class="w-3.5 h-3.5 mr-1 text-slate-400"></i> ${dateLabel}
+              <div class="text-xs font-bold flex items-center px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-250/60 shadow-sm">
+                <i data-lucide="calendar" class="w-3.5 h-3.5 mr-1.5 text-amber-500"></i> ${dateLabel}
               </div>
             </div>
             
@@ -1250,7 +1250,7 @@
                 <div>
                   <p class="text-sm md:text-base font-bold text-slate-700">${venue.name}</p>
                   <div class="flex flex-wrap gap-2 items-center mt-1">
-                    <span class="text-xs text-slate-400 flex items-center"><i data-lucide="calendar" class="w-3.5 h-3.5 mr-1"></i> ${dateLabel}</span>
+                    <span class="inline-flex items-center text-xs font-bold px-2 py-0.5 rounded bg-yellow-300 text-slate-900 border border-yellow-400 shadow-sm"><i data-lucide="calendar" class="w-3.5 h-3.5 mr-1 text-amber-600"></i> ${dateLabel}</span>
                     <span class="text-xs text-slate-400">โควต้า: ${venue.quota} คน</span>
                   </div>
                 </div>
@@ -1812,9 +1812,9 @@
                   <p class="text-[10px] text-teal-600 font-extrabold uppercase tracking-wider">สถานที่ศึกษาดูงานที่จองไว้</p>
                   <p class="text-slate-800 font-extrabold text-sm md:text-base mt-0.5">${site}</p>
                 </div>
-                <div class="pt-2 border-t border-slate-100 flex items-center text-xs text-slate-500">
-                  <i data-lucide="calendar" class="w-4 h-4 mr-1.5 text-teal-600 shrink-0"></i>
-                  <span>วันนัดหมายกิจกรรม: <strong class="text-slate-700">${dateStr}</strong></span>
+                 <div class="pt-2 border-t border-slate-100 flex items-center text-xs text-slate-650">
+                  <i data-lucide="calendar" class="w-4 h-4 mr-1.5 text-amber-500 shrink-0"></i>
+                  <span>วันนัดหมายกิจกรรม: <strong class="bg-yellow-100 text-yellow-800 border border-yellow-200 px-2 py-0.5 rounded font-extrabold ml-1">${dateStr}</strong></span>
                 </div>
               </div>
               <p class="text-[11px] text-rose-500 font-bold bg-rose-50 py-1.5 px-3 rounded-lg border border-rose-100/50 inline-block w-full">
