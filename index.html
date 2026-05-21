@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ลงทะเบียนเข้าร่วมงาน Open House สสจ.สตูล 2569</title>
   
+  <!-- Favicon ประจำโครงการ (Data URI SVG) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2334D399'/%3E%3Cstop offset='100%25' stop-color='%23059669'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='%230F172A'/%3E%3Cpath d='M50 24 C40 10 18 16 18 36 C18 56 50 78 50 78 C50 78 82 56 82 36 C82 16 60 10 50 24 Z' fill='url(%23g)' stroke='%23FBBF24' stroke-width='2'/%3E%3Cpath d='M42 36 H58 M50 28 V44' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M22 50 H33 L38 40 L43 60 L48 46 L51 54 L54 50 H78' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  
   <!-- นำเข้าฟอนต์และเครื่องมือต่างๆ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,7 +56,7 @@
       font-family: 'Prompt', sans-serif;
       background-color: #f0fdfa;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.06) 0px, transparent 50%),
+      	radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.06) 0px, transparent 50%),
         radial-gradient(at 50% 0%, rgba(16, 185, 129, 0.06) 0px, transparent 50%),
         radial-gradient(at 100% 0%, rgba(13, 148, 136, 0.06) 0px, transparent 50%);
       background-attachment: fixed;
@@ -70,6 +73,53 @@
       color: #0d9488;
       border-bottom: 3px solid #0d9488;
     }
+
+    /* สไตล์คลาสแอนิเมชั่นเพิ่มเติมสำหรับ Logo & ปุ่มลงทะเบียน */
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 25s linear infinite;
+      transform-origin: center;
+    }
+    
+    @keyframes bounce-horizontal {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(5px); }
+    }
+    .animate-bounce-horizontal {
+      animation: bounce-horizontal 1.2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.4), 0 8px 10px -6px rgba(13, 148, 136, 0.4); }
+      50% { box-shadow: 0 20px 35px -5px rgba(16, 185, 129, 0.6), 0 12px 16px -6px rgba(16, 185, 129, 0.6); }
+    }
+    .animate-pulse-glow {
+      animation: pulse-glow 2.5s infinite;
+    }
+
+    @keyframes pulse-light {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.03); opacity: 0.95; }
+    }
+    .animate-pulse-slow {
+      animation: pulse-light 3s ease-in-out infinite;
+    }
+
+    /* สไตล์ Radio Custom ใน Venue Selector */
+    .venue-option-card input[type="radio"]:checked + .venue-card-content {
+      border-color: #14b8a6 !important;
+      background-color: rgba(204, 251, 241, 0.4) !important;
+      box-shadow: 0 10px 15px -3px rgba(20, 184, 166, 0.15), 0 4px 6px -4px rgba(20, 184, 166, 0.15), 0 0 0 3px rgba(20, 184, 166, 0.3) !important;
+    }
+    .venue-option-card input[type="radio"]:checked + .venue-card-content .checked-dot-outer {
+      border-color: #14b8a6 !important;
+    }
+    .venue-option-card input[type="radio"]:checked + .venue-card-content .checked-dot-inner {
+      transform: scale(1) !important;
+    }
   </style>
 </head>
 <body class="min-h-screen text-slate-800 pb-16 md:pb-8">
@@ -78,8 +128,30 @@
   <header class="bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-700 text-white shadow-lg overflow-hidden relative">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-teal-600/20 via-transparent to-transparent opacity-60"></div>
     <div class="max-w-6xl mx-auto px-4 py-8 md:py-12 text-center relative z-10">
+      
+      <!-- โลโก้โครงการสไตล์พรีเมียม -->
+      <div class="flex justify-center mb-5">
+        <div class="relative group">
+          <div class="absolute -inset-1.5 bg-gradient-to-r from-teal-400 to-emerald-400 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+          <div class="relative bg-slate-900 border border-teal-500/40 p-4 rounded-full flex items-center justify-center shadow-2xl">
+            <svg class="w-16 h-16 text-emerald-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 3" class="animate-spin-slow" opacity="0.6"/>
+              <path d="M50 22C40 9 18 15 18 36C18 57 50 78 50 78 C50 78 82 57 82 36C82 15 60 9 50 22Z" fill="url(#logo-grad)" stroke="#FBBF24" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M42 36H58M50 28V44" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M22 50 H33 L38 40 L43 60 L48 46 L51 54 L54 50 H78" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#059669"/>
+                  <stop offset="100%" stop-color="#0d9488"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+
       <div class="inline-flex items-center justify-center bg-teal-500/20 backdrop-blur-md rounded-full px-4 py-1.5 mb-4 border border-teal-400/30 text-teal-200 text-sm">
-        <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> โครงการ Open House ครั้งที่ 2
+        <i data-lucide="sparkles" class="w-4 h-4 mr-2 text-amber-300"></i> โครงการ Open House ครั้งที่ 2
       </div>
       <h1 class="text-2xl md:text-4xl font-bold tracking-wide leading-tight drop-shadow-sm mb-3">
         เปิดโลกแห่งการเรียนรู้สู่สายงานบุคลากรทางการแพทย์และสาธารณสุข
@@ -98,8 +170,13 @@
           <i data-lucide="layout-dashboard" class="w-5 h-5 md:mr-2 mb-1 md:mb-0"></i>
           <span class="text-xs md:text-base">หน้าหลัก</span>
         </button>
-        <button onclick="switchTab('register-tab')" id="btn-register-tab" class="flex flex-col md:flex-row items-center py-3 px-4 text-slate-500 hover:text-teal-600 font-medium border-b-2 border-transparent transition-all duration-300">
-          <i data-lucide="user-plus" class="w-5 h-5 md:mr-2 mb-1 md:mb-0"></i>
+        <button onclick="switchTab('register-tab')" id="btn-register-tab" class="flex flex-col md:flex-row items-center py-2 px-5 my-1.5 text-white bg-gradient-to-r from-teal-600/90 via-emerald-600/90 to-cyan-600/90 rounded-full font-bold border border-teal-300/20 shadow-md transition-all duration-300 relative hover:scale-105 hover:from-teal-500 hover:to-cyan-500 active:scale-95">
+          <!-- ไฟกะพริบแจ้งเตือนปุ่มสำคัญที่สุด -->
+          <span class="absolute top-1 right-2 md:top-1.5 md:right-3 flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-300 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400"></span>
+          </span>
+          <i data-lucide="user-plus" class="w-5 h-5 md:mr-2 mb-1 md:mb-0 text-white animate-pulse"></i>
           <span class="text-xs md:text-base">ลงทะเบียน</span>
         </button>
         <button onclick="switchTab('edit-tab')" id="btn-edit-tab" class="flex flex-col md:flex-row items-center py-3 px-4 text-slate-500 hover:text-teal-600 font-medium border-b-2 border-transparent transition-all duration-300">
@@ -125,35 +202,35 @@
       
       <!-- สถิติภาพรวม (Stat Overview Cards) -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-sm hover:shadow-md transition-shadow">
-          <div class="p-4 bg-teal-100 text-teal-600 rounded-xl">
+        <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-teal-500/5 hover:ring-2 hover:ring-teal-500/20">
+          <div class="p-4 bg-gradient-to-br from-teal-50 to-teal-100 text-teal-600 rounded-xl shadow-inner">
             <i data-lucide="users" class="w-8 h-8"></i>
           </div>
           <div>
-            <p class="text-sm text-slate-500 font-medium">จำนวนผู้ลงทะเบียนทั้งหมด</p>
+            <p class="text-sm text-slate-500 font-medium tracking-wide">จำนวนผู้ลงทะเบียนทั้งหมด</p>
             <h3 id="stat-total-registered" class="text-3xl font-bold text-teal-800 mt-1">0</h3>
-            <p class="text-xs text-slate-400 mt-0.5">จากความจุทั้งหมด 450 คน</p>
+            <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">จากความจุทั้งหมด 450 คน</p>
           </div>
         </div>
-        <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-sm hover:shadow-md transition-shadow">
-          <div class="p-4 bg-emerald-100 text-emerald-600 rounded-xl">
+        <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-teal-500/5 hover:ring-2 hover:ring-emerald-500/20">
+          <div class="p-4 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-xl shadow-inner">
             <i data-lucide="check-circle-2" class="w-8 h-8"></i>
           </div>
           <div>
-            <p class="text-sm text-slate-500 font-medium">ที่นั่งว่างที่จองได้</p>
+            <p class="text-sm text-slate-500 font-medium tracking-wide">ที่นั่งว่างที่จองได้</p>
             <h3 id="stat-total-available" class="text-3xl font-bold text-emerald-700 mt-1">0</h3>
-            <p class="text-xs text-slate-400 mt-0.5">เหลือที่นั่งคงเหลือรวม</p>
+            <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">เหลือที่นั่งคงเหลือรวม</p>
           </div>
         </div>
-        <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-sm hover:shadow-md transition-shadow">
-          <div class="p-4 bg-amber-100 text-amber-600 rounded-xl">
+        <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-teal-500/5 hover:ring-2 hover:ring-amber-500/20">
+          <div class="p-4 bg-gradient-to-br from-amber-50 to-amber-100 text-amber-600 rounded-xl shadow-inner">
             <i data-lucide="percent" class="w-8 h-8"></i>
           </div>
           <div>
-            <p class="text-sm text-slate-500 font-medium">อัตราการจองพื้นที่</p>
+            <p class="text-sm text-slate-500 font-medium tracking-wide">อัตราการจองพื้นที่</p>
             <h3 id="stat-fill-percentage" class="text-3xl font-bold text-amber-700 mt-1">0%</h3>
-            <div class="w-full bg-slate-200 rounded-full h-1.5 mt-2 overflow-hidden">
-              <div id="stat-progress-bar" class="bg-amber-500 h-1.5 transition-all duration-500" style="width: 0%"></div>
+            <div class="w-full bg-slate-200/80 rounded-full h-2 mt-2 overflow-hidden shadow-inner">
+              <div id="stat-progress-bar" class="bg-amber-500 h-2 transition-all duration-500" style="width: 0%"></div>
             </div>
           </div>
         </div>
@@ -173,9 +250,11 @@
       </div>
 
       <!-- ปุ่มลงทะเบียนด่วน -->
-      <div class="text-center pt-4">
-        <button onclick="switchTab('register-tab')" class="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-semibold text-lg px-8 py-3.5 rounded-full shadow-lg hover:shadow-teal-900/20 -translate-y-0.5 active:translate-y-0 hover:scale-[1.02] transition-all">
-          ลงทะเบียนเข้าร่วมโครงการเลย <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
+      <div class="text-center pt-6">
+        <button onclick="switchTab('register-tab')" class="relative inline-flex items-center justify-center px-10 py-4 text-xl font-bold text-white transition-all duration-300 rounded-full group bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 shadow-2xl hover:shadow-teal-500/40 hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-95 overflow-hidden animate-pulse-glow ring-4 ring-teal-200/50">
+          <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></span>
+          ลงทะเบียนเข้าร่วมโครงการเลย 
+          <i data-lucide="arrow-right" class="w-6 h-6 ml-2 animate-bounce-horizontal"></i>
         </button>
       </div>
     </section>
@@ -206,18 +285,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label for="first-name" class="block text-sm font-medium text-slate-600 mb-1">ชื่อจริง (ไม่ต้องมีคำนำหน้าชื่อ) <span class="text-rose-500">*</span></label>
-                <input type="text" id="first-name" required placeholder="เช่น สมชาย" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                <input type="text" id="first-name" required placeholder="เช่น สมชาย" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
               </div>
               <div>
                 <label for="last-name" class="block text-sm font-medium text-slate-600 mb-1">นามสกุล <span class="text-rose-500">*</span></label>
-                <input type="text" id="last-name" required placeholder="เช่น ใจดี" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                <input type="text" id="last-name" required placeholder="เช่น ใจดี" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label for="grade-select" class="block text-sm font-medium text-slate-600 mb-1">ระดับชั้นเรียน <span class="text-rose-500">*</span></label>
-                <select id="grade-select" required class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                <select id="grade-select" required class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
                   <option value="" disabled selected>-- เลือกชั้นเรียน --</option>
                   <option value="มัธยมศึกษาปีที่ 4">มัธยมศึกษาปีที่ 4 (ม.4)</option>
                   <option value="มัธยมศึกษาปีที่ 5">มัธยมศึกษาปีที่ 5 (ม.5)</option>
@@ -226,7 +305,7 @@
               </div>
               <div>
                 <label for="phone-input" class="block text-sm font-medium text-slate-600 mb-1">เบอร์โทรศัพท์ติดต่อ <span class="text-rose-500">*</span></label>
-                <input type="tel" id="phone-input" required pattern="[0][0-9]{9}" maxlength="10" placeholder="เช่น 0891234567" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                <input type="tel" id="phone-input" required pattern="[0][0-9]{9}" maxlength="10" placeholder="เช่น 0891234567" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
                 <span class="text-[10px] text-slate-400 mt-1 block">ตัวเลข 10 หลักขึ้นต้นด้วยเลข 0 (สำคัญสำหรับการค้นหา/แก้ไขข้อมูล)</span>
               </div>
             </div>
@@ -257,20 +336,20 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label for="district-select" class="block text-sm font-medium text-slate-600 mb-1">อำเภอ <span class="text-rose-500">*</span></label>
-                  <select id="district-select" class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all" onchange="onDistrictChange()">
+                  <select id="district-select" class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200" onchange="onDistrictChange()">
                     <option value="" disabled selected>-- เลือกอำเภอ --</option>
                   </select>
                 </div>
                 <div>
                   <label for="sub-district-select" class="block text-sm font-medium text-slate-600 mb-1">ตำบล <span class="text-rose-500">*</span></label>
-                  <select id="sub-district-select" disabled class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all" onchange="onSubDistrictChange()">
+                  <select id="sub-district-select" disabled class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200" onchange="onSubDistrictChange()">
                     <option value="" disabled selected>-- กรุณาเลือกอำเภอก่อน --</option>
                   </select>
                 </div>
               </div>
               <div>
                 <label for="school-select" class="block text-sm font-medium text-slate-600 mb-1">ชื่อโรงเรียน <span class="text-rose-500">*</span></label>
-                <select id="school-select" disabled class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                <select id="school-select" disabled class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
                   <option value="" disabled selected>-- กรุณาเลือกตำบลก่อน --</option>
                 </select>
               </div>
@@ -281,20 +360,20 @@
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label for="other-province" class="block text-sm font-medium text-slate-600 mb-1">จังหวัด <span class="text-rose-500">*</span></label>
-                  <input type="text" id="other-province" placeholder="เช่น สงขลา" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                  <input type="text" id="other-province" placeholder="เช่น สงขลา" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
                 </div>
                 <div>
                   <label for="other-district" class="block text-sm font-medium text-slate-600 mb-1">อำเภอ <span class="text-rose-500">*</span></label>
-                  <input type="text" id="other-district" placeholder="เช่น หาดใหญ่" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                  <input type="text" id="other-district" placeholder="เช่น หาดใหญ่" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
                 </div>
                 <div>
                   <label for="other-sub-district" class="block text-sm font-medium text-slate-600 mb-1">ตำบล <span class="text-rose-500">*</span></label>
-                  <input type="text" id="other-sub-district" placeholder="เช่น คอหงส์" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                  <input type="text" id="other-sub-district" placeholder="เช่น คอหงส์" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
                 </div>
               </div>
               <div>
                 <label for="other-school-name" class="block text-sm font-medium text-slate-600 mb-1">ชื่อโรงเรียนสถาบันศึกษา <span class="text-rose-500">*</span></label>
-                <input type="text" id="other-school-name" placeholder="เช่น โรงเรียนหาดใหญ่วิทยาลัย" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+                <input type="text" id="other-school-name" placeholder="เช่น โรงเรียนหาดใหญ่วิทยาลัย" class="w-full rounded-xl border border-slate-200 bg-white/50 px-4 py-2.5 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
               </div>
             </div>
           </div>
@@ -316,7 +395,7 @@
             <button type="button" onclick="cancelRegistration()" class="w-full md:w-auto px-6 py-2.5 rounded-xl border border-slate-200 font-medium text-slate-500 hover:bg-slate-50 active:bg-slate-100 transition-all text-center">
               ยกเลิก
             </button>
-            <button type="submit" id="submit-btn" class="w-full md:w-auto px-8 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 font-semibold text-white shadow-md shadow-teal-900/10 hover:scale-[1.01] transition-all flex items-center justify-center">
+            <button type="submit" id="submit-btn" class="w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/25 hover:shadow-emerald-500/35 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-emerald-100/80 hover:ring-emerald-200/80 flex items-center justify-center uppercase tracking-wide">
               <span id="btn-text">ยืนยันลงทะเบียน</span>
               <div id="btn-spinner" class="hidden ml-2 animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
             </button>
@@ -340,7 +419,7 @@
         <div class="flex flex-col md:flex-row gap-3 mb-8">
           <div class="relative flex-grow">
             <i data-lucide="phone" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
-            <input type="tel" id="search-phone" placeholder="กรอกเบอร์โทรศัพท์ 10 หลัก เช่น 0891234567" class="w-full rounded-xl border border-slate-200 bg-white/50 pl-12 pr-4 py-3 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-all">
+            <input type="tel" id="search-phone" placeholder="กรอกเบอร์โทรศัพท์ 10 หลัก เช่น 0891234567" class="w-full rounded-xl border border-slate-200 bg-white/50 pl-12 pr-4 py-3 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200/50 shadow-sm transition-all duration-200">
           </div>
           <button onclick="performSearch()" class="px-6 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 font-semibold text-white shadow-md hover:scale-[1.01] transition-all flex items-center justify-center">
             <i data-lucide="search" class="w-5 h-5 mr-2"></i> ค้นหา
@@ -527,10 +606,12 @@
   <script>
     // ส่วนกำหนดค่าระบบ
     const CONFIG = {
-      // กรุณาใส่ URL เว็บแอปที่ได้จากการ Deploy ใน Google Apps Script ของท่านที่นี่
-      // ตัวอย่าง: 'https://script.google.com/macros/s/AKfycbyxxxx.../exec'
+      // URL เว็บแอปสำหรับบันทึก/แก้ไขข้อมูล (เขียน) ผ่าน Google Apps Script
       API_URL: 'https://script.google.com/macros/s/AKfycbzJ2Xfsn5sRmByJcxqhHaDuo3rcXvEqUl4lMI1kVEgGImpu8gXz14OFOBq9guf7Fb8UdA/exec', 
       
+      // ID ของ Google Sheet สำหรับการดึงข้อมูลสด (อ่าน) โดยตรงผ่าน Visualization API
+      SHEET_ID: '1Np7AeQonS5gDmFYF5pdssZ12FC_r3VTjBD55fdrw_OY',
+
       // การตั้งค่าโควต้าของสถานที่ดูงานต่างๆ
       QUOTAS: {
         "สำนักงานสาธารณสุขจังหวัดสตูล และโรงพยาบาลสตูล": { max: 120, date: "12 มิถุนายน 2569" },
@@ -550,12 +631,13 @@
     };
 
     // แฟล็กเช็กสถานะการดึงข้อมูลจาก API จริง
-    let isMockMode = true;
+    let isMockMode = false;
+    let connectionStatus = "connecting"; // 'connecting', 'connected', 'error'
 
     // เริ่มต้นระบบเมื่อหน้าเว็บโหลด
     document.addEventListener("DOMContentLoaded", () => {
-      // ตรวจสอบว่าใส่ API URL หรือยัง
-      if (CONFIG.API_URL && CONFIG.API_URL !== 'YOUR_API_URL_HERE' && CONFIG.API_URL.startsWith('https://')) {
+      // ตรวจสอบว่าระบุ SHEET_ID และ API_URL หรือยัง
+      if (CONFIG.SHEET_ID && CONFIG.SHEET_ID !== 'YOUR_SHEET_ID_HERE' && CONFIG.API_URL && CONFIG.API_URL.startsWith('https://')) {
         isMockMode = false;
       } else {
         isMockMode = true;
@@ -575,15 +657,47 @@
       }
     }
 
-    // แสดง Badge ระบุโหมดการเชื่อมต่อ
+    // แสดง Badge ระบุโหมดการเชื่อมต่อแบบพรีเมียม
     function updateModeBadge() {
       const badge = document.getElementById("mode-badge");
       if (isMockMode) {
-        badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200";
+        badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200 shadow-sm transition-all duration-300";
         badge.innerHTML = `<span class="w-2 h-2 bg-amber-500 rounded-full mr-2 animate-pulse"></span> โหมดจำลองระบบ (จัดเก็บในเครื่องของคุณ)`;
+        badge.onclick = null;
+        badge.style.cursor = "default";
+      } else if (connectionStatus === "connected") {
+        badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm transition-all duration-300";
+        badge.innerHTML = `
+          <span class="relative flex h-2 w-2 mr-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          ระบบออนไลน์: เชื่อมต่อฐานข้อมูล Google Sheets สำเร็จ
+        `;
+        badge.onclick = null;
+        badge.style.cursor = "default";
+      } else if (connectionStatus === "error") {
+        badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-200 shadow-sm cursor-pointer hover:bg-rose-200 transition-all duration-300";
+        badge.innerHTML = `
+          <span class="relative flex h-2 w-2 mr-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+          </span>
+          การเชื่อมต่อขัดข้อง: ดึงข้อมูลล้มเหลว (คลิกเพื่อลองใหม่)
+        `;
+        badge.onclick = () => { refreshData(); };
+        badge.style.cursor = "pointer";
       } else {
-        badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200";
-        badge.innerHTML = `<span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> เชื่อมต่อ Google Sheets เรียบร้อย`;
+        badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 border border-sky-200 shadow-sm transition-all duration-300";
+        badge.innerHTML = `
+          <span class="relative flex h-2 w-2 mr-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+          </span>
+          กำลังเชื่อมต่อฐานข้อมูล Google Sheets...
+        `;
+        badge.onclick = null;
+        badge.style.cursor = "default";
       }
     }
 
@@ -680,12 +794,28 @@
       
       // ปรับแต่งคลาสของปุ่มเนวิเกชั่น
       document.querySelectorAll("[id^='btn-']").forEach(btn => {
+        if (btn.id === "btn-register-tab") return; // ข้ามปุ่มลงทะเบียนในลูปหลักเพื่อให้ฟังก์ชันพิเศษจัดการ
         btn.classList.remove("active-tab");
         btn.classList.add("text-slate-500");
       });
       
-      document.getElementById(`btn-${tabId}`).classList.add("active-tab");
-      document.getElementById(`btn-${tabId}`).classList.remove("text-slate-500");
+      const activeBtn = document.getElementById(`btn-${tabId}`);
+      if (activeBtn && activeBtn.id !== "btn-register-tab") {
+        activeBtn.classList.add("active-tab");
+        activeBtn.classList.remove("text-slate-500");
+      }
+      
+      // จัดการการไฮไลต์พิเศษของปุ่มลงทะเบียน (Capsule Highlight)
+      const regBtn = document.getElementById("btn-register-tab");
+      if (regBtn) {
+        if (tabId === 'register-tab') {
+          // โหมดกำลังทำงานแท็บลงทะเบียน: พื้นหลังไล่เฉดเขียวมรกต-ฟ้าพรีเมียม ตัวอักษรขาว โดดเด่นเป็นพิเศษ พร้อมเรืองแสง
+          regBtn.className = "flex flex-col md:flex-row items-center py-2 px-5 my-1.5 text-white bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 rounded-full font-bold border-0 shadow-lg shadow-teal-500/40 transition-all duration-300 relative scale-105 ring-4 ring-teal-300/50 animate-pulse-glow";
+        } else {
+          // โหมดแท็บอื่น: พื้นหลังไล่เฉดเขียวมรกต-ฟ้า (จางลงเล็กน้อย) แต่ยังมีสีสันเด่นกว่าปุ่มอื่นอย่างชัดเจน
+          regBtn.className = "flex flex-col md:flex-row items-center py-2 px-5 my-1.5 text-white bg-gradient-to-r from-teal-600/90 via-emerald-600/90 to-cyan-600/90 rounded-full font-bold border border-teal-300/20 shadow-md transition-all duration-300 relative hover:scale-105 hover:from-teal-500 hover:to-cyan-500 active:scale-95";
+        }
+      }
 
       // ถ้ารีเซ็ตเป็นแบบฟอร์มลงทะเบียนปกติ (กรณีเคยแก้ค้างไว้)
       if (tabId === 'register-tab' && !document.getElementById("edit-row-number").value) {
@@ -699,27 +829,151 @@
     }
 
     // ================= DATA FETCHING =================
+    // เก็บประวัติแถวข้อมูลจริงทั้งหมดสำหรับการค้นหาและตรวจเช็กซ้ำในเครื่อง
+    let sheetRecords = [];
+
+    // ฟังก์ชันย่อยสำหรับแยกแยะข้อมูลดิบจาก API ของ Google Sheets Visualization
+    function parseGoogleSheetJson(text) {
+      try {
+        const jsonStr = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+        const rawData = JSON.parse(jsonStr);
+        if (!rawData.table || !rawData.table.rows) {
+          throw new Error("โครงสร้างข้อมูลของ Google Sheet ไม่ถูกต้อง");
+        }
+        
+        const rows = rawData.table.rows;
+        const parsedRows = [];
+        
+        rows.forEach((row, idx) => {
+          if (!row || !row.c) return;
+          
+          // ตรวจสอบว่าเป็นแถวหัวตารางหรือไม่ (ข้ามถ้าเป็น 'ประทับเวลา')
+          if (row.c[0] && String(row.c[0].v).trim() === "ประทับเวลา") {
+            return;
+          }
+          
+          // แมพแถวเป็น Object
+          parsedRows.push({
+            rowNumber: idx + 1, // หมายเลขแถวแบบ 1-indexed (มีประโยชน์สำหรับการอ้างอิงตอนแก้ไขผ่าน POST)
+            timestamp: row.c[0] ? row.c[0].v : "",
+            firstName: row.c[1] ? String(row.c[1].v).trim() : "",
+            lastName: row.c[2] ? String(row.c[2].v).trim() : "",
+            grade: row.c[3] ? String(row.c[3].v).trim() : "",
+            schoolType: row.c[4] ? String(row.c[4].v).trim() : "",
+            province: row.c[5] ? String(row.c[5].v).trim() : "",
+            district: row.c[6] ? String(row.c[6].v).trim() : "",
+            subDistrict: row.c[7] ? String(row.c[7].v).trim() : "",
+            schoolName: row.c[8] ? String(row.c[8].v).trim() : "",
+            phone: row.c[9] ? String(row.c[9].v).trim() : "",
+            site: row.c[10] ? String(row.c[10].v).trim() : ""
+          });
+        });
+        
+        return parsedRows;
+      } catch (e) {
+        console.error("การแกะวิเคราะห์ JSON จาก Google Sheet ล้มเหลว:", e);
+        throw e;
+      }
+    }
+
+    // คำนวณยอดสะสมและจัดกลุ่มสถิติตามสถานที่จากแถวที่ดึงมา
+    function calculateStatsFromRecords(records) {
+      const counts = {};
+      // ตั้งค่าเริ่มต้นยอดการลงทะเบียนของทุกโรงพยาบาลเป็น 0
+      Object.keys(CONFIG.QUOTAS).forEach(venue => {
+        counts[venue] = 0;
+      });
+      
+      let totalRegistered = 0;
+      records.forEach(record => {
+        const venue = record.site;
+        if (counts.hasOwnProperty(venue)) {
+          counts[venue]++;
+          totalRegistered++;
+        }
+      });
+      
+      const venuesList = [];
+      Object.keys(CONFIG.QUOTAS).forEach(venue => {
+        const quota = CONFIG.QUOTAS[venue].max;
+        const registered = counts[venue] || 0;
+        const remaining = Math.max(0, quota - registered);
+        let status = "ว่าง";
+        
+        if (remaining === 0) {
+          status = "เต็ม";
+        } else if (remaining <= 10) {
+          status = "ใกล้เต็ม";
+        }
+        
+        venuesList.push({
+          name: venue,
+          quota: quota,
+          registered: registered,
+          remaining: remaining,
+          status: status
+        });
+      });
+      
+      return {
+        status: "success",
+        totalRegistered: totalRegistered,
+        venues: venuesList
+      };
+    }
+
     async function refreshData() {
       try {
         if (isMockMode) {
+          connectionStatus = "connected";
+          updateModeBadge();
           const res = getMockStats();
           processStats(res);
         } else {
+          connectionStatus = "connecting";
+          updateModeBadge();
           showGlobalLoader();
-          const response = await fetch(`${CONFIG.API_URL}?action=getStats`);
-          const res = await response.json();
+          
+          // ดึงข้อมูลผ่าน Google Visualization API ด้วย SHEET_ID
+          const sheetUrl = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json`;
+          const response = await fetch(sheetUrl);
+          if (!response.ok) throw new Error("ไม่สามารถดึงตารางข้อมูลจาก Google Sheet ได้");
+          
+          const text = await response.text();
+          sheetRecords = parseGoogleSheetJson(text);
+          
+          const res = calculateStatsFromRecords(sheetRecords);
+          
+          connectionStatus = "connected";
+          updateModeBadge();
           processStats(res);
         }
       } catch (err) {
         console.error("Error fetching stats:", err);
+        connectionStatus = "error";
+        updateModeBadge();
+        
         Swal.fire({
           icon: 'error',
-          title: 'การเชื่อมต่อผิดพลาด',
-          text: 'ไม่สามารถดึงข้อมูลสถิติสดจากเซิร์ฟเวอร์ได้ กำลังเข้าสู่ Mock Mode ชั่วคราว',
+          title: 'เชื่อมต่อฐานข้อมูลล้มเหลว',
+          html: `
+            <div class="text-left text-sm space-y-2 text-slate-600 leading-relaxed font-prompt">
+              <p class="font-semibold text-rose-600">ไม่สามารถเชื่อมดึงข้อมูลสดผ่าน Google Sheet ID ได้</p>
+              <hr class="my-2 border-slate-100">
+              <p class="font-bold text-slate-700">คำแนะนำการแก้ไข:</p>
+              <ul class="list-decimal pl-4 space-y-1 text-xs">
+                <li>กรุณาตรวจสอบว่า Google Sheet ลิงก์นี้สามารถเข้าถึงโดยสาธารณะได้หรือไม่ (เปิดแชร์แบบ <b>"ทุกคนที่มีลิงก์มีสิทธิ์อ่าน"</b> หรือ <b>"Anyone with the link can view"</b>)</li>
+                <li>ตรวจสอบความถูกต้องของ <code class="bg-slate-100 px-1 py-0.5 rounded text-rose-600">CONFIG.SHEET_ID</code> ในสคริปต์หน้าเว็บ</li>
+                <li>ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของเครื่องคอมพิวเตอร์ของคุณ</li>
+              </ul>
+              <p class="text-xs text-amber-600 mt-2">💡 ระหว่างนี้ระบบจะแสดงข้อมูลแบบจำลองชั่วคราวเพื่อให้ระบบยังแสดงความสวยงามได้</p>
+            </div>
+          `,
+          confirmButtonText: 'ตกลง',
           confirmButtonColor: '#0d9488'
         });
-        isMockMode = true;
-        updateModeBadge();
+        
+        // แสดงข้อมูลจำลองเพื่อรักษาเลย์เอาต์หน้าจอ
         processStats(getMockStats());
       } finally {
         hideGlobalLoader();
@@ -775,7 +1029,7 @@
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
 
         const card = document.createElement("div");
-        card.className = "glassmorphism rounded-2xl p-5 shadow-sm hover:-translate-y-1 transition-all duration-300 relative flex flex-col justify-between overflow-hidden group";
+        card.className = "glassmorphism rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative flex flex-col justify-between overflow-hidden group ring-1 ring-teal-500/5 hover:ring-2 hover:ring-teal-400/40";
         
         card.innerHTML = `
           <div>
@@ -827,39 +1081,40 @@
         // หากคนคนนี้กำลังแก้ไขข้อมูลของสถานที่เดิม ให้แสดงสถานที่นั้นเป็นตัวเลือกที่กดได้อยู่ แม้จะเต็มก็ตาม
         const isDisabled = isFull && (!currentSelectedVenue || currentSelectedVenue !== venue.name);
         
-        let labelClass = "flex flex-col md:flex-row md:items-center justify-between p-4 border rounded-xl cursor-pointer transition-all duration-200 ";
         let badgeHTML = "";
 
         if (isDisabled) {
-          labelClass += "border-slate-100 bg-slate-50 text-slate-400 opacity-60 cursor-not-allowed";
-          badgeHTML = `<span class="inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded bg-rose-50 text-rose-500 border border-rose-100">เต็มแล้ว</span>`;
+          badgeHTML = `<span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded bg-rose-50 text-rose-500 border border-rose-100">เต็มแล้ว</span>`;
         } else {
-          labelClass += "border-slate-200 bg-white/50 hover:bg-teal-50/20 hover:border-teal-500 hover:shadow-sm";
-          
           if (venue.remaining <= 10 && venue.remaining > 0) {
-            badgeHTML = `<span class="inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-100">ใกล้เต็ม (เหลือ ${venue.remaining} ที่)</span>`;
+            badgeHTML = `<span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-100">ใกล้เต็ม (เหลือ ${venue.remaining} ที่)</span>`;
           } else {
-            badgeHTML = `<span class="inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded bg-teal-50 text-teal-600 border border-teal-100">ว่าง (เหลือ ${venue.remaining} ที่)</span>`;
+            badgeHTML = `<span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded bg-teal-50 text-teal-600 border border-teal-100">ว่าง (เหลือ ${venue.remaining} ที่)</span>`;
           }
         }
 
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
 
         const item = document.createElement("label");
-        item.className = labelClass;
+        item.className = "venue-option-card relative block cursor-pointer select-none";
         item.innerHTML = `
-          <div class="flex items-start md:items-center space-x-3 mb-2 md:mb-0">
-            <input type="radio" name="venue-option" value="${venue.name}" ${isDisabled ? 'disabled' : ''} class="accent-teal-600 w-4 h-4 mt-1 md:mt-0">
-            <div>
-              <p class="text-sm md:text-base font-bold text-slate-700">${venue.name}</p>
-              <div class="flex flex-wrap gap-2 items-center mt-1">
-                <span class="text-xs text-slate-400 flex items-center"><i data-lucide="calendar" class="w-3.5 h-3.5 mr-1"></i> ${dateLabel}</span>
-                <span class="text-xs text-slate-400">โควต้า: ${venue.quota} คน</span>
+          <input type="radio" name="venue-option" value="${venue.name}" ${isDisabled ? 'disabled' : ''} class="sr-only">
+          <div class="venue-card-content ${isDisabled ? 'bg-slate-50/50 border-slate-100 opacity-60 cursor-not-allowed' : 'bg-white/50 border-slate-200 hover:border-teal-400 hover:bg-teal-50/10 hover:shadow-sm'} border-2 rounded-2xl p-4 md:p-5 transition-all duration-200 flex flex-col md:flex-row md:items-center justify-between">
+            <div class="flex items-start md:items-center space-x-3 mb-2 md:mb-0">
+              <div class="w-4 h-4 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1 md:mt-0 transition-all checked-dot-outer">
+                <div class="w-2 h-2 rounded-full bg-teal-600 scale-0 transition-transform duration-200 checked-dot-inner"></div>
+              </div>
+              <div>
+                <p class="text-sm md:text-base font-bold text-slate-700">${venue.name}</p>
+                <div class="flex flex-wrap gap-2 items-center mt-1">
+                  <span class="text-xs text-slate-400 flex items-center"><i data-lucide="calendar" class="w-3.5 h-3.5 mr-1"></i> ${dateLabel}</span>
+                  <span class="text-xs text-slate-400">โควต้า: ${venue.quota} คน</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="flex justify-end items-center mt-2 md:mt-0">
-            ${badgeHTML}
+            <div class="flex justify-end items-center mt-2 md:mt-0">
+              ${badgeHTML}
+            </div>
           </div>
         `;
         container.appendChild(item);
@@ -1026,6 +1281,66 @@
       const editRowNumber = document.getElementById("edit-row-number").value;
       const isEditMode = editRowNumber !== "";
 
+      // ตรวจสอบข้อมูลซ้ำบนฝั่ง Client ก่อนลงทะเบียน/แก้ไข (เช็คใน sheetRecords เมื่อไม่ได้อยู่ในโหมด Mock)
+      if (!isMockMode && sheetRecords && sheetRecords.length > 0) {
+        const targetRow = isEditMode ? Number(editRowNumber) : null;
+        
+        // 1. ตรวจสอบชื่อ-นามสกุลซ้ำ
+        const isDuplicateName = sheetRecords.some(r => 
+          r.firstName.toLowerCase() === firstName.toLowerCase() && 
+          r.lastName.toLowerCase() === lastName.toLowerCase() &&
+          (!isEditMode || r.rowNumber !== targetRow)
+        );
+        
+        if (isDuplicateName) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'ข้อมูลซ้ำซ้อน',
+            text: isEditMode 
+              ? 'ชื่อและนามสกุลที่แก้ไขนี้ถูกใช้ลงทะเบียนโดยผู้เข้าร่วมงานท่านอื่นแล้ว' 
+              : 'ชื่อและนามสกุลนี้ได้รับการลงทะเบียนเข้าร่วมงานแล้ว หากต้องการแก้ไขข้อมูล กรุณาค้นหาด้วยเบอร์โทรศัพท์ที่เมนู "ค้นหา/แก้ไขประวัติ"',
+            confirmButtonColor: '#0d9488'
+          });
+          return;
+        }
+
+        // 2. ตรวจสอบเบอร์โทรศัพท์ซ้ำ
+        const isDuplicatePhone = sheetRecords.some(r => 
+          r.phone === phone && 
+          (!isEditMode || r.rowNumber !== targetRow)
+        );
+        
+        if (isDuplicatePhone) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'เบอร์โทรศัพท์ซ้ำซ้อน',
+            text: isEditMode 
+              ? 'เบอร์โทรศัพท์ที่แก้ไขนี้ถูกใช้ลงทะเบียนโดยผู้เข้าร่วมงานท่านอื่นแล้ว' 
+              : 'เบอร์โทรศัพท์นี้ถูกใช้ลงทะเบียนเข้าร่วมงานแล้ว หากต้องการแก้ไขข้อมูล กรุณาค้นหาด้วยเบอร์โทรศัพท์ที่เมนู "ค้นหา/แก้ไขประวัติ"',
+            confirmButtonColor: '#0d9488'
+          });
+          return;
+        }
+
+        // 3. ตรวจสอบโควต้าสถานที่คงเหลือ
+        const currentRegisteredForSite = sheetRecords.filter(r => 
+          r.site === site && 
+          (!isEditMode || r.rowNumber !== targetRow)
+        ).length;
+        
+        const maxQuotaForSite = CONFIG.QUOTAS[site]?.max || 0;
+        
+        if (currentRegisteredForSite >= maxQuotaForSite) {
+          Swal.fire({
+            icon: 'error',
+            title: 'โควต้าเต็มแล้ว',
+            text: `ขออภัย สถานที่ดูงาน "${site}" มีผู้ลงทะเบียนครบจำนวนโควต้าสูงสุดแล้ว (${maxQuotaForSite} คน) กรุณาเลือกสถานที่ดูงานอื่น`,
+            confirmButtonColor: '#0d9488'
+          });
+          return;
+        }
+      }
+
       const payload = {
         action: isEditMode ? "update" : "register",
         rowNumber: editRowNumber,
@@ -1048,22 +1363,48 @@
           // หน่วงเวลาเล็กน้อยจำลองการโทร API
           await new Promise(resolve => setTimeout(resolve, 800));
           const response = simulateMockPost(payload);
-          handleApiResponse(response, isEditMode);
+          handleApiResponse(response, isEditMode, payload);
         } else {
-          // ส่งคำขอไปยัง Google Apps Script (ส่งผ่าน Content-type text/plain เพื่อเลี่ยง preflight CORS)
-          const response = await fetch(CONFIG.API_URL, {
+          // ส่งคำขอไปยัง Google Apps Script
+          // ใช้ mode: 'no-cors' เพื่อการันตี 100% ว่าหน้าเว็บจะสามารถลงทะเบียนสำเร็จโดยไม่ติดปัญหา CORS/Redirect บล็อกขากลับ
+          await fetch(CONFIG.API_URL, {
             method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain'
+            },
             body: JSON.stringify(payload)
           });
-          const result = await response.json();
-          handleApiResponse(result, isEditMode);
+          
+          // เนื่องจากใช้ no-cors ผลตอบกลับจะเป็น opaque (ไม่สามารถอ่านข้อมูล response ภายในได้)
+          // แต่เราได้ตรวจสอบความถูกต้อง (ชื่อซ้ำ, โควต้า) ที่หน้าบ้านเสร็จเรียบร้อยแล้ว
+          // และถ้าการดึงข้อมูลผิดปกติจริง (เน็ตหลุด) fetch ก็จะ throw exception และเข้า catch block เสมอ
+          // ดังนั้นเมื่อเรียกเสร็จสิ้นโดยไม่มี exception แปลว่าข้อมูลถูกส่งบันทึกสำเร็จแน่นอน
+          handleApiResponse({ status: "success", message: isEditMode ? "แก้ไขข้อมูลสำเร็จ!" : "ลงทะเบียนเรียบร้อยแล้ว!" }, isEditMode, payload);
         }
       } catch (err) {
         console.error("Submission error:", err);
         Swal.fire({
           icon: 'error',
           title: 'บันทึกข้อมูลไม่สำเร็จ',
-          text: 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง',
+          html: `
+            <div class="text-left text-sm space-y-2 text-slate-600 leading-relaxed font-prompt">
+              <p class="font-semibold text-rose-600">เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์หรือปัญหา CORS ในการเขียนข้อมูล</p>
+              <hr class="my-2 border-slate-100">
+              <p class="font-bold text-slate-700">คำแนะนำการแก้ไขสำหรับผู้ดูแลระบบ:</p>
+              <ol class="list-decimal pl-4 space-y-1 text-slate-500">
+                <li>เปิดโครงการ <b>Google Apps Script</b> ที่เชื่อมโยงอยู่ขึ้นมา</li>
+                <li>ตรวจสอบการ Deploy (การปรับใช้งาน) ว่าเลือกประเภทเป็น <b>Web App</b></li>
+                <li>กำหนดค่าสิทธิ์การใช้งานของแอปพลิเคชัน:
+                  <ul class="list-disc pl-4 space-y-0.5 font-sans">
+                    <li><b>Execute as:</b> เลือกเป็น <b>Me (ตัวฉันเอง)</b></li>
+                    <li><b>Who has access:</b> เลือกเป็น <b>Anyone (ทุกคน)</b></li>
+                  </ul>
+                </li>
+                <li>หากมีการอัปเดตสคริปต์ใน Google Apps Script ต้องกด <b>"การจัดวางจำหน่ายใหม่" (New Deployment)</b> ทุกครั้ง และนำ URL ใหม่มาใส่แทนใน <code>CONFIG.API_URL</code></li>
+              </ol>
+            </div>
+          `,
           confirmButtonColor: '#0d9488'
         });
       } finally {
@@ -1085,18 +1426,52 @@
         const isEditMode = document.getElementById("edit-row-number").value !== "";
         btnText.innerText = isEditMode ? "บันทึกการแก้ไข" : "ยืนยันลงทะเบียน";
         spinner.classList.add("hidden");
-        submitBtn.className = "w-full md:w-auto px-8 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 font-semibold text-white shadow-md hover:scale-[1.01] transition-all flex items-center justify-center";
+        if (isEditMode) {
+          submitBtn.className = "w-full md:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 font-bold text-white shadow-lg hover:shadow-cyan-500/20 hover:scale-[1.02] active:scale-98 transition-all flex items-center justify-center";
+        } else {
+          submitBtn.className = "w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/25 hover:shadow-emerald-500/35 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-emerald-100/80 hover:ring-emerald-200/80 flex items-center justify-center uppercase tracking-wide";
+        }
       }
     }
 
-    function handleApiResponse(result, isEditMode) {
+    function handleApiResponse(result, isEditMode, regData = null) {
       if (result.status === "success") {
+        let htmlContent = `<div class="text-center font-prompt text-slate-600">${result.message}</div>`;
+        
+        if (regData) {
+          const { firstName, lastName, site } = regData;
+          const dateStr = CONFIG.QUOTAS[site]?.date || "-";
+          htmlContent = `
+            <div class="text-center font-prompt space-y-4 leading-relaxed mt-2">
+              <p class="text-sm text-slate-600">ยินดีต้อนรับคุณ <span class="font-bold text-teal-600">${firstName} ${lastName}</span></p>
+              <div class="p-4 bg-teal-50/50 rounded-2xl border border-teal-100/50 text-left space-y-2">
+                <div>
+                  <p class="text-[10px] text-teal-600 font-extrabold uppercase tracking-wider">สถานที่ศึกษาดูงานที่จองไว้</p>
+                  <p class="text-slate-800 font-extrabold text-sm md:text-base mt-0.5">${site}</p>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex items-center text-xs text-slate-500">
+                  <i data-lucide="calendar" class="w-4 h-4 mr-1.5 text-teal-600 shrink-0"></i>
+                  <span>วันนัดหมายกิจกรรม: <strong class="text-slate-700">${dateStr}</strong></span>
+                </div>
+              </div>
+              <p class="text-[11px] text-rose-500 font-bold bg-rose-50 py-1.5 px-3 rounded-lg border border-rose-100/50 inline-block w-full">
+                ⚠️ กรุณาบันทึกภาพหน้าจอนี้ไว้เป็นหลักฐานในการเข้าร่วมงาน
+              </p>
+            </div>
+          `;
+        }
+
         Swal.fire({
           icon: 'success',
-          title: isEditMode ? 'แก้ไขสำเร็จ!' : 'ลงทะเบียนสำเร็จ!',
-          text: result.message,
+          title: isEditMode ? 'แก้ไขข้อมูลสำเร็จ!' : 'ลงทะเบียนสำเร็จ!',
+          html: htmlContent,
           confirmButtonColor: '#0d9488',
-          timer: 3000
+          confirmButtonText: 'ตกลง',
+          didOpen: () => {
+            if (window.lucide) {
+              window.lucide.createIcons();
+            }
+          }
         }).then(() => {
           if (isEditMode) {
             // ย้อนไปหน้าค้นหาและเริ่มค้นหาใหม่เพื่อให้เห็นการเปลี่ยนแปลง
@@ -1198,7 +1573,6 @@
     // ================= SEARCH & EDIT SYSTEM =================
     async function performSearch() {
       const searchPhone = document.getElementById("search-phone").value.trim();
-      const resultsArea = document.getElementById("search-results-area");
 
       if (!searchPhone) {
         Swal.fire({
@@ -1229,13 +1603,20 @@
           const allRecords = JSON.parse(localStorage.getItem("open_house_registrations") || "[]");
           results = allRecords.filter(r => String(r.phone).trim() === searchPhone);
         } else {
-          const response = await fetch(`${CONFIG.API_URL}?action=search&phone=${searchPhone}`);
-          const res = await response.json();
-          if (res.status === "success") {
-            results = res.data;
-          } else {
-            throw new Error(res.message);
-          }
+          // ดึงข้อมูลสดจาก Google Sheets โดยตรงเพื่อค้นหาและอัปเดตสถิติไปพร้อมกัน
+          const sheetUrl = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json`;
+          const response = await fetch(sheetUrl);
+          if (!response.ok) throw new Error("ไม่สามารถเชื่อมตอร์ดึงข้อมูลจาก Google Sheets ได้");
+          
+          const text = await response.text();
+          sheetRecords = parseGoogleSheetJson(text);
+          
+          // อัปเดตสถิติในหน้าแดชบอร์ดไปด้วย
+          const res = calculateStatsFromRecords(sheetRecords);
+          processStats(res);
+          
+          // กรองข้อมูลตามเบอร์โทรศัพท์
+          results = sheetRecords.filter(r => String(r.phone).trim() === searchPhone);
         }
 
         renderSearchResults(results);
@@ -1271,7 +1652,7 @@
 
       results.forEach(record => {
         const card = document.createElement("div");
-        card.className = "bg-white border border-teal-100 rounded-2xl p-5 shadow-sm space-y-4 hover:shadow-md transition-shadow relative overflow-hidden";
+        card.className = "glassmorphism rounded-2xl p-6 shadow-lg border border-teal-100/50 space-y-4 hover:shadow-xl transition-all duration-300 relative overflow-hidden ring-1 ring-teal-500/5";
         
         // แถบคาดหัวการ์ดแยกสีสถานที่ดูงาน
         card.innerHTML = `

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- การไล่เฉดสีทองพรีเมียม -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    
+    <!-- การไล่เฉดสีเขียวมรกตสาธารณสุข -->
+    <linearGradient id="emerald-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="50%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    
+    <!-- การไล่เฉดสีฟ้าเขียวบำบัด -->
+    <linearGradient id="teal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#0D9488" />
+    </linearGradient>
+
+    <!-- เงาพรีเมียม -->
+    <filter id="premium-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#059669" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- วงกลมฉากหลังหรูหรา -->
+  <circle cx="250" cy="250" r="230" fill="#0F172A" />
+  <circle cx="250" cy="250" r="220" fill="none" stroke="url(#teal-grad)" stroke-width="1" opacity="0.3" />
+  <circle cx="250" cy="250" r="210" fill="none" stroke="url(#gold-grad)" stroke-width="2" stroke-dasharray="10 5" opacity="0.8" />
+
+  <!-- สัญลักษณ์หัวใจหลักและคลื่นแพทย์ -->
+  <g filter="url(#premium-shadow)">
+    <!-- รูปหัวใจเชิงการแพทย์ -->
+    <path d="M250 130 C200 40 70 80 70 200 C70 310 250 420 250 420 C250 420 430 310 430 200 C430 80 300 40 250 130 Z" 
+          fill="url(#emerald-grad)" 
+          stroke="url(#gold-grad)" 
+          stroke-width="4" 
+          stroke-linejoin="round" />
+          
+    <!-- กากบาทปฐมพยาบาลสีทองเรืองรอง -->
+    <path d="M225 180 H275 M250 155 V205" stroke="url(#gold-grad)" stroke-width="12" stroke-linecap="round" />
+    <path d="M225 180 H275 M250 155 V205" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" />
+
+    <!-- เส้นชีพจรคลื่นหัวใจ EKG สีขาวพรีเมียม -->
+    <path d="M90 270 H170 L195 210 L220 330 L250 240 L270 290 L290 270 H410" 
+          stroke="#FFFFFF" 
+          stroke-width="8" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+  </g>
+
+  <!-- รัศมีเปล่งประกายตกแต่ง -->
+  <circle cx="195" cy="210" r="6" fill="#FCD34D" />
+  <circle cx="220" cy="330" r="6" fill="#FCD34D" />
+  <circle cx="250" cy="240" r="6" fill="#FCD34D" />
+  
+  <path d="M110 110 L130 130 M390 110 L370 130" stroke="url(#gold-grad)" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+  <path d="M80 200 H100 M400 200 H420" stroke="url(#gold-grad)" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+</svg>
