@@ -1665,17 +1665,17 @@
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
         const percent = Math.round((venue.registered / venue.quota) * 100);
 
-        // กำหนดสีของแถบความคืบหน้าโควต้าภายในฟอร์มสมัคร (เขียว -> เหลือง -> แดง) ตามจำนวนที่นั่งคงเหลือจริง
+        // กำหนดสีของแถบความคืบหน้าโควต้าภายในฟอร์มสมัคร (เขียว -> เหลือง -> แดง) โดยอ้างอิงสัดส่วนจากโควต้าของสถานที่นั้น
         let progressBg = "bg-gradient-to-r from-emerald-400 to-emerald-600"; 
         let textClass = "text-emerald-600 bg-emerald-50 border-emerald-200 font-bold";
         
         if (venue.remaining === 0) {
           progressBg = "bg-rose-500";
           textClass = "text-rose-700 bg-rose-100 border-rose-300 font-extrabold";
-        } else if (venue.remaining <= 15) {
+        } else if (percent >= 80) {
           progressBg = "bg-gradient-to-r from-red-500 to-rose-600 animate-pulse";
           textClass = "text-rose-600 bg-rose-50 border-rose-200 font-bold";
-        } else if (venue.remaining <= 40) {
+        } else if (percent >= 50) {
           progressBg = "bg-gradient-to-r from-amber-400 to-amber-500";
           textClass = "text-amber-600 bg-amber-50 border-amber-200 font-bold";
         }
