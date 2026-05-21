@@ -28,7 +28,8 @@ function getSheet() {
       "ตำบล", 
       "ชื่อโรงเรียน", 
       "เบอร์โทรศัพท์", 
-      "สถานที่ดูงาน"
+      "สถานที่ดูงาน",
+      "คำนำหน้าชื่อ"
     ]);
   }
   return sheet;
@@ -67,6 +68,8 @@ function doPost(e) {
       result = handleRegister(postData);
     } else if (action === "update") {
       result = handleUpdate(postData);
+    } else if (action === "delete") {
+      result = handleDelete(postData);
     } else {
       result = { status: "error", message: "ไม่พบ Action ที่ระบุสำหรับ POST" };
     }
@@ -161,7 +164,8 @@ function handleSearch(phone) {
         subDistrict: data[i][7],
         schoolName: data[i][8],
         phone: normalizePhone(data[i][9]), // ตรวจสอบให้แน่ใจว่าเบอร์ที่ส่งกลับมีเลข 0 นำหน้าด้วย
-        site: data[i][10]
+        site: data[i][10],
+        title: data[i][11] || ""
       });
     }
   }
@@ -238,7 +242,8 @@ function handleRegister(data) {
       data.subDistrict || "",
       data.schoolName || "",
       "'" + phone,
-      site
+      site,
+      data.title || ""
     ]);
     
     return { status: "success", message: "ลงทะเบียนเรียบร้อยแล้ว!" };
@@ -313,7 +318,7 @@ function handleUpdate(data) {
     }
     
     // อัปเดตข้อมูลในแถวเดิม (ใช้ "'" เพื่อบังคับให้เซลล์เป็นแบบข้อความ ไม่ตัดเลข 0)
-    var range = sheet.getRange(rowNumber, 2, 1, 10);
+    var range = sheet.getRange(rowNumber, 2, 1, 11);
     range.setValues([[
       firstName,
       lastName,
@@ -324,12 +329,42 @@ function handleUpdate(data) {
       data.subDistrict || "",
       data.schoolName || "",
       "'" + phone,
-      site
+      site,
+      data.title || ""
     ]]);
     
     return { status: "success", message: "แก้ไขข้อมูลการลงทะเบียนสำเร็จ!" };
   } catch (err) {
     return { status: "error", message: "ไม่สามารถแก้ไขข้อมูลได้: " + err.toString() };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ลบข้อมูลผู้ลงทะเบียนตามหมายเลขแถว
+function handleDelete(data) {
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(15000);
+  } catch (e) {
+    return { status: "error", message: "ระบบมีการใช้งานหนาแน่น กรุณารอสักครู่แล้วลองส่งใหม่อีกครั้ง" };
+  }
+  
+  try {
+    var sheet = getSheet();
+    var rowNumber = parseInt(data.rowNumber);
+    var values = sheet.getDataRange().getValues();
+    
+    if (!rowNumber || rowNumber <= 1 || rowNumber > values.length) {
+      return { status: "error", message: "ไม่พบข้อมูลที่ต้องการลบในฐานข้อมูล" };
+    }
+    
+    // ลบแถวข้อมูลตาม rowNumber
+    sheet.deleteRow(rowNumber);
+    
+    return { status: "success", message: "ลบข้อมูลการลงทะเบียนสำเร็จ!" };
+  } catch (err) {
+    return { status: "error", message: "ไม่สามารถลบข้อมูลได้: " + err.toString() };
   } finally {
     lock.releaseLock();
   }
