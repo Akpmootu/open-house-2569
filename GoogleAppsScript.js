@@ -125,6 +125,15 @@ function handleGetStats() {
   });
 }
 
+// ฟังก์ชันช่วยจัดรูปแบบเบอร์โทรศัพท์ (ใส่เลข 0 นำหน้ากรณีข้อมูลถูกตัดใน Google Sheet)
+function normalizePhone(phone) {
+  var clean = String(phone || "").replace(/\D/g, "").trim();
+  if (clean.length === 9 && !clean.startsWith("0")) {
+    return "0" + clean;
+  }
+  return clean;
+}
+
 // ค้นหาข้อมูลผู้ลงทะเบียนด้วยเบอร์โทรศัพท์
 function handleSearch(phone) {
   if (!phone) {
@@ -134,11 +143,11 @@ function handleSearch(phone) {
   var sheet = getSheet();
   var data = sheet.getDataRange().getValues();
   var results = [];
-  var searchPhone = String(phone).trim();
+  var searchPhone = normalizePhone(phone);
   
   // ค้นหาแถวที่ตรงกับเบอร์โทรศัพท์ (ข้ามแถว Header)
   for (var i = 1; i < data.length; i++) {
-    var rowPhone = String(data[i][9]).trim();
+    var rowPhone = normalizePhone(data[i][9]);
     if (rowPhone === searchPhone) {
       results.push({
         rowNumber: i + 1, // หมายเลขแถวในชีต (1-indexed)
@@ -151,7 +160,7 @@ function handleSearch(phone) {
         district: data[i][6],
         subDistrict: data[i][7],
         schoolName: data[i][8],
-        phone: data[i][9],
+        phone: normalizePhone(data[i][9]), // ตรวจสอบให้แน่ใจว่าเบอร์ที่ส่งกลับมีเลข 0 นำหน้าด้วย
         site: data[i][10]
       });
     }
@@ -180,7 +189,7 @@ function handleRegister(data) {
     
     var firstName = String(data.firstName || "").trim();
     var lastName = String(data.lastName || "").trim();
-    var phone = String(data.phone || "").trim();
+    var phone = normalizePhone(data.phone);
     var site = String(data.site || "").trim();
     
     if (!firstName || !lastName || !phone || !site) {
@@ -191,7 +200,7 @@ function handleRegister(data) {
     for (var i = 1; i < values.length; i++) {
       var rFirstName = String(values[i][1]).trim();
       var rLastName = String(values[i][2]).trim();
-      var rPhone = String(values[i][9]).trim();
+      var rPhone = normalizePhone(values[i][9]);
       if (rFirstName.toLowerCase() === firstName.toLowerCase() && rLastName.toLowerCase() === lastName.toLowerCase()) {
         return { status: "error", message: "ชื่อและนามสกุลนี้มีผู้ลงทะเบียนแล้วในระบบ" };
       }
@@ -217,7 +226,7 @@ function handleRegister(data) {
       return { status: "error", message: "ขออภัย สถานที่นี้ลงทะเบียนเต็มโควต้า (" + quota + " คน) แล้ว" };
     }
     
-    // เพิ่มข้อมูลลงในแถวใหม่
+    // เพิ่มข้อมูลลงในแถวใหม่ (ใช้ "'" เพื่อบังคับให้เซลล์เป็นแบบข้อความ ไม่ตัดเลข 0)
     sheet.appendRow([
       new Date(),
       firstName,
@@ -228,7 +237,7 @@ function handleRegister(data) {
       data.district || "",
       data.subDistrict || "",
       data.schoolName || "",
-      phone,
+      "'" + phone,
       site
     ]);
     
@@ -261,7 +270,7 @@ function handleUpdate(data) {
     
     var firstName = String(data.firstName || "").trim();
     var lastName = String(data.lastName || "").trim();
-    var phone = String(data.phone || "").trim();
+    var phone = normalizePhone(data.phone);
     var site = String(data.site || "").trim();
     
     if (!firstName || !lastName || !phone || !site) {
@@ -274,7 +283,7 @@ function handleUpdate(data) {
       
       var rFirstName = String(values[i][1]).trim();
       var rLastName = String(values[i][2]).trim();
-      var rPhone = String(values[i][9]).trim();
+      var rPhone = normalizePhone(values[i][9]);
       if (rFirstName.toLowerCase() === firstName.toLowerCase() && rLastName.toLowerCase() === lastName.toLowerCase()) {
         return { status: "error", message: "ชื่อและนามสกุลนี้ถูกลงทะเบียนโดยผู้ใช้อื่นแล้วในระบบ" };
       }
@@ -303,7 +312,7 @@ function handleUpdate(data) {
       }
     }
     
-    // อัปเดตข้อมูลในแถวเดิม (อ้างอิงช่วงเซลล์ดัชนี rowNumber ตั้งแต่คอลัมน์ที่ 2 ถึง 11)
+    // อัปเดตข้อมูลในแถวเดิม (ใช้ "'" เพื่อบังคับให้เซลล์เป็นแบบข้อความ ไม่ตัดเลข 0)
     var range = sheet.getRange(rowNumber, 2, 1, 10);
     range.setValues([[
       firstName,
@@ -314,7 +323,7 @@ function handleUpdate(data) {
       data.district || "",
       data.subDistrict || "",
       data.schoolName || "",
-      phone,
+      "'" + phone,
       site
     ]]);
     
