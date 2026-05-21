@@ -120,6 +120,15 @@
     .venue-option-card input[type="radio"]:checked + .venue-card-content .checked-dot-inner {
       transform: scale(1) !important;
     }
+    
+    /* บังคับสีปุ่มยืนยันลงทะเบียน/บันทึกการแก้ไขให้อ่านง่ายและเด่นชัดแน่นอน */
+    #submit-btn {
+      color: #ffffff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    #submit-btn span, #submit-btn i, #submit-btn svg {
+      color: #ffffff !important;
+    }
   </style>
 </head>
 <body class="min-h-screen text-slate-800 pb-16 md:pb-8">
@@ -633,8 +642,11 @@
             <button type="button" onclick="cancelRegistration()" class="w-full md:w-auto px-6 py-3 rounded-xl border border-slate-200 font-bold text-slate-500 hover:bg-slate-100/80 active:bg-slate-200/80 transition-all text-center hover:text-slate-700 shadow-sm">
               ยกเลิก
             </button>
-            <button type="submit" id="submit-btn" class="w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/30 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-teal-200/60 flex items-center justify-center uppercase tracking-wide">
-              <span id="btn-text">ยืนยันลงทะเบียน</span>
+            <button type="submit" id="submit-btn" class="w-full md:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-black text-white shadow-xl shadow-teal-500/40 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-teal-200/60 flex items-center justify-center space-x-2 uppercase tracking-wide cursor-pointer">
+              <span id="btn-icon-container" class="flex items-center justify-center">
+                <i data-lucide="check-circle" class="w-5 h-5 text-white"></i>
+              </span>
+              <span id="btn-text" class="text-white font-extrabold drop-shadow">ยืนยันลงทะเบียน</span>
               <div id="btn-spinner" class="hidden ml-2 animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
             </button>
           </div>
@@ -680,7 +692,7 @@
   <!-- ================= FOOTER CREDIT & VERSION ================= -->
   <footer class="max-w-6xl mx-auto px-4 py-8 text-center text-xs text-slate-400 border-t border-teal-100/50 mt-12 space-y-1">
     <p class="font-medium text-slate-500 text-sm">จัดทำโดย ศูนย์นวัตกรรม กลุ่มงานสุขภาพดิจิทัล สำนักงานสาธารณสุขจังหวัดสตูล 2026</p>
-    <p>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.4.0</p>
+    <p>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.4.1</p>
   </footer>
 
   <!-- ================= MODAL SHOWING REGISTRANTS FOR SELECTED VENUE ================= -->
@@ -2205,22 +2217,31 @@
     function setFormLoadingState(isLoading) {
       const submitBtn = document.getElementById("submit-btn");
       const btnText = document.getElementById("btn-text");
+      const btnIconContainer = document.getElementById("btn-icon-container");
       const spinner = document.getElementById("btn-spinner");
       
       submitBtn.disabled = isLoading;
       if (isLoading) {
         btnText.innerText = "กำลังประมวลผล...";
         spinner.classList.remove("hidden");
-        submitBtn.className = "w-full md:w-auto px-8 py-2.5 rounded-xl bg-slate-400 font-semibold text-white cursor-not-allowed flex items-center justify-center";
+        if (btnIconContainer) btnIconContainer.classList.add("hidden");
+        submitBtn.className = "w-full md:w-auto px-8 py-3 rounded-xl bg-slate-400 font-semibold text-white cursor-not-allowed flex items-center justify-center space-x-2";
       } else {
         const isEditMode = document.getElementById("edit-row-number").value !== "";
         btnText.innerText = isEditMode ? "บันทึกการแก้ไข" : "ยืนยันลงทะเบียน";
         spinner.classList.add("hidden");
-        if (isEditMode) {
-          submitBtn.className = "w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 hover:from-cyan-600 hover:via-blue-600 hover:to-teal-600 font-extrabold text-white shadow-xl shadow-cyan-500/30 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-cyan-200/60 flex items-center justify-center uppercase tracking-wide";
-        } else {
-          submitBtn.className = "w-full md:w-auto px-10 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/30 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-teal-200/60 flex items-center justify-center uppercase tracking-wide";
+        if (btnIconContainer) {
+          btnIconContainer.classList.remove("hidden");
+          btnIconContainer.innerHTML = isEditMode 
+            ? '<i data-lucide="save" class="w-5 h-5 text-white"></i>'
+            : '<i data-lucide="check-circle" class="w-5 h-5 text-white"></i>';
         }
+        if (isEditMode) {
+          submitBtn.className = "w-full md:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 hover:from-cyan-600 hover:via-blue-600 hover:to-teal-600 font-extrabold text-white shadow-xl shadow-cyan-500/40 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-cyan-200/60 flex items-center justify-center space-x-2 uppercase tracking-wide cursor-pointer";
+        } else {
+          submitBtn.className = "w-full md:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/40 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-teal-200/60 flex items-center justify-center space-x-2 uppercase tracking-wide cursor-pointer";
+        }
+        initLucide();
       }
     }
 
@@ -2526,6 +2547,15 @@
       // เปลี่ยนหัวชื่อฟอร์มและปุ่มยืนยัน
       document.getElementById("form-title").innerHTML = `<i data-lucide="edit-3" class="w-6 h-6 mr-2 text-teal-600"></i> แก้ไขข้อมูลการลงทะเบียน`;
       document.getElementById("btn-text").innerText = "บันทึกการแก้ไข";
+      const iconContainer = document.getElementById("btn-icon-container");
+      if (iconContainer) {
+        iconContainer.innerHTML = `<i data-lucide="save" class="w-5 h-5 text-white"></i>`;
+      }
+      const submitBtn = document.getElementById("submit-btn");
+      if (submitBtn) {
+        submitBtn.className = "w-full md:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500 hover:from-cyan-600 hover:via-blue-600 hover:to-teal-600 font-extrabold text-white shadow-xl shadow-cyan-500/40 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-cyan-200/60 flex items-center justify-center space-x-2 uppercase tracking-wide cursor-pointer";
+      }
+      initLucide();
 
       // ดึงสถิติใหม่เพื่อเรนเดอร์ Radio Options ของสถานที่ดูงาน (พร้อมตรวจสอบโควต้า)
       renderVenueFormOptions(currentStats.venues);
@@ -2549,6 +2579,14 @@
       document.getElementById("edit-row-number").value = "";
       document.getElementById("form-title").innerHTML = `<i data-lucide="clipboard-list" class="w-6 h-6 mr-2 text-teal-600"></i> ลงทะเบียนเข้าร่วมโครงการ`;
       document.getElementById("btn-text").innerText = "ยืนยันลงทะเบียน";
+      const iconContainer = document.getElementById("btn-icon-container");
+      if (iconContainer) {
+        iconContainer.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5 text-white"></i>`;
+      }
+      const submitBtn = document.getElementById("submit-btn");
+      if (submitBtn) {
+        submitBtn.className = "w-full md:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 font-extrabold text-white shadow-xl shadow-teal-500/40 hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-teal-200/60 flex items-center justify-center space-x-2 uppercase tracking-wide cursor-pointer";
+      }
       document.getElementById("reg-form").reset();
       
       // เคลียร์ dropdown
