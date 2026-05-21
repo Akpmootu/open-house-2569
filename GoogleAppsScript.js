@@ -187,12 +187,16 @@ function handleRegister(data) {
       return { status: "error", message: "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน" };
     }
     
-    // ตรวจสอบชื่อ - นามสกุลซ้ำในระบบ
+    // ตรวจสอบชื่อ - นามสกุล หรือเบอร์โทรศัพท์ซ้ำในระบบ
     for (var i = 1; i < values.length; i++) {
       var rFirstName = String(values[i][1]).trim();
       var rLastName = String(values[i][2]).trim();
+      var rPhone = String(values[i][9]).trim();
       if (rFirstName.toLowerCase() === firstName.toLowerCase() && rLastName.toLowerCase() === lastName.toLowerCase()) {
-        return { status: "error", message: "คุณเคยลงทะเบียนในชื่อและนามสกุลนี้แล้วในระบบ" };
+        return { status: "error", message: "ชื่อและนามสกุลนี้มีผู้ลงทะเบียนแล้วในระบบ" };
+      }
+      if (rPhone === phone) {
+        return { status: "error", message: "เบอร์โทรศัพท์นี้ถูกใช้ลงทะเบียนไปแล้วในระบบ" };
       }
     }
     
@@ -264,14 +268,18 @@ function handleUpdate(data) {
       return { status: "error", message: "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน" };
     }
     
-    // ตรวจสอบชื่อ - นามสกุลซ้ำกับคนอื่นๆ ในระบบ (ยกเว้นแถวของตัวเอง)
+    // ตรวจสอบชื่อ - นามสกุล หรือเบอร์โทรศัพท์ซ้ำกับคนอื่นๆ ในระบบ (ยกเว้นแถวของตัวเอง)
     for (var i = 1; i < values.length; i++) {
       if (i + 1 === rowNumber) continue;
       
       var rFirstName = String(values[i][1]).trim();
       var rLastName = String(values[i][2]).trim();
+      var rPhone = String(values[i][9]).trim();
       if (rFirstName.toLowerCase() === firstName.toLowerCase() && rLastName.toLowerCase() === lastName.toLowerCase()) {
         return { status: "error", message: "ชื่อและนามสกุลนี้ถูกลงทะเบียนโดยผู้ใช้อื่นแล้วในระบบ" };
+      }
+      if (rPhone === phone) {
+        return { status: "error", message: "เบอร์โทรศัพท์นี้ถูกใช้ลงทะเบียนโดยผู้ใช้อื่นแล้วในระบบ" };
       }
     }
     
