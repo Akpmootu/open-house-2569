@@ -38,8 +38,7 @@ function getSheet() {
 // ฟังก์ชันช่วยส่งออกข้อมูลในรูปแบบ JSON พร้อมเปิดการเข้าถึงจากโดเมนอื่น (CORS)
 function createJsonResponse(data) {
   return ContentService.createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader("Access-Control-Allow-Origin", "*");
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // จัดการคำขอแบบ GET (ดึงสถิติ และการค้นหาผู้ลงทะเบียน)
@@ -323,11 +322,12 @@ function handleUpdate(data) {
       */
     }
     
-    // อัปเดตข้อมูลในแถวเดิม (ใช้ "'" เพื่อบังคับให้เซลล์เป็นแบบข้อความ ไม่ตัดเลข 0)
-    var range = sheet.getRange(rowNumber, 2, 1, 11);
+    // อัปเดตข้อมูลในแถวเดิม และอัปเดตเวลาการบันทึกข้อมูลล่าสุด (ใช้ "'" เพื่อบังคับให้เซลล์เป็นแบบข้อความ ไม่ตัดเลข 0)
+    var range = sheet.getRange(rowNumber, 1, 1, 12);
     range.setValues([[
-      firstName,
-      lastName,
+      new Date(), // คอลัมน์ที่ 1: อัปเดตเวลาบันทึก/แก้ไขข้อมูลล่าสุด
+      firstName,  // คอลัมน์ที่ 2
+      lastName,   // คอลัมน์ที่ 3
       data.grade || "",
       data.schoolType || "",
       data.province || "",

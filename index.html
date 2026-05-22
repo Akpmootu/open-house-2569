@@ -294,7 +294,7 @@
     <section id="dashboard-tab" class="tab-content space-y-8">
       
       <!-- สถิติภาพรวม (Stat Overview Cards) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-teal-500/5 hover:ring-2 hover:ring-teal-500/20">
           <div class="p-4 bg-gradient-to-br from-teal-50 to-teal-100 text-teal-600 rounded-xl shadow-inner">
             <i data-lucide="users" class="w-8 h-8"></i>
@@ -325,6 +325,16 @@
             <div class="w-full bg-slate-200/80 rounded-full h-2 mt-2 overflow-hidden shadow-inner">
               <div id="stat-progress-bar" class="bg-amber-500 h-2 transition-all duration-500" style="width: 0%"></div>
             </div>
+          </div>
+        </div>
+        <div class="glassmorphism rounded-2xl p-6 flex items-center space-x-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ring-1 ring-teal-500/5 hover:ring-2 hover:ring-rose-500/20 bg-rose-50/10">
+          <div class="p-4 bg-gradient-to-br from-rose-50 to-rose-100 text-rose-600 rounded-xl shadow-inner animate-pulse">
+            <i data-lucide="clock" class="w-8 h-8"></i>
+          </div>
+          <div>
+            <p class="text-sm text-slate-500 font-medium tracking-wide">คิวสำรองสะสมทั้งหมด</p>
+            <h3 id="stat-total-waitlist" class="text-3xl font-bold text-rose-700 mt-1">0</h3>
+            <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">จำนวนน้องๆ ที่ลงทะเบียนสำรองไว้</p>
           </div>
         </div>
       </div>
@@ -791,7 +801,7 @@
   <footer class="max-w-6xl mx-auto px-4 py-8 text-center text-xs text-slate-400 border-t border-teal-100/50 mt-12 space-y-2">
     <p class="font-medium text-slate-500 text-sm">จัดทำโดย ศูนย์นวัตกรรม กลุ่มงานสุขภาพดิจิทัล สำนักงานสาธารณสุขจังหวัดสตูล 2026</p>
     <div class="flex justify-center items-center gap-4 flex-wrap text-slate-400 mt-1">
-      <span>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.9.1</span>
+      <span>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.9.3</span>
       <span class="text-slate-300">|</span>
       <a href="https://www.facebook.com/Mootu00" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-teal-600 hover:text-teal-700 transition-colors font-medium">
         <i data-lucide="facebook" class="w-4 h-4 mr-1.5 text-blue-600"></i>
@@ -1218,9 +1228,10 @@
         } else {
           Swal.fire({
             icon: 'warning',
-            title: 'โควต้าเต็มแล้ว',
-            text: `สถานที่ ${decodedVenue} มีผู้จองเต็มโควต้าแล้ว ไม่สามารถลงทะเบียนเพิ่มได้`,
-            confirmButtonColor: '#0d9488'
+            title: 'เต็มแล้วจ้าน้องๆ 🚨',
+            text: `สถานที่ "${decodedVenue}" เต็มโควต้าแล้วนะ แต่น้องๆ ยังกดจองคิวสำรองไว้ก่อนได้จ้า! 🏥💖`,
+            confirmButtonColor: '#0d9488',
+            confirmButtonText: 'รับทราบครับพี่ๆ 👍'
           });
         }
       }
@@ -1643,21 +1654,21 @@
         
         Swal.fire({
           icon: 'error',
-          title: 'เชื่อมต่อฐานข้อมูลล้มเหลว',
+          title: 'พี่ๆ เชื่อมต่อฐานข้อมูลไม่สำเร็จน้า 🥺🚨',
           html: `
             <div class="text-left text-sm space-y-2 text-slate-600 leading-relaxed font-prompt">
-              <p class="font-semibold text-rose-600">ไม่สามารถเชื่อมดึงข้อมูลสดผ่าน Google Sheet ID ได้</p>
+              <p class="font-semibold text-rose-600">ดึงข้อมูลจาก Google Sheet ไม่ได้จ้า</p>
               <hr class="my-2 border-slate-100">
-              <p class="font-bold text-slate-700">คำแนะนำการแก้ไข:</p>
+              <p class="font-bold text-slate-700">น้องๆ หรือคุณครู ลองช่วยเช็กตามนี้ทีน้า:</p>
               <ul class="list-decimal pl-4 space-y-1 text-xs">
-                <li>กรุณาตรวจสอบว่า Google Sheet ลิงก์นี้สามารถเข้าถึงโดยสาธารณะได้หรือไม่ (เปิดแชร์แบบ <b>"ทุกคนที่มีลิงก์มีสิทธิ์อ่าน"</b> หรือ <b>"Anyone with the link can view"</b>)</li>
-                <li>ตรวจสอบความถูกต้องของ <code class="bg-slate-100 px-1 py-0.5 rounded text-rose-600">CONFIG.SHEET_ID</code> ในสคริปต์หน้าเว็บ</li>
-                <li>ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของเครื่องคอมพิวเตอร์ของคุณ</li>
+                <li>ตรวจสอบว่าตั้งค่า Google Sheet เป็นแบบ <b>"ทุกคนที่มีลิงก์มีสิทธิ์อ่าน (Anyone with the link can view)"</b> หรือยังน้า</li>
+                <li>ตรวจสอบความถูกต้องของ <code class="bg-slate-100 px-1 py-0.5 rounded text-rose-600">CONFIG.SHEET_ID</code> ในระบบจ้า</li>
+                <li>เช็กสัญญาณอินเทอร์เน็ตของเครื่องน้องๆ ดูอีกทีนะจ้า</li>
               </ul>
-              <p class="text-xs text-amber-600 mt-2">💡 ระหว่างนี้ระบบจะแสดงข้อมูลแบบจำลองชั่วคราวเพื่อให้ระบบยังแสดงความสวยงามได้</p>
+              <p class="text-xs text-amber-600 mt-2">💡 ตอนนี้ระบบแสดงข้อมูลจำลองชั่วคราวเพื่อให้น้องๆ เห็นหน้าตาระบบไปก่อนจ้า</p>
             </div>
           `,
-          confirmButtonText: 'ตกลง',
+          confirmButtonText: 'รับทราบครับพี่ๆ 🧡',
           confirmButtonColor: '#0d9488'
         });
         
@@ -1683,6 +1694,7 @@
         document.getElementById("stat-total-registered").innerText = totalRegistered.toLocaleString();
         document.getElementById("stat-total-available").innerText = totalAvailable.toLocaleString();
         document.getElementById("stat-fill-percentage").innerText = `${fillPercent}%`;
+        document.getElementById("stat-total-waitlist").innerText = (data.totalWaitlist || 0).toLocaleString();
         
         const statProgressBar = document.getElementById("stat-progress-bar");
         statProgressBar.style.width = `${fillPercent}%`;
@@ -1741,7 +1753,7 @@
             tr.className = "hover:bg-rose-50/20 transition-colors";
             tr.innerHTML = `
               <td class="px-4 py-3 whitespace-nowrap"><span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200/40">สำรองที่ ${r.waitlistQueue}</span></td>
-              <td class="px-4 py-3 whitespace-nowrap font-semibold text-slate-700">คุณ ${r.title || ""}${r.firstName} ${r.lastName}</td>
+              <td class="px-4 py-3 whitespace-nowrap font-semibold text-slate-700">${r.title ? r.title + ' ' : ''}${r.firstName} ${r.lastName}</td>
               <td class="px-4 py-3 whitespace-nowrap text-slate-500 text-xs">${r.schoolName}</td>
               <td class="px-4 py-3 whitespace-nowrap font-medium text-slate-700 text-xs">${r.site}</td>
               <td class="px-4 py-3 whitespace-nowrap text-xs text-slate-400">${formatThaiDateTime(r.timestamp)}</td>
@@ -1783,6 +1795,13 @@
 
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
 
+        const waitlistHtml = venue.waitlistCount > 0 
+          ? `<div class="mt-2.5 flex items-center justify-between text-xs bg-rose-50 border border-rose-100 text-rose-700 px-2.5 py-1.5 rounded-xl shadow-sm animate-pulse">
+               <span class="flex items-center font-bold text-[10px]"><i data-lucide="clock" class="w-3.5 h-3.5 mr-1 text-rose-500 shrink-0"></i> คิวสำรองสะสม:</span>
+               <span class="font-black text-xs text-rose-600">+${venue.waitlistCount} คน</span>
+             </div>`
+          : '';
+
         const cardClass = isFull 
           ? "glassmorphism-full rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 relative flex flex-col justify-between overflow-hidden group ring-1 ring-rose-500/10 hover:ring-2 hover:ring-rose-450/40 cursor-pointer"
           : "glassmorphism rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 relative flex flex-col justify-between overflow-hidden group ring-1 ring-teal-500/5 hover:ring-2 hover:ring-teal-400/40 cursor-pointer";
@@ -1822,6 +1841,8 @@
               <span>${percent}%</span>
             </div>
 
+            ${waitlistHtml}
+
             <!-- Visual cue indicating clickable card -->
             <div class="border-t border-slate-100/70 pt-2.5 mt-2 flex justify-between items-center text-[10px] text-slate-400 ${isFull ? 'group-hover:text-rose-600' : 'group-hover:text-teal-600'} transition-colors">
               <span class="flex items-center"><i data-lucide="users" class="w-3.5 h-3.5 mr-1 ${isFull ? 'text-rose-500' : 'text-teal-500'}"></i> คลิกเพื่อดูรายชื่อผู้จอง</span>
@@ -1849,6 +1870,15 @@
 
         if (isFull) {
           badgeHTML = `<span class="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded bg-rose-100 text-rose-700 border border-rose-300 shadow-sm"><i data-lucide="lock" class="w-3.5 h-3.5 mr-1 text-rose-600"></i> คิวสำรอง (เต็ม)</span>`;
+        }
+
+        let waitlistTip = "";
+        if (isFull) {
+          waitlistTip = `
+            <div class="mt-2.5 flex items-center justify-between text-xs bg-rose-50 border border-rose-100 text-rose-750 p-2.5 rounded-xl">
+              <span class="flex items-center font-bold text-[11px]"><span class="mr-1.5">📢</span> ระบบจองเต็มสะแล้ว น้องๆ ลงทะเบียนสำรองไว้ก่อนนะ (จะได้คิวสำรองอันดับที่ ${venue.waitlistCount + 1} จ้า) 💖</span>
+            </div>
+          `;
         }
 
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
@@ -1903,6 +1933,7 @@
                   ${percent >= 12 ? percent + '%' : ''}
                 </div>
               </div>
+              ${waitlistTip}
             </div>
           </div>
         `;
@@ -2111,7 +2142,7 @@
                </span>`;
           tr.innerHTML = `
             <td class="px-4 py-3 border-b border-slate-100 text-center font-medium text-slate-400">${idx + 1}</td>
-            <td class="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">${r.firstName}</td>
+            <td class="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">${r.title ? r.title + ' ' : ''}${r.firstName}</td>
             <td class="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">${r.lastName}</td>
             <td class="px-4 py-3 border-b border-slate-100 text-slate-600">${r.grade}</td>
             <td class="px-4 py-3 border-b border-slate-100 text-slate-700 font-medium">${r.schoolName}</td>
@@ -2253,9 +2284,10 @@
       if (!selectedOption) {
         Swal.fire({
           icon: 'warning',
-          title: 'ข้อมูลไม่ครบถ้วน',
-          text: 'กรุณาเลือกสถานที่เข้าเยี่ยมชมดูงาน',
-          confirmButtonColor: '#0d9488'
+          title: 'เลือกสถานที่ด้วยนะน้องๆ! 🏥✨',
+          text: 'อย่าลืมคลิกเลือกโรงพยาบาลหรือสถานที่ที่น้องต้องการศึกษาดูงานน้า 🥺',
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'ตกลงจ้า 👌'
         });
         return;
       }
@@ -2265,9 +2297,10 @@
       if (!/^0\d{9}$/.test(phone)) {
         Swal.fire({
           icon: 'warning',
-          title: 'เบอร์โทรศัพท์ไม่ถูกต้อง',
-          text: 'กรุณากรอกเบอร์โทรศัพท์ 10 หลักขึ้นต้นด้วย 0',
-          confirmButtonColor: '#0d9488'
+          title: 'เบอร์โทรศัพท์ไม่ถูกต้องน้า 📞🥺',
+          text: 'น้องๆ ช่วยกรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก และขึ้นต้นด้วยเลข 0 ให้ถูกต้องด้วยจ้า 💖',
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'รับทราบครับ/ค่ะ 👍'
         });
         return;
       }
@@ -2276,9 +2309,10 @@
       if (/[^\u0e00-\u0e7fa-zA-Z\s.-]/.test(firstName) || /[^\u0e00-\u0e7fa-zA-Z\s.-]/.test(lastName)) {
         Swal.fire({
           icon: 'warning',
-          title: 'ข้อมูลไม่ถูกต้อง',
-          text: 'ชื่อและนามสกุลไม่ควรมีตัวอักษรพิเศษหรือตัวเลข',
-          confirmButtonColor: '#0d9488'
+          title: 'ชื่อ-นามสกุลมีอักขระพิเศษหรออ? 🧐🚨',
+          text: 'ชื่อและนามสกุลของน้องๆ ไม่ควรมีตัวเลขหรือตัวอักษรพิเศษน้า ตรวจสอบอีกทีจ้า 💖',
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'โอเคเลย 👌'
         });
         return;
       }
@@ -2300,11 +2334,12 @@
         if (isDuplicateName) {
           Swal.fire({
             icon: 'warning',
-            title: 'ข้อมูลซ้ำซ้อน',
+            title: 'ชื่อและนามสกุลซ้ำกันน้า! 🧐🚨',
             text: isEditMode 
-              ? 'ชื่อและนามสกุลที่แก้ไขนี้ถูกใช้ลงทะเบียนโดยผู้เข้าร่วมงานท่านอื่นแล้ว' 
-              : 'ชื่อและนามสกุลนี้ได้รับการลงทะเบียนเข้าร่วมงานแล้ว หากต้องการแก้ไขข้อมูล กรุณาค้นหาด้วยเบอร์โทรศัพท์ที่เมนู "ค้นหา/แก้ไขประวัติ"',
-            confirmButtonColor: '#0d9488'
+              ? 'พี่ๆ ตรวจพบว่าชื่อและนามสกุลที่แก้ไขนี้ ถูกลงทะเบียนโดยน้องคนอื่นแล้วน้า 🥺' 
+              : 'น้องลงทะเบียนชื่อ-นามสกุลนี้ไปแล้วน้า หากน้องต้องการแก้ไขข้อมูล ให้ไปค้นหาด้วยเบอร์โทรศัพท์ที่แถบ "ค้นหา/แก้ไขประวัติ" ได้เลยจ้า 💖',
+            confirmButtonColor: '#0d9488',
+            confirmButtonText: 'เข้าใจแล้วจ้า 👌'
           });
           return;
         }
@@ -2318,11 +2353,12 @@
         if (isDuplicatePhone) {
           Swal.fire({
             icon: 'warning',
-            title: 'เบอร์โทรศัพท์ซ้ำซ้อน',
+            title: 'เบอร์โทรศัพท์นี้ลงทะเบียนไปแล้วน้า! 📞🚨',
             text: isEditMode 
-              ? 'เบอร์โทรศัพท์ที่แก้ไขนี้ถูกใช้ลงทะเบียนโดยผู้เข้าร่วมงานท่านอื่นแล้ว' 
-              : 'เบอร์โทรศัพท์นี้ถูกใช้ลงทะเบียนเข้าร่วมงานแล้ว หากต้องการแก้ไขข้อมูล กรุณาค้นหาด้วยเบอร์โทรศัพท์ที่เมนู "ค้นหา/แก้ไขประวัติ"',
-            confirmButtonColor: '#0d9488'
+              ? 'พี่ๆ พบว่าเบอร์โทรศัพท์ที่แก้ไขนี้ ถูกใช้ลงทะเบียนโดยน้องคนอื่นแล้วจ้า 🥺' 
+              : 'เบอร์โทรศัพท์นี้ถูกใช้ลงทะเบียนแล้วจ้า หากน้องต้องการแก้ไขหรือตรวจสอบข้อมูล ให้ค้นหาเบอร์นี้ที่เมนู "ค้นหา/แก้ไขประวัติ" ได้เลยน้า ✨',
+            confirmButtonColor: '#0d9488',
+            confirmButtonText: 'เข้าใจแล้วจ้า 👌'
           });
           return;
         }
@@ -2338,18 +2374,18 @@
         if (currentRegisteredForSite >= maxQuotaForSite) {
           const waitlistQueueNum = currentRegisteredForSite - maxQuotaForSite + 1;
           const confirmResult = await Swal.fire({
-            title: 'ยืนยันลงทะเบียนล่วงหน้า (Waitlist)',
+            title: 'ระบบจองเต็มซะแล้วน้องๆ! 🚨🏥',
             html: `
               <div class="text-left text-sm leading-relaxed font-prompt text-slate-600 space-y-2">
-                <p class="font-semibold text-rose-600">สถานที่ดูงาน "${site}" เต็มโควต้าแล้ว</p>
-                <p>คุณต้องการลงทะเบียนล่วงหน้าในฐานะ <b>คิวสำรองอันดับที่ ${waitlistQueueNum}</b> หรือไม่?</p>
-                <p class="text-xs text-amber-600 mt-2">💡 หากมีการยกเลิกหรือย้ายสถานที่ คิวสำรองของคุณจะได้รับการเลื่อนเป็นผู้ได้รับสิทธิ์เข้าชมปกติโดยอัตโนมัติ</p>
+                <p class="font-semibold text-rose-600">สถานที่ดูงาน "${site}" เต็มโควต้าแล้วจ้า</p>
+                <p>แต่น้องๆ ลงทะเบียนสำรองไว้ก่อนนะ โดยจะเป็น <b>คิวสำรองอันดับที่ ${waitlistQueueNum}</b> น้า 💖</p>
+                <p class="text-xs text-amber-600 mt-2">💡 หากมีการขยับขยายหรือมีเพื่อนๆ ยกเลิกสิทธิ์ คิวสำรองของน้องจะเลื่อนขึ้นอัตโนมัติเลยนะ พี่ๆ จะรีบอัปเดตให้เร็วๆ นี้แน่นอนจ้า! 🥺✨</p>
               </div>
             `,
             icon: 'info',
             showCancelButton: true,
-            confirmButtonText: 'ยืนยันลงคิวสำรอง',
-            cancelButtonText: 'ยกเลิก',
+            confirmButtonText: 'น้องๆ ขอยืนยันลงคิวสำรองจ้า 📝',
+            cancelButtonText: 'ยกเลิกก่อนนะ ❌',
             confirmButtonColor: '#e11d48',
             cancelButtonColor: '#64748b'
           });
@@ -2406,26 +2442,21 @@
         console.error("Submission error:", err);
         Swal.fire({
           icon: 'error',
-          title: 'บันทึกข้อมูลไม่สำเร็จ',
+          title: 'พี่ๆ บันทึกข้อมูลไม่สำเร็จน้า 🥺🚨',
           html: `
             <div class="text-left text-sm space-y-2 text-slate-600 leading-relaxed font-prompt">
-              <p class="font-semibold text-rose-600">เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์หรือปัญหา CORS ในการเขียนข้อมูล</p>
+              <p class="font-semibold text-rose-600">เกิดข้อผิดพลาดในการส่งข้อมูลเชื่อมต่อกับเซิร์ฟเวอร์จ้า</p>
               <hr class="my-2 border-slate-100">
-              <p class="font-bold text-slate-700">คำแนะนำการแก้ไขสำหรับผู้ดูแลระบบ:</p>
-              <ol class="list-decimal pl-4 space-y-1 text-slate-500">
-                <li>เปิดโครงการ <b>Google Apps Script</b> ที่เชื่อมโยงอยู่ขึ้นมา</li>
-                <li>ตรวจสอบการ Deploy (การปรับใช้งาน) ว่าเลือกประเภทเป็น <b>Web App</b></li>
-                <li>กำหนดค่าสิทธิ์การใช้งานของแอปพลิเคชัน:
-                  <ul class="list-disc pl-4 space-y-0.5 font-sans">
-                    <li><b>Execute as:</b> เลือกเป็น <b>Me (ตัวฉันเอง)</b></li>
-                    <li><b>Who has access:</b> เลือกเป็น <b>Anyone (ทุกคน)</b></li>
-                  </ul>
-                </li>
-                <li>หากมีการอัปเดตสคริปต์ใน Google Apps Script ต้องกด <b>"การจัดวางจำหน่ายใหม่" (New Deployment)</b> ทุกครั้ง และนำ URL ใหม่มาใส่แทนใน <code>CONFIG.API_URL</code></li>
+              <p class="font-bold text-slate-700">พี่ๆ แนะนำให้ตรวจสอบตามนี้น้า:</p>
+              <ol class="list-decimal pl-4 space-y-1 text-slate-500 text-xs">
+                <li>สัญญาณอินเทอร์เน็ตหลุดหรือขัดข้องหรือเปล่าน้า 🌐</li>
+                <li>สำหรับผู้ดูแลระบบ: ตรวจสอบการตั้งค่าสิทธิ์ Web App ใน <b>Google Apps Script</b> ให้รันเป็น <b>Me (ตัวฉันเอง)</b> และให้สิทธิ์เข้าถึงเป็น <b>Anyone (ทุกคน)</b> เรียบร้อยหรือยังจ้า</li>
+                <li>หากอัปเดตสคริปต์ ต้องกด <b>"การจัดวางจำหน่ายใหม่" (New Deployment)</b> ทุกครั้งน้า 💖</li>
               </ol>
             </div>
           `,
-          confirmButtonColor: '#0d9488'
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'ลองใหม่อีกครั้งจ้า 👍'
         });
       } finally {
         setFormLoadingState(false);
@@ -2528,7 +2559,7 @@
                 <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">ชื่อ - นามสกุลผู้ลงทะเบียน</label>
                 <span class="text-base font-extrabold text-white flex items-center mt-0.5">
                   <i data-lucide="user" class="w-4 h-4 ${isWaitlist ? 'text-rose-400' : 'text-teal-450'} mr-2 shrink-0"></i>
-                  คุณ ${title || ""}${firstName} ${lastName}
+                  ${title ? title + ' ' : ''}${firstName} ${lastName}
                 </span>
               </div>
               <div>
@@ -2589,7 +2620,7 @@
       Swal.fire({
         html: htmlContent,
         confirmButtonColor: '#0d9488',
-        confirmButtonText: 'ตกลง',
+        confirmButtonText: 'ตกลงจ้า 👌',
         didOpen: () => {
           if (window.lucide) {
             window.lucide.createIcons();
@@ -2606,8 +2637,7 @@
           if (isEditMode) {
             const idx = sheetRecords.findIndex(r => r.rowNumber === parseInt(regData.rowNumber));
             if (idx !== -1) {
-              const oldTimestamp = sheetRecords[idx].timestamp;
-              sheetRecords[idx] = { ...regData, timestamp: regData.timestamp || oldTimestamp };
+              sheetRecords[idx] = { ...regData, timestamp: new Date().toISOString() };
             }
           } else {
             // ดึง rowNumber ลำดับถัดไปที่น่าจะเป็น
@@ -2635,10 +2665,10 @@
 
         Swal.fire({
           icon: 'success',
-          title: isEditMode ? 'แก้ไขข้อมูลสำเร็จ!' : 'ลงทะเบียนสำเร็จ!',
+          title: isEditMode ? '🎉 พี่ๆ แก้ไขข้อมูลให้เรียบร้อยแล้วจ้า!' : '🎉 ยินดีต้อนรับน้า น้องๆ ลงทะเบียนสำเร็จแล้ว!',
           html: htmlContent,
           confirmButtonColor: '#0d9488',
-          confirmButtonText: 'ตกลง',
+          confirmButtonText: 'เย้! ตกลงจ้า 💖',
           didOpen: () => {
             if (window.lucide) {
               window.lucide.createIcons();
@@ -2662,9 +2692,10 @@
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'ดำเนินการไม่สำเร็จ',
-          text: result.message,
-          confirmButtonColor: '#0d9488'
+          title: 'เกิดข้อผิดพลาดน้า 🥺🚨',
+          text: 'พี่ๆ พบปัญหา: ' + result.message + ' จ้า ลองใหม่อีกครั้งนะน้องๆ',
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'รับทราบจ้า 👍'
         });
       }
     }
@@ -2721,7 +2752,7 @@
         }
 
         // อัปเดตฟิลด์ข้อมูล
-        payload.timestamp = records[index].timestamp;
+        payload.timestamp = new Date().toISOString();
         records[index] = payload;
         localStorage.setItem("open_house_registrations", JSON.stringify(records));
         
@@ -2756,9 +2787,10 @@
       if (!searchPhone) {
         Swal.fire({
           icon: 'warning',
-          title: 'เบอร์โทรศัพท์ว่างเปล่า',
-          text: 'กรุณากรอกเบอร์โทรศัพท์เพื่อค้นหา',
-          confirmButtonColor: '#0d9488'
+          title: 'ลืมกรอกเบอร์โทรศัพท์น้า 📞🥺',
+          text: 'น้องๆ ช่วยกรอกเบอร์โทรศัพท์เพื่อใช้ค้นหาประวัติด้วยจ้า 💖',
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'ตกลงจ้า 👌'
         });
         return;
       }
@@ -2766,9 +2798,10 @@
       if (!/^0\d{9}$/.test(searchPhone)) {
         Swal.fire({
           icon: 'warning',
-          title: 'เบอร์โทรศัพท์ไม่ถูกต้อง',
-          text: 'กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข 10 หลักขึ้นต้นด้วย 0',
-          confirmButtonColor: '#0d9488'
+          title: 'เบอร์โทรศัพท์ไม่ถูกต้องน้า 📞🧐',
+          text: 'น้องๆ ตรวจสอบเบอร์โทรศัพท์อีกครั้งให้ครบ 10 หลักและขึ้นต้นด้วย 0 น้าจ้า 💖',
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'โอเคจ้า 👍'
         });
         return;
       }
@@ -2807,16 +2840,16 @@
       }
     }
 
-    async function deleteRegistration(rowNumber, firstName, lastName) {
+    async function deleteRegistration(rowNumber, title, firstName, lastName) {
       Swal.fire({
-        title: 'ยืนยันการลบข้อมูล?',
-        text: `คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลการลงทะเบียนของ คุณ ${firstName} ${lastName}? การดำเนินการนี้ไม่สามารถย้อนกลับได้`,
+        title: 'ยืนยันการลบข้อมูลจริงหรอครับ? 🚨🥺',
+        text: `พี่ๆ อยากให้น้องแน่ใจอีกครั้ง น้องแน่ใจใช่ไหมว่าจะลบข้อมูลการลงทะเบียนของ ${title ? title + ' ' : ''}${firstName} ${lastName}? พอลบแล้วข้อมูลจะหายไปเลยและกู้คืนไม่ได้แล้วนะ 🥺`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#e11d48', // rose-600
         cancelButtonColor: '#cbd5e1', // slate-300
-        confirmButtonText: 'ยืนยันการลบ',
-        cancelButtonText: 'ยกเลิก'
+        confirmButtonText: 'ยืนยัน ลบได้เลยครับ! 🗑️',
+        cancelButtonText: 'ยกเลิกก่อนครับ ❌'
       }).then(async (result) => {
         if (result.isConfirmed) {
           // เก็บสำรองข้อมูลเก่าสำหรับทำ Rollback เผื่อกรณีติดต่อ API ล้มเหลว
@@ -2877,10 +2910,10 @@
           if (deleteSuccess) {
             Swal.fire({
               icon: 'success',
-              title: 'ลบข้อมูลสำเร็จ',
-              text: 'ระบบทำการลบข้อมูลเรียบร้อยแล้ว',
+              title: 'ลบข้อมูลให้สำเร็จแล้วจ้า ✨🗑️',
+              text: 'พี่ๆ ทำการลบข้อมูลการลงทะเบียนของน้องเรียบร้อยแล้วน้า 🥺',
               confirmButtonColor: '#0d9488',
-              timer: 1500,
+              timer: 2000,
               showConfirmButton: false
             });
             // รีเฟรชข้อมูลเบื้องหลังอีกครั้งเพื่อให้ข้อมูลในระบบตรงกับหลังบ้าน 100%
@@ -2896,9 +2929,10 @@
             
             Swal.fire({
               icon: 'error',
-              title: 'ลบข้อมูลไม่สำเร็จ',
-              text: 'เกิดข้อผิดพลาด: ' + errorMessage + ' (ระบบได้ทำการกู้คืนข้อมูลเดิมบนหน้าจอเรียบร้อยแล้ว)',
-              confirmButtonColor: '#0d9488'
+              title: 'พี่ๆ ลบข้อมูลไม่สำเร็จน้า 🥺🚨',
+              text: 'เกิดข้อผิดพลาด: ' + errorMessage + ' (พี่ๆ กู้คืนข้อมูลเดิมขึ้นบนหน้าจอให้แล้วจ้า 👍)',
+              confirmButtonColor: '#0d9488',
+              confirmButtonText: 'โอเคจ้า 👌'
             });
           }
         }
@@ -2943,7 +2977,7 @@
           <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
             <div>
               <h4 class="text-base font-bold text-teal-800 flex items-center flex-wrap gap-1">
-                คุณ ${record.title || ""}${record.firstName} ${record.lastName}
+                ${record.title ? record.title + ' ' : ''}${record.firstName} ${record.lastName}
                 ${statusBadge}
               </h4>
               <p class="text-xs text-slate-400">ระดับชั้น: ${record.grade}</p>
@@ -2955,7 +2989,7 @@
               <button onclick="startEditFlow('${encodeURIComponent(JSON.stringify(record))}')" class="px-3 py-1.5 text-xs font-semibold text-teal-600 bg-teal-50 border border-teal-100 rounded-lg hover:bg-teal-100 active:bg-teal-200 transition-all flex items-center shadow-sm">
                 <i data-lucide="edit-3" class="w-3.5 h-3.5 mr-1.5"></i> แก้ไข
               </button>
-              <button onclick="deleteRegistration(${record.rowNumber}, '${record.firstName.replace(/'/g, "\\'")}', '${record.lastName.replace(/'/g, "\\'")}')" class="px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-lg hover:bg-rose-100 active:bg-rose-200 transition-all flex items-center shadow-sm">
+              <button onclick="deleteRegistration(${record.rowNumber}, '${(record.title || "").replace(/'/g, "\\'")}', '${record.firstName.replace(/'/g, "\\'")}', '${record.lastName.replace(/'/g, "\\'")}')" class="px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-lg hover:bg-rose-100 active:bg-rose-200 transition-all flex items-center shadow-sm">
                 <i data-lucide="trash-2" class="w-3.5 h-3.5 mr-1.5"></i> ลบ
               </button>
             </div>
@@ -3093,14 +3127,14 @@
     function cancelRegistration() {
       const isEditing = document.getElementById("edit-row-number").value !== "";
       Swal.fire({
-        title: 'คุณต้องการยกเลิกใช่หรือไม่?',
-        text: isEditing ? 'การเปลี่ยนแปลงทั้งหมดจะไม่ถูกบันทึก' : 'ข้อมูลที่กรอกจะถูกล้างทั้งหมด',
+        title: 'น้องๆ ต้องการยกเลิกใช่ไหมครับ? 🥺💖',
+        text: isEditing ? 'พี่ๆ จะไม่บันทึกการแก้ไขในครั้งนี้นะจ้า 🥺' : 'พี่ๆ จะล้างข้อมูลในฟอร์มลงทะเบียนออกทั้งหมดเลยนะ 🧹',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#0d9488',
-        cancelButtonColor: '#cbd5e1',
-        confirmButtonText: 'ใช่, ยกเลิก',
-        cancelButtonText: 'ทำงานต่อ'
+        confirmButtonColor: '#cbd5e1',
+        cancelButtonColor: '#0d9488',
+        confirmButtonText: 'ใช่จ้า ยกเลิกเลย ❌',
+        cancelButtonText: 'เขียนฟอร์มต่อจ้า 👌'
       }).then((result) => {
         if (result.isConfirmed) {
           if (isEditing) {
@@ -3116,7 +3150,7 @@
     // ================= UTILITIES DIALOGS =================
     let globalLoader = null;
     
-    function showGlobalLoader(message = "กำลังประมวลผลข้อมูล...") {
+    function showGlobalLoader(message = "พี่ๆ กำลังประมวลผลข้อมูลอยู่น้า... ⏳💖") {
       globalLoader = Swal.fire({
         title: message,
         allowOutsideClick: false,
