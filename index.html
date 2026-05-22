@@ -128,6 +128,20 @@
       transform: scale(1) !important;
     }
     
+    /* สไตล์ Radio สำหรับผู้ลงทะเบียนล่วงหน้า (Waitlist) เมื่อกดยืนยันเลือกจะออกเฉดชมพู/แดง */
+    .venue-option-card input[type="radio"].is-waitlist:checked + .venue-card-content {
+      border-color: #f43f5e !important;
+      background-color: rgba(254, 242, 242, 0.4) !important;
+      box-shadow: 0 10px 15px -3px rgba(244, 63, 94, 0.15), 0 4px 6px -4px rgba(244, 63, 94, 0.15), 0 0 0 3px rgba(244, 63, 94, 0.3) !important;
+    }
+    .venue-option-card input[type="radio"].is-waitlist:checked + .venue-card-content .checked-dot-outer {
+      border-color: #f43f5e !important;
+    }
+    .venue-option-card input[type="radio"].is-waitlist:checked + .venue-card-content .checked-dot-inner {
+      background-color: #f43f5e !important;
+      transform: scale(1) !important;
+    }
+    
     /* บังคับสีปุ่มยืนยันลงทะเบียน/บันทึกการแก้ไขให้อ่านง่ายและเด่นชัดแน่นอน */
     #submit-btn {
       color: #ffffff !important;
@@ -141,6 +155,11 @@
     .ticket-container {
       background: linear-gradient(135deg, #020617 0%, #032b25 50%, #030712 100%) !important;
       border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    }
+    .ticket-container-pre {
+      background: linear-gradient(135deg, #020617 0%, #3b0712 50%, #0c0204 100%) !important;
+      border: 1px solid rgba(239, 68, 68, 0.15) !important;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
     }
     .ticket-circle-left, .ticket-circle-right {
@@ -320,6 +339,45 @@
         <!-- Grid แสดงสถานที่จัดงาน -->
         <div id="venue-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- วนซ้ำแสดงข้อมูลด้วย JS -->
+        </div>
+      </div>
+
+      <!-- ส่วนแสดงข้อมูลการลงทะเบียนล่วงหน้า (Waitlist / คิวสำรอง) จะแสดงเฉพาะเมื่อมีคิวสำรองอย่างน้อย 1 คน -->
+      <div id="waitlist-section" class="hidden space-y-6 mt-8">
+        <div class="flex items-center space-x-2 border-b border-rose-100 pb-3">
+          <i data-lucide="clock" class="w-6 h-6 text-rose-600 animate-pulse"></i>
+          <h2 class="text-xl md:text-2xl font-bold text-rose-700">
+            รายการลงทะเบียนล่วงหน้า (คิวสำรอง - Waitlist)
+          </h2>
+        </div>
+        
+        <!-- สถิติจำนวน Waitlist แยกรายสถานที่ -->
+        <div id="waitlist-stats-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- แสดงด้วย JS -->
+        </div>
+
+        <!-- ตารางแสดงรายชื่อผู้ลงทะเบียนล่วงหน้า -->
+        <div class="glassmorphism rounded-2xl p-6 shadow-lg border border-rose-100/50 overflow-hidden">
+          <h3 class="text-base font-bold text-slate-700 mb-4 flex items-center">
+            <i data-lucide="list-ordered" class="w-5 h-5 mr-2 text-rose-500"></i>
+            รายชื่อผู้ลงทะเบียนล่วงหน้าแยกตามสถานที่ศึกษาดูงาน
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-100 font-prompt text-sm">
+              <thead class="bg-rose-50/50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-bold text-rose-700 uppercase tracking-wider">คิวที่</th>
+                  <th class="px-4 py-3 text-left text-xs font-bold text-rose-700 uppercase tracking-wider">ชื่อ - นามสกุล</th>
+                  <th class="px-4 py-3 text-left text-xs font-bold text-rose-700 uppercase tracking-wider">โรงเรียน</th>
+                  <th class="px-4 py-3 text-left text-xs font-bold text-rose-700 uppercase tracking-wider">สถานที่ศึกษาดูงาน</th>
+                  <th class="px-4 py-3 text-left text-xs font-bold text-rose-700 uppercase tracking-wider">เวลาลงทะเบียน</th>
+                </tr>
+              </thead>
+              <tbody id="waitlist-table-body" class="divide-y divide-slate-100 text-slate-600">
+                <!-- รายชื่อจะถูกเรนเดอร์ผ่าน JS -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -733,7 +791,7 @@
   <footer class="max-w-6xl mx-auto px-4 py-8 text-center text-xs text-slate-400 border-t border-teal-100/50 mt-12 space-y-2">
     <p class="font-medium text-slate-500 text-sm">จัดทำโดย ศูนย์นวัตกรรม กลุ่มงานสุขภาพดิจิทัล สำนักงานสาธารณสุขจังหวัดสตูล 2026</p>
     <div class="flex justify-center items-center gap-4 flex-wrap text-slate-400 mt-1">
-      <span>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.8.0</span>
+      <span>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 1.9.1</span>
       <span class="text-slate-300">|</span>
       <a href="https://www.facebook.com/Mootu00" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-teal-600 hover:text-teal-700 transition-colors font-medium">
         <i data-lucide="facebook" class="w-4 h-4 mr-1.5 text-blue-600"></i>
@@ -782,6 +840,7 @@
                 <th class="px-4 py-3 border-b border-slate-100">นามสกุล</th>
                 <th class="px-4 py-3 border-b border-slate-100">ระดับชั้น</th>
                 <th class="px-4 py-3 border-b border-slate-100">โรงเรียน</th>
+                <th class="px-4 py-3 border-b border-slate-100 w-32">สถานะ</th>
               </tr>
             </thead>
             <tbody id="modal-table-body" class="divide-y divide-slate-50">
@@ -1477,30 +1536,52 @@
       }
     }
 
-    // คำนวณยอดสะสมและจัดกลุ่มสถิติตามสถานที่จากแถวที่ดึงมา
+    // คำนวณยอดสะสมและจัดกลุ่มสถิติตามสถานที่จากแถวที่ดึงมา (และคำนวณ Waitlist คิวสำรองรายบุคคล)
     function calculateStatsFromRecords(records) {
-      const counts = {};
-      // ตั้งค่าเริ่มต้นยอดการลงทะเบียนของทุกโรงพยาบาลเป็น 0
+      const venueRunningCounts = {};
       Object.keys(CONFIG.QUOTAS).forEach(venue => {
-        counts[venue] = 0;
+        venueRunningCounts[venue] = 0;
       });
       
-      let totalRegistered = 0;
-      records.forEach(record => {
+      // ประมวลผลและแสตมป์สถานะการจองลงบนแต่ละ record แบบไดนามิกอิงตามลำดับการจัดคิว (rowNumber)
+      // เรียงลำดับระเบียนตาม rowNumber เผื่อกรณีข้อมูลไม่อยู่ในระเบียบ
+      const sortedRecords = [...records].sort((a, b) => a.rowNumber - b.rowNumber);
+      
+      sortedRecords.forEach(record => {
         const venue = record.site;
-        if (counts.hasOwnProperty(venue)) {
-          counts[venue]++;
-          totalRegistered++;
+        if (venueRunningCounts.hasOwnProperty(venue)) {
+          venueRunningCounts[venue]++;
+          const quota = CONFIG.QUOTAS[venue].max;
+          if (venueRunningCounts[venue] <= quota) {
+            record.bookingStatus = "ปกติ";
+            record.waitlistQueue = 0;
+          } else {
+            record.bookingStatus = "ลงทะเบียนล่วงหน้า";
+            record.waitlistQueue = venueRunningCounts[venue] - quota;
+          }
+        } else {
+          record.bookingStatus = "ปกติ";
+          record.waitlistQueue = 0;
         }
       });
       
       const venuesList = [];
+      let totalRegisteredNormal = 0;
+      let totalWaitlistAll = 0;
+      
       Object.keys(CONFIG.QUOTAS).forEach(venue => {
         const quota = CONFIG.QUOTAS[venue].max;
-        const registered = counts[venue] || 0;
-        const remaining = Math.max(0, quota - registered);
-        let status = "ว่าง";
+        const totalCountForVenue = venueRunningCounts[venue] || 0;
         
+        // ยอดลงทะเบียนปกติจะไม่เกินโควต้า
+        const registeredNormal = Math.min(quota, totalCountForVenue);
+        const waitlistCount = Math.max(0, totalCountForVenue - quota);
+        const remaining = Math.max(0, quota - totalCountForVenue);
+        
+        totalRegisteredNormal += registeredNormal;
+        totalWaitlistAll += waitlistCount;
+        
+        let status = "ว่าง";
         if (remaining === 0) {
           status = "เต็ม";
         } else if (remaining <= 10) {
@@ -1510,15 +1591,17 @@
         venuesList.push({
           name: venue,
           quota: quota,
-          registered: registered,
+          registered: registeredNormal,
           remaining: remaining,
-          status: status
+          status: status,
+          waitlistCount: waitlistCount
         });
       });
       
       return {
         status: "success",
-        totalRegistered: totalRegistered,
+        totalRegistered: totalRegisteredNormal,
+        totalWaitlist: totalWaitlistAll,
         venues: venuesList
       };
     }
@@ -1529,15 +1612,15 @@
           connectionStatus = "connected";
           updateModeBadge();
           sheetRecords = JSON.parse(localStorage.getItem("open_house_registrations") || "[]");
-          const res = getMockStats();
+          const res = calculateStatsFromRecords(sheetRecords);
           processStats(res);
         } else {
           connectionStatus = "connecting";
           updateModeBadge();
           showGlobalLoader();
           
-          // ดึงข้อมูลผ่าน Google Visualization API ด้วย SHEET_ID
-          const sheetUrl = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json`;
+          // ดึงข้อมูลผ่าน Google Visualization API ด้วย SHEET_ID พร้อม Cache Buster
+          const sheetUrl = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&t=${Date.now()}`;
           const response = await fetch(sheetUrl);
           if (!response.ok) throw new Error("ไม่สามารถดึงตารางข้อมูลจาก Google Sheet ได้");
           
@@ -1577,7 +1660,7 @@
         
         // แสดงข้อมูลจำลองเพื่อรักษาเลย์เอาต์หน้าจอ
         sheetRecords = JSON.parse(localStorage.getItem("open_house_registrations") || "[]");
-        processStats(getMockStats());
+        processStats(calculateStatsFromRecords(sheetRecords));
       } finally {
         hideGlobalLoader();
       }
@@ -1608,6 +1691,64 @@
         renderVenueFormOptions(data.venues);
         updateAnalytics(sheetRecords);
         
+        // --- เรนเดอร์ส่วนลงทะเบียนล่วงหน้า (Waitlist) ---
+        const waitlistRecords = sheetRecords.filter(r => r.bookingStatus === "ลงทะเบียนล่วงหน้า");
+        const waitlistSection = document.getElementById("waitlist-section");
+        
+        if (waitlistRecords.length > 0) {
+          waitlistSection.classList.remove("hidden");
+          
+          // 1. เรนเดอร์สถิติ Waitlist รายสถานที่
+          const statsGrid = document.getElementById("waitlist-stats-grid");
+          statsGrid.innerHTML = "";
+          
+          const venueWaitlistCounts = {};
+          Object.keys(CONFIG.QUOTAS).forEach(v => { venueWaitlistCounts[v] = 0; });
+          waitlistRecords.forEach(r => {
+            if (venueWaitlistCounts.hasOwnProperty(r.site)) {
+              venueWaitlistCounts[r.site]++;
+            }
+          });
+          
+          Object.keys(CONFIG.QUOTAS).forEach(venue => {
+            const count = venueWaitlistCounts[venue] || 0;
+            if (count > 0) {
+              const card = document.createElement("div");
+              card.className = "bg-rose-50/65 border border-rose-200/50 rounded-xl p-4 flex items-center justify-between shadow-sm ring-1 ring-rose-500/5";
+              card.innerHTML = `
+                <div class="pr-2">
+                  <p class="text-[11px] text-rose-700 font-bold leading-tight truncate max-w-[180px]">${venue}</p>
+                  <p class="text-2xl font-black text-rose-600 mt-1">${count} <span class="text-xs font-normal text-slate-500">คน</span></p>
+                </div>
+                <div class="p-2.5 bg-rose-100/60 text-rose-600 rounded-lg shrink-0">
+                  <i data-lucide="clock" class="w-5 h-5"></i>
+                </div>
+              `;
+              statsGrid.appendChild(card);
+            }
+          });
+          
+          // 2. เรนเดอร์ตาราง Waitlist รายชื่อ
+          const tableBody = document.getElementById("waitlist-table-body");
+          tableBody.innerHTML = "";
+          
+          const sortedWaitlist = [...waitlistRecords].sort((a, b) => a.rowNumber - b.rowNumber);
+          sortedWaitlist.forEach(r => {
+            const tr = document.createElement("tr");
+            tr.className = "hover:bg-rose-50/20 transition-colors";
+            tr.innerHTML = `
+              <td class="px-4 py-3 whitespace-nowrap"><span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700 border border-rose-200/40">สำรองที่ ${r.waitlistQueue}</span></td>
+              <td class="px-4 py-3 whitespace-nowrap font-semibold text-slate-700">คุณ ${r.title || ""}${r.firstName} ${r.lastName}</td>
+              <td class="px-4 py-3 whitespace-nowrap text-slate-500 text-xs">${r.schoolName}</td>
+              <td class="px-4 py-3 whitespace-nowrap font-medium text-slate-700 text-xs">${r.site}</td>
+              <td class="px-4 py-3 whitespace-nowrap text-xs text-slate-400">${formatThaiDateTime(r.timestamp)}</td>
+            `;
+            tableBody.appendChild(tr);
+          });
+        } else {
+          waitlistSection.classList.add("hidden");
+        }
+
         // อัปเดตข้อมูลและโควต้าบนปฏิทินกิจกรรม
         updateCalendarSeats();
       }
@@ -1650,7 +1791,7 @@
           <div>
             <div class="flex justify-between items-start mb-4">
               <span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded-full border ${badgeStyle}">
-                ${venue.status === "เต็ม" ? "เต็ม" : (venue.status === "ใกล้เต็ม" ? "ใกล้เต็ม" : "ว่าง")}
+                ${venue.status === "เต็ม" ? '<i data-lucide="lock" class="w-3 h-3 mr-1 text-rose-600 shrink-0"></i>เต็ม' : (venue.status === "ใกล้เต็ม" ? "ใกล้เต็ม" : "ว่าง")}
               </span>
               <div class="text-xs font-bold flex items-center px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-250/60 shadow-sm">
                 <i data-lucide="calendar" class="w-3.5 h-3.5 mr-1.5 text-amber-500"></i> ${dateLabel}
@@ -1692,20 +1833,16 @@
       const container = document.getElementById("venue-selector-list");
       container.innerHTML = "";
       
-      // ตรวจสอบว่าเราอยู่ระหว่างการแก้ไขข้อมูลหรือไม่
-      const isEditing = document.getElementById("edit-row-number").value !== "";
-      const currentSelectedVenue = isEditing ? document.querySelector('input[name="venue-option"]:checked')?.value : null;
-
       venues.forEach((venue, index) => {
         const isFull = venue.remaining === 0;
         
-        // หากคนคนนี้กำลังแก้ไขข้อมูลของสถานที่เดิม ให้แสดงสถานที่นั้นเป็นตัวเลือกที่กดได้อยู่ แม้จะเต็มก็ตาม
-        const isDisabled = isFull && (!currentSelectedVenue || currentSelectedVenue !== venue.name);
+        // สำหรับระบบ Waitlist ทุกสถานที่จัดงานจะเปิดให้ลงทะเบียนได้เสมอ (ไม่ disable)
+        const isDisabled = false;
         
         let badgeHTML = "";
 
         if (isFull) {
-          badgeHTML = `<span class="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded bg-rose-100 text-rose-700 border border-rose-300 shadow-sm animate-pulse"><i data-lucide="lock" class="w-3.5 h-3.5 mr-1 text-rose-600"></i> ล็อกแล้ว</span>`;
+          badgeHTML = `<span class="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded bg-rose-100 text-rose-700 border border-rose-300 shadow-sm"><i data-lucide="lock" class="w-3.5 h-3.5 mr-1 text-rose-600"></i> คิวสำรอง (เต็ม)</span>`;
         }
 
         const dateLabel = CONFIG.QUOTAS[venue.name] ? CONFIG.QUOTAS[venue.name].date : (venue.date || "");
@@ -1729,8 +1866,8 @@
         const item = document.createElement("label");
         item.className = "venue-option-card relative block cursor-pointer select-none";
         item.innerHTML = `
-          <input type="radio" name="venue-option" value="${venue.name}" ${isDisabled ? 'disabled' : ''} class="sr-only">
-          <div class="venue-card-content ${isDisabled ? 'bg-slate-50/50 border-slate-100 opacity-60 cursor-not-allowed' : 'bg-white/50 border-slate-200 hover:border-teal-400 hover:bg-teal-50/10 hover:shadow-sm'} border-2 rounded-2xl p-4 md:p-5 transition-all duration-200 flex flex-col w-full">
+          <input type="radio" name="venue-option" value="${venue.name}" class="sr-only ${isFull ? 'is-waitlist' : ''}">
+          <div class="venue-card-content bg-white/50 border-slate-200 hover:border-teal-400 hover:bg-teal-50/10 hover:shadow-sm border-2 rounded-2xl p-4 md:p-5 transition-all duration-200 flex flex-col w-full">
             <div class="flex flex-col md:flex-row md:items-center justify-between">
               <div class="flex items-start md:items-center space-x-3 mb-2 md:mb-0">
                 <div class="w-4 h-4 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1 md:mt-0 transition-all checked-dot-outer">
@@ -1958,12 +2095,21 @@
         filtered.forEach((r, idx) => {
           const tr = document.createElement("tr");
           tr.className = "hover:bg-slate-50/80 transition-colors";
+          const isWaitlist = r.bookingStatus === "ลงทะเบียนล่วงหน้า";
+          const statusBadge = isWaitlist 
+            ? `<span class="px-2 py-1 text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-100 rounded-full inline-flex items-center">
+                <i data-lucide="clock" class="w-3 h-3 mr-1"></i>สำรองคิวที่ ${r.waitlistQueue || 1}
+               </span>`
+            : `<span class="px-2 py-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-full inline-flex items-center">
+                <i data-lucide="check" class="w-3 h-3 mr-1"></i>ปกติ
+               </span>`;
           tr.innerHTML = `
             <td class="px-4 py-3 border-b border-slate-100 text-center font-medium text-slate-400">${idx + 1}</td>
             <td class="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">${r.firstName}</td>
             <td class="px-4 py-3 border-b border-slate-100 font-semibold text-slate-800">${r.lastName}</td>
             <td class="px-4 py-3 border-b border-slate-100 text-slate-600">${r.grade}</td>
             <td class="px-4 py-3 border-b border-slate-100 text-slate-700 font-medium">${r.schoolName}</td>
+            <td class="px-4 py-3 border-b border-slate-100">${statusBadge}</td>
           `;
           tbody.appendChild(tr);
         });
@@ -2134,8 +2280,8 @@
       const editRowNumber = document.getElementById("edit-row-number").value;
       const isEditMode = editRowNumber !== "";
 
-      // ตรวจสอบข้อมูลซ้ำบนฝั่ง Client ก่อนลงทะเบียน/แก้ไข (เช็คใน sheetRecords เมื่อไม่ได้อยู่ในโหมด Mock)
-      if (!isMockMode && sheetRecords && sheetRecords.length > 0) {
+      // ตรวจสอบข้อมูลซ้ำบนฝั่ง Client ก่อนลงทะเบียน/แก้ไข (เช็คใน sheetRecords)
+      if (sheetRecords && sheetRecords.length > 0) {
         const targetRow = isEditMode ? Number(editRowNumber) : null;
         
         // 1. ตรวจสอบชื่อ-นามสกุลซ้ำ
@@ -2184,13 +2330,27 @@
         const maxQuotaForSite = CONFIG.QUOTAS[site]?.max || 0;
         
         if (currentRegisteredForSite >= maxQuotaForSite) {
-          Swal.fire({
-            icon: 'error',
-            title: 'โควต้าเต็มแล้ว',
-            text: `ขออภัย สถานที่ดูงาน "${site}" มีผู้ลงทะเบียนครบจำนวนโควต้าสูงสุดแล้ว (${maxQuotaForSite} คน) กรุณาเลือกสถานที่ดูงานอื่น`,
-            confirmButtonColor: '#0d9488'
+          const waitlistQueueNum = currentRegisteredForSite - maxQuotaForSite + 1;
+          const confirmResult = await Swal.fire({
+            title: 'ยืนยันลงทะเบียนล่วงหน้า (Waitlist)',
+            html: `
+              <div class="text-left text-sm leading-relaxed font-prompt text-slate-600 space-y-2">
+                <p class="font-semibold text-rose-600">สถานที่ดูงาน "${site}" เต็มโควต้าแล้ว</p>
+                <p>คุณต้องการลงทะเบียนล่วงหน้าในฐานะ <b>คิวสำรองอันดับที่ ${waitlistQueueNum}</b> หรือไม่?</p>
+                <p class="text-xs text-amber-600 mt-2">💡 หากมีการยกเลิกหรือย้ายสถานที่ คิวสำรองของคุณจะได้รับการเลื่อนเป็นผู้ได้รับสิทธิ์เข้าชมปกติโดยอัตโนมัติ</p>
+              </div>
+            `,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยันลงคิวสำรอง',
+            cancelButtonText: 'ยกเลิก',
+            confirmButtonColor: '#e11d48',
+            cancelButtonColor: '#64748b'
           });
-          return;
+          
+          if (!confirmResult.isConfirmed) {
+            return;
+          }
         }
       }
 
@@ -2322,12 +2482,23 @@
       const { title, firstName, lastName, grade, phone, schoolName, site, timestamp } = record;
       const dateStr = CONFIG.QUOTAS[site]?.date || "-";
       const thaiDateTimeStr = formatThaiDateTime(timestamp || new Date());
+      const isWaitlist = record.bookingStatus === "ลงทะเบียนล่วงหน้า";
+      const containerClass = isWaitlist ? "ticket-container-pre" : "ticket-container";
+      const ticketTitle = isWaitlist ? "WAITLIST PASS" : "TICKET PASS";
+      
+      const badgeHtml = isWaitlist 
+        ? `<span class="text-[9px] px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 inline-block mt-2 font-bold">
+            <i data-lucide="clock" class="w-2.5 h-2.5 inline mr-1"></i>ลงทะเบียนล่วงหน้า (คิวสำรองอันดับที่ ${record.waitlistQueue || 1})
+           </span>`
+        : `<span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-450 inline-block mt-2 font-bold">
+            <i data-lucide="check" class="w-2.5 h-2.5 inline mr-1"></i>${isSuccessTitle ? 'ลงทะเบียนสำเร็จ' : 'ลงทะเบียนเรียบร้อย'}
+           </span>`;
 
       return `
-        <div class="ticket-container my-4 font-prompt relative overflow-hidden rounded-3xl p-6 select-none max-w-sm mx-auto text-slate-200">
+        <div class="${containerClass} my-4 font-prompt relative overflow-hidden rounded-3xl p-6 select-none max-w-sm mx-auto text-slate-200">
           <!-- แสงระยิบระยับหัวตั๋ว -->
-          <div class="absolute -top-12 -left-12 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl"></div>
-          <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+          <div class="absolute -top-12 -left-12 w-32 h-32 ${isWaitlist ? 'bg-rose-500/10' : 'bg-teal-500/10'} rounded-full blur-2xl"></div>
+          <div class="absolute -bottom-12 -right-12 w-32 h-32 ${isWaitlist ? 'bg-rose-500/10' : 'bg-amber-500/10'} rounded-full blur-2xl"></div>
           
           <!-- หัวตั๋ว (Header) -->
           <div class="text-center pb-4 border-b border-dashed border-slate-800/80 relative">
@@ -2336,10 +2507,8 @@
               <span class="text-[10px] tracking-widest font-extrabold text-amber-455 uppercase">SATUN MOPH OPEN HOUSE</span>
               <i data-lucide="sparkles" class="w-4 h-4 text-amber-455 animate-pulse"></i>
             </div>
-            <h3 class="text-base font-extrabold text-white tracking-wide uppercase">TICKET PASS</h3>
-            <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-450 inline-block mt-2 font-bold">
-              <i data-lucide="check" class="w-2.5 h-2.5 inline mr-1"></i>${isSuccessTitle ? 'ลงทะเบียนสำเร็จ' : 'ลงทะเบียนเรียบร้อย'}
-            </span>
+            <h3 class="text-base font-extrabold text-white tracking-wide uppercase">${ticketTitle}</h3>
+            ${badgeHtml}
           </div>
 
           <!-- รอยเว้าตั๋ว ซ้าย-ขวา -->
@@ -2352,7 +2521,7 @@
               <div class="col-span-2">
                 <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">ชื่อ - นามสกุลผู้ลงทะเบียน</label>
                 <span class="text-base font-extrabold text-white flex items-center mt-0.5">
-                  <i data-lucide="user" class="w-4 h-4 text-teal-450 mr-2 shrink-0"></i>
+                  <i data-lucide="user" class="w-4 h-4 ${isWaitlist ? 'text-rose-400' : 'text-teal-450'} mr-2 shrink-0"></i>
                   คุณ ${title || ""}${firstName} ${lastName}
                 </span>
               </div>
@@ -2366,14 +2535,14 @@
               </div>
               <div class="col-span-2">
                 <label class="text-[9px] uppercase tracking-wider text-slate-500 block font-bold">โรงเรียน</label>
-                <span class="text-xs font-bold text-teal-300 mt-0.5 block">${schoolName}</span>
+                <span class="text-xs font-bold ${isWaitlist ? 'text-rose-300' : 'text-teal-300'} mt-0.5 block">${schoolName}</span>
               </div>
             </div>
 
             <!-- ส่วนสถานที่และวันเวลาที่จอง -->
             <div class="mt-4 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-900/60 shadow-inner space-y-2">
               <div>
-                <div class="flex items-center text-[10px] text-teal-450 font-extrabold tracking-wider uppercase mb-1">
+                <div class="flex items-center text-[10px] ${isWaitlist ? 'text-rose-400' : 'text-teal-450'} font-extrabold tracking-wider uppercase mb-1">
                   <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1 text-rose-500 shrink-0"></i>
                   สถานที่ศึกษาดูงาน
                 </div>
@@ -2392,15 +2561,15 @@
           <!-- ท้ายตั๋ว (Ticket Footer) -->
           <div class="pt-2 text-center relative space-y-2">
             <div class="flex items-center justify-center space-x-1.5 text-slate-500 text-[9px]">
-              <i data-lucide="clock" class="w-3 h-3 text-teal-500 shrink-0"></i>
+              <i data-lucide="clock" class="w-3 h-3 ${isWaitlist ? 'text-rose-500' : 'text-teal-500'} shrink-0"></i>
               <span>บันทึกข้อมูล: ${thaiDateTimeStr}</span>
             </div>
             <div class="flex justify-center pt-2">
               <!-- บาร์โค้ดจำลองสวยงาม -->
               <div class="h-8 w-48 bg-[repeating-linear-gradient(90deg,#475569,#475569_2px,transparent_2px,transparent_6px,#94a3b8_6px,#94a3b8_10px,transparent_10px,transparent_12px)] opacity-50"></div>
             </div>
-            <p class="text-[9px] text-rose-450 font-bold bg-rose-950/20 border border-rose-900/30 py-1.5 px-3 rounded-lg inline-block w-full">
-              ⚠️ กรุณาบันทึกภาพหน้าจอนี้ไว้เป็นหลักฐานในการเข้าร่วมงาน
+            <p class="text-[9px] ${isWaitlist ? 'text-rose-400 bg-rose-950/20 border-rose-900/30' : 'text-teal-400 bg-teal-950/20 border-teal-900/30'} font-bold border py-1.5 px-3 rounded-lg inline-block w-full">
+              ⚠️ ${isWaitlist ? 'กรุณาบันทึกภาพหน้าจอนี้ไว้เป็นหลักฐานคิวสำรองของท่าน' : 'กรุณาบันทึกภาพหน้าจอนี้ไว้เป็นหลักฐานการลงทะเบียนของท่าน'}
             </p>
           </div>
         </div>
@@ -2428,8 +2597,34 @@
         let htmlContent = `<div class="text-center font-prompt text-slate-600">${result.message}</div>`;
         
         if (regData) {
-          const dataForTicket = { ...regData, timestamp: regData.timestamp || new Date() };
-          htmlContent = generateTicketHtml(dataForTicket, true);
+          if (isEditMode) {
+            const idx = sheetRecords.findIndex(r => r.rowNumber === parseInt(regData.rowNumber));
+            if (idx !== -1) {
+              const oldTimestamp = sheetRecords[idx].timestamp;
+              sheetRecords[idx] = { ...regData, timestamp: regData.timestamp || oldTimestamp };
+            }
+          } else {
+            // ดึง rowNumber ลำดับถัดไปที่น่าจะเป็น
+            const rowNum = regData.rowNumber || (sheetRecords.length + 2);
+            const newRecord = { 
+              ...regData, 
+              rowNumber: rowNum, 
+              timestamp: regData.timestamp || new Date().toISOString() 
+            };
+            sheetRecords.push(newRecord);
+          }
+          
+          // คำนวณสถิติและสถานะคิวสำรองใหม่ทันทีเพื่อความรวดเร็วในการอัปเดต UI (Optimistic UI)
+          const res = calculateStatsFromRecords(sheetRecords);
+          processStats(res);
+          
+          // ดึงประวัติที่ประมวลผลแล้วล่าสุดเพื่อไปสร้างตั๋ว (จะได้คิวสำรองจริง)
+          const updatedRecord = sheetRecords.find(r => r.phone === regData.phone);
+          if (updatedRecord) {
+            htmlContent = generateTicketHtml(updatedRecord, true);
+          } else {
+            htmlContent = generateTicketHtml({ ...regData, bookingStatus: "ปกติ", waitlistQueue: 0 }, true);
+          }
         }
 
         Swal.fire({
@@ -2456,7 +2651,7 @@
             resetFormToRegister();
             switchTab('dashboard-tab');
           }
-          refreshData(); // ดึงสถิติมารีเฟรชโควต้าใหม่
+          refreshData(); // ดึงสถิติมารีเฟรชโควต้าใหม่จริงจากหลังบ้าน
         });
       } else {
         Swal.fire({
@@ -2493,11 +2688,6 @@
           return { status: "error", message: "เบอร์โทรศัพท์นี้ถูกใช้ลงทะเบียนไปแล้วในระบบ" };
         }
 
-        // ตรวจโควต้า
-        if (counts[site] >= CONFIG.QUOTAS[site].max) {
-          return { status: "error", message: `สถานที่ดูงานนี้มีผู้จองเต็ม ${CONFIG.QUOTAS[site].max} คนเรียบร้อยแล้ว` };
-        }
-
         // บันทึกแถวใหม่
         payload.rowNumber = records.length + 2; // เลียนแบบ Google Sheet Row (ข้ามหัวและ 0-index)
         payload.timestamp = new Date().toISOString();
@@ -2522,14 +2712,6 @@
         const isDuplicatePhone = records.some((r, i) => i !== index && r.phone === phone);
         if (isDuplicatePhone) {
           return { status: "error", message: "เบอร์โทรศัพท์ที่แก้ไขนี้ถูกนำไปลงทะเบียนในแถวอื่นแล้ว" };
-        }
-
-        // ตรวจโควต้ากรณีเปลี่ยนสถานที่
-        const oldSite = records[index].site;
-        if (oldSite !== site) {
-          if (counts[site] >= CONFIG.QUOTAS[site].max) {
-            return { status: "error", message: `สถานที่ดูงานใหม่ที่เลือก เต็มโควต้าแล้ว` };
-          }
         }
 
         // อัปเดตฟิลด์ข้อมูล
@@ -2585,43 +2767,37 @@
         return;
       }
 
-      showGlobalLoader("กำลังสแกนค้นหาข้อมูล...");
+      // 1. Optimistic Search: ดึงและแสดงผลจากหน่วยความจำเครื่องทันทีเพื่อความลื่นไหล
+      let localResults = sheetRecords.filter(r => String(r.phone).trim() === searchPhone);
+      renderSearchResults(localResults);
 
+      // 2. โหลดข้อมูลจริงสดใหม่จากเซิร์ฟเวอร์แบบเบื้องหลัง (Background Sync) พร้อม Cache Buster
       try {
-        let results = [];
         if (isMockMode) {
-          await new Promise(resolve => setTimeout(resolve, 500));
           const allRecords = JSON.parse(localStorage.getItem("open_house_registrations") || "[]");
-          results = allRecords.filter(r => String(r.phone).trim() === searchPhone);
-        } else {
-          // ดึงข้อมูลสดจาก Google Sheets โดยตรงเพื่อค้นหาและอัปเดตสถิติไปพร้อมกัน
-          const sheetUrl = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json`;
-          const response = await fetch(sheetUrl);
-          if (!response.ok) throw new Error("ไม่สามารถเชื่อมตอร์ดึงข้อมูลจาก Google Sheets ได้");
-          
-          const text = await response.text();
-          sheetRecords = parseGoogleSheetJson(text);
-          
-          // อัปเดตสถิติในหน้าแดชบอร์ดไปด้วย
+          sheetRecords = allRecords;
           const res = calculateStatsFromRecords(sheetRecords);
           processStats(res);
-          
-          // กรองข้อมูลตามเบอร์โทรศัพท์
-          results = sheetRecords.filter(r => String(r.phone).trim() === searchPhone);
+          const freshResults = sheetRecords.filter(r => String(r.phone).trim() === searchPhone);
+          renderSearchResults(freshResults);
+        } else {
+          const sheetUrl = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&t=${Date.now()}`;
+          const response = await fetch(sheetUrl);
+          if (response.ok) {
+            const text = await response.text();
+            sheetRecords = parseGoogleSheetJson(text);
+            
+            // อัปเดตสถิติบน Dashboard
+            const res = calculateStatsFromRecords(sheetRecords);
+            processStats(res);
+            
+            // อัปเดตตารางค้นหาหน้าจอด้วยข้อมูลล่าสุด
+            const freshResults = sheetRecords.filter(r => String(r.phone).trim() === searchPhone);
+            renderSearchResults(freshResults);
+          }
         }
-
-        renderSearchResults(results);
-
       } catch (err) {
-        console.error("Search error:", err);
-        Swal.fire({
-          icon: 'error',
-          title: 'ค้นหาผิดพลาด',
-          text: 'เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ลงทะเบียน หรือไม่พบบัญชี',
-          confirmButtonColor: '#0d9488'
-        });
-      } finally {
-        hideGlobalLoader();
+        console.warn("การอัปเดตข้อมูลเบื้องหลังล้มเหลว:", err);
       }
     }
 
@@ -2637,27 +2813,41 @@
         cancelButtonText: 'ยกเลิก'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          showGlobalLoader("กำลังลบข้อมูล...");
+          // เก็บสำรองข้อมูลเก่าสำหรับทำ Rollback เผื่อกรณีติดต่อ API ล้มเหลว
+          const backupRecords = JSON.parse(JSON.stringify(sheetRecords));
+          
+          // 1. ดำเนินการลบแบบ Optimistic UI ทันทีในหน่วยความจำเครื่อง
+          const indexToDelete = sheetRecords.findIndex(r => r.rowNumber === rowNumber);
+          if (indexToDelete !== -1) {
+            sheetRecords.splice(indexToDelete, 1);
+            // ลดค่า rowNumber ของแถวที่อยู่ถัดลงไปทั้งหมดลง 1 แถวเพื่อให้สอดคล้องกับโครงสร้าง Google Sheets
+            sheetRecords.forEach(r => {
+              if (r.rowNumber > rowNumber) {
+                r.rowNumber -= 1;
+              }
+            });
+            
+            // อัปเดตสถิติตัวเลขหน้าจอและรายชื่อการค้นหาทันที
+            const res = calculateStatsFromRecords(sheetRecords);
+            processStats(res);
+            const searchPhone = normalizePhone(document.getElementById("search-phone").value);
+            const updatedResults = sheetRecords.filter(r => String(r.phone).trim() === searchPhone);
+            renderSearchResults(updatedResults);
+          }
+
+          let deleteSuccess = false;
+          let errorMessage = "การสื่อสารกับเครือข่ายขัดข้อง";
+
           try {
             if (isMockMode) {
-              await new Promise(resolve => setTimeout(resolve, 800));
+              await new Promise(resolve => setTimeout(resolve, 600));
               const response = simulateMockDelete(rowNumber);
               if (response.status === "success") {
-                Swal.fire({
-                  icon: 'success',
-                  title: 'ลบข้อมูลสำเร็จ',
-                  text: 'ข้อมูลการลงทะเบียนของคุณถูกลบออกจากระบบแล้ว',
-                  confirmButtonColor: '#0d9488'
-                });
-                // รีเฟรชข้อมูลแดชบอร์ดและอัปเดตสถิติ
-                await refreshData();
-                // ทำการค้นหาซ้ำอีกครั้งเพื่อเคลียร์/อัปเดตการ์ดที่แสดงผล
-                await performSearch();
+                deleteSuccess = true;
               } else {
-                throw new Error(response.message);
+                errorMessage = response.message;
               }
             } else {
-              // ส่งคำขอแบบ POST ด้วย action: "delete"
               const payload = {
                 action: "delete",
                 rowNumber: rowNumber
@@ -2671,29 +2861,39 @@
                 },
                 body: JSON.stringify(payload)
               });
-              
-              Swal.fire({
-                icon: 'success',
-                title: 'ลบข้อมูลสำเร็จ',
-                text: 'ข้อมูลการลงทะเบียนของคุณถูกลบออกจากระบบแล้ว',
-                confirmButtonColor: '#0d9488'
-              });
-              
-              // รีเฟรชข้อมูล
-              await refreshData();
-              // ทำการค้นหาซ้ำอีกครั้งเพื่อเคลียร์/อัปเดตการ์ดที่แสดงผล
-              await performSearch();
+              deleteSuccess = true;
             }
           } catch (err) {
-            console.error("Delete error:", err);
+            deleteSuccess = false;
+            errorMessage = err.message;
+          }
+
+          if (deleteSuccess) {
+            Swal.fire({
+              icon: 'success',
+              title: 'ลบข้อมูลสำเร็จ',
+              text: 'ระบบทำการลบข้อมูลเรียบร้อยแล้ว',
+              confirmButtonColor: '#0d9488',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            // รีเฟรชข้อมูลเบื้องหลังอีกครั้งเพื่อให้ข้อมูลในระบบตรงกับหลังบ้าน 100%
+            refreshData();
+          } else {
+            // เกิดความผิดพลาดขึ้น -> ทำการ Rollback คืนค่าเดิม
+            sheetRecords = backupRecords;
+            const res = calculateStatsFromRecords(sheetRecords);
+            processStats(res);
+            const searchPhone = normalizePhone(document.getElementById("search-phone").value);
+            const updatedResults = sheetRecords.filter(r => String(r.phone).trim() === searchPhone);
+            renderSearchResults(updatedResults);
+            
             Swal.fire({
               icon: 'error',
               title: 'ลบข้อมูลไม่สำเร็จ',
-              text: 'เกิดข้อผิดพลาดในการติดต่อฐานข้อมูล: ' + err.message,
+              text: 'เกิดข้อผิดพลาด: ' + errorMessage + ' (ระบบได้ทำการกู้คืนข้อมูลเดิมบนหน้าจอเรียบร้อยแล้ว)',
               confirmButtonColor: '#0d9488'
             });
-          } finally {
-            hideGlobalLoader();
           }
         }
       });
@@ -2716,14 +2916,30 @@
       }
 
       results.forEach(record => {
+        const isWaitlist = record.bookingStatus === "ลงทะเบียนล่วงหน้า";
         const card = document.createElement("div");
-        card.className = "glassmorphism rounded-2xl p-6 shadow-lg border border-teal-100/50 space-y-4 hover:shadow-xl transition-all duration-300 relative overflow-hidden ring-1 ring-teal-500/5";
+        if (isWaitlist) {
+          card.className = "glassmorphism rounded-2xl p-6 shadow-lg border border-rose-200/60 space-y-4 hover:shadow-xl transition-all duration-300 relative overflow-hidden ring-1 ring-rose-500/5 bg-rose-50/10";
+        } else {
+          card.className = "glassmorphism rounded-2xl p-6 shadow-lg border border-teal-100/50 space-y-4 hover:shadow-xl transition-all duration-300 relative overflow-hidden ring-1 ring-teal-500/5";
+        }
         
+        const statusBadge = isWaitlist 
+          ? `<span class="px-2.5 py-0.5 text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-100 rounded-full inline-flex items-center ml-2">
+              <i data-lucide="clock" class="w-3 h-3 mr-1"></i>สำรองคิวที่ ${record.waitlistQueue || 1}
+             </span>`
+          : `<span class="px-2.5 py-0.5 text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-full inline-flex items-center ml-2">
+              <i data-lucide="check" class="w-3 h-3 mr-1"></i>ปกติ
+             </span>`;
+
         // แถบคาดหัวการ์ดแยกสีสถานที่ดูงาน
         card.innerHTML = `
           <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
             <div>
-              <h4 class="text-base font-bold text-teal-800">คุณ ${record.title || ""}${record.firstName} ${record.lastName}</h4>
+              <h4 class="text-base font-bold text-teal-800 flex items-center flex-wrap gap-1">
+                คุณ ${record.title || ""}${record.firstName} ${record.lastName}
+                ${statusBadge}
+              </h4>
               <p class="text-xs text-slate-400">ระดับชั้น: ${record.grade}</p>
             </div>
             <div class="flex flex-wrap gap-2">
@@ -2752,10 +2968,10 @@
               <span class="text-slate-400 font-medium">เบอร์โทรติดต่อ:</span> 
               <span class="text-slate-700 font-medium">${record.phone}</span>
             </div>
-            <div class="col-span-1 md:col-span-2 pt-2 bg-teal-50/30 p-3 rounded-xl border border-teal-50/50 mt-1 flex items-start space-x-2">
-              <i data-lucide="map-pin" class="w-5 h-5 text-teal-600 shrink-0 mt-0.5"></i>
+            <div class="col-span-1 md:col-span-2 pt-2 ${isWaitlist ? 'bg-rose-50/40 border-rose-100/60' : 'bg-teal-50/30 border-teal-50/50'} p-3 rounded-xl border mt-1 flex items-start space-x-2">
+              <i data-lucide="map-pin" class="w-5 h-5 ${isWaitlist ? 'text-rose-500' : 'text-teal-600'} shrink-0 mt-0.5"></i>
               <div>
-                <p class="text-[10px] text-teal-600 font-bold uppercase tracking-wider">สถานที่ศึกษาดูงานที่จองไว้</p>
+                <p class="text-[10px] ${isWaitlist ? 'text-rose-500' : 'text-teal-600'} font-bold uppercase tracking-wider">${isWaitlist ? 'สถานที่ศึกษาดูงานที่สำรองไว้' : 'สถานที่ศึกษาดูงานที่จองไว้'}</p>
                 <p class="text-slate-700 font-bold text-sm">${record.site}</p>
                 <p class="text-xs text-slate-400 mt-0.5">วันนัดหมายกิจกรรม: ${CONFIG.QUOTAS[record.site]?.date || "-"}</p>
               </div>
