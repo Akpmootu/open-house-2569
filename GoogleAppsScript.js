@@ -41,7 +41,7 @@ function createJsonResponse(data) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// จัดการคำขอแบบ GET (ดึงสถิติ และการค้นหาผู้ลงทะเบียน)
+// จัดการคำขอแบบ GET (ดึงสถิติ, ค้นหาผู้ลงทะเบียน, และดึงข้อมูลทั้งหมด)
 function doGet(e) {
   var action = e.parameter.action;
   
@@ -50,6 +50,8 @@ function doGet(e) {
   } else if (action === "search") {
     var phone = e.parameter.phone;
     return handleSearch(phone);
+  } else if (action === "getAll") {
+    return handleGetAllRecords();
   }
   
   return createJsonResponse({ status: "error", message: "ไม่พบ Action ที่ระบุ" });
@@ -374,4 +376,36 @@ function handleDelete(data) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// ดึงข้อมูลผู้ลงทะเบียนทั้งหมดในระบบส่งกลับเป็น JSON
+function handleGetAllRecords() {
+  var sheet = getSheet();
+  var data = sheet.getDataRange().getValues();
+  var results = [];
+  
+  // ข้ามแถวที่ 1 (Header)
+  for (var i = 1; i < data.length; i++) {
+    results.push({
+      rowNumber: i + 1, // หมายเลขแถวในชีต (1-indexed)
+      timestamp: data[i][0],
+      firstName: data[i][1],
+      lastName: data[i][2],
+      grade: data[i][3],
+      schoolType: data[i][4],
+      province: data[i][5],
+      district: data[i][6],
+      subDistrict: data[i][7],
+      schoolName: data[i][8],
+      phone: normalizePhone(data[i][9]),
+      site: data[i][10],
+      title: data[i][11] || ""
+    });
+  }
+  
+  return createJsonResponse({
+    status: "success",
+    count: results.length,
+    data: results
+  });
 }
