@@ -287,15 +287,20 @@
   </div>
 
   <!-- ================= HEADER BANNER ================= -->
-  <header class="bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-700 text-white shadow-lg overflow-hidden relative">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-teal-600/20 via-transparent to-transparent opacity-60"></div>
-    <div class="max-w-6xl mx-auto px-4 py-8 md:py-12 text-center relative z-10">
+  <header class="bg-gradient-to-br from-slate-950 via-teal-950 to-slate-900 text-white shadow-xl overflow-hidden relative border-b border-teal-500/10">
+    <!-- Ambient glowing meshes -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(20,184,166,0.15),_transparent_60%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_rgba(16,185,129,0.12),_transparent_60%)]"></div>
+    <!-- Mesh pattern overlay -->
+    <div class="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+
+    <div class="max-w-6xl mx-auto px-4 py-10 md:py-16 text-center relative z-10">
       
       <!-- โลโก้โครงการสไตล์พรีเมียม -->
-      <div class="flex justify-center mb-5">
-        <div class="relative group">
-          <div class="absolute -inset-1.5 bg-gradient-to-r from-teal-400 to-emerald-400 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-          <div class="relative bg-slate-900 border border-teal-500/40 p-4 rounded-full flex items-center justify-center shadow-2xl">
+      <div class="flex justify-center mb-6">
+        <div class="relative group cursor-pointer">
+          <div class="absolute -inset-1.5 bg-gradient-to-r from-teal-400 to-emerald-400 rounded-full blur opacity-45 group-hover:opacity-85 transition duration-1000 group-hover:duration-200"></div>
+          <div class="relative bg-slate-950 border border-teal-500/40 p-4 rounded-full flex items-center justify-center shadow-2xl transition-transform duration-500 group-hover:scale-105">
             <svg class="w-16 h-16 text-emerald-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 3" class="animate-spin-slow" opacity="0.6"/>
               <path d="M50 22C40 9 18 15 18 36C18 57 50 78 50 78 C50 78 82 57 82 36C82 15 60 9 50 22Z" fill="url(#logo-grad)" stroke="#FBBF24" stroke-width="2" stroke-linejoin="round"/>
@@ -312,13 +317,13 @@
         </div>
       </div>
 
-      <div class="inline-flex items-center justify-center bg-teal-500/20 backdrop-blur-md rounded-full px-4 py-1.5 mb-4 border border-teal-400/30 text-teal-200 text-sm">
+      <div class="inline-flex items-center justify-center bg-teal-500/10 backdrop-blur-md rounded-full px-4 py-1.5 mb-4 border border-teal-450/20 text-teal-300 text-xs font-bold tracking-wide animate-pulse-slow">
         <i data-lucide="sparkles" class="w-4 h-4 mr-2 text-amber-300"></i> โครงการ Open House ครั้งที่ 2
       </div>
-      <h1 class="text-2xl md:text-4xl font-bold tracking-wide leading-tight drop-shadow-sm mb-3">
-        เปิดโลกแห่งการเรียนรู้สู่สายงานบุคลากรทางการแพทย์และสาธารณสุข
+      <h1 class="text-3xl md:text-5xl font-black tracking-tight leading-tight drop-shadow-lg mb-4">
+        เปิดโลกแห่งการเรียนรู้สู่<span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-300 via-emerald-300 to-amber-300 drop-shadow-[0_2px_10px_rgba(20,184,166,0.3)] font-black">สายงานบุคลากรทางการแพทย์และสาธารณสุข</span>
       </h1>
-      <p class="text-base md:text-lg text-teal-100 font-light max-w-3xl mx-auto">
+      <p class="text-sm md:text-base text-slate-350 font-light max-w-2xl mx-auto tracking-wide leading-relaxed">
         ปีงบประมาณ พ.ศ. 2569 | สำนักงานสาธารณสุขจังหวัดสตูล
       </p>
     </div>
@@ -330,25 +335,26 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo & Title -->
         <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchTab('landing-page'); window.scrollTo({top: 0, behavior: 'smooth'});">
-          <div class="p-1.5 bg-teal-600 text-white rounded-xl shadow-md shrink-0">
+          <div class="p-1.5 bg-gradient-to-br from-teal-500 to-emerald-600 text-white rounded-xl shadow-md shadow-teal-500/20 shrink-0">
             <svg class="w-6 h-6" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M50 22C40 9 18 15 18 36C18 57 50 78 50 78 C50 78 82 57 82 36C82 15 60 9 50 22Z" fill="#34D399" stroke="#FBBF24" stroke-width="3"/>
               <path d="M42 36H58M50 28V44" stroke="white" stroke-width="6" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="hidden sm:block">
-            <h2 class="text-sm font-extrabold text-teal-800 tracking-wide leading-none">Open House Satun 2026</h2>
-            <p class="text-[9px] text-teal-600 font-bold uppercase tracking-wider mt-0.5">MOPH Satun Open House</p>
+          <div>
+            <h2 class="text-sm font-black text-slate-800 tracking-tight leading-none">Open House Satun 2026</h2>
+            <p class="text-[9px] text-teal-650 font-extrabold uppercase tracking-widest mt-0.5">MOPH Satun Open House</p>
           </div>
         </div>
 
-        <!-- Menu Links for Front-End (Landing Page) -->
-        <div id="nav-landing-menus" class="flex items-center space-x-1 md:space-x-4">
-          <button onclick="switchTab('landing-page'); window.scrollTo(0,0)" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-600 rounded-lg transition-all duration-200">หน้าแรก</button>
-          <button onclick="switchTab('landing-page'); setTimeout(() => scrollToSection('about-section'), 100)" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-600 rounded-lg transition-all duration-200">รายละเอียด</button>
-          <button onclick="switchTab('venues-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-600 rounded-lg transition-all duration-200">สถานที่ดูงาน</button>
-          <button onclick="switchTab('edit-tab')" class="hidden md:inline-block px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-600 rounded-lg transition-all duration-200">ค้นหาประวัติ</button>
-          <button onclick="switchTab('faq-tab')" class="hidden md:inline-block px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-600 rounded-lg transition-all duration-200">ติดต่อ</button>
+        <!-- Menu Links for Front-End (Landing Page) - Desktop -->
+        <div id="nav-landing-menus" class="hidden lg:flex items-center space-x-1 lg:space-x-4">
+          <button onclick="switchTab('landing-page'); window.scrollTo(0,0)" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">หน้าแรก</button>
+          <button onclick="switchTab('landing-page'); setTimeout(() => scrollToSection('about-section'), 100)" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">รายละเอียด</button>
+          <button onclick="switchTab('venues-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">สถานที่ดูงาน</button>
+          <button onclick="switchTab('edit-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">ค้นหาประวัติ</button>
+          <button onclick="switchTab('calendar-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">ปฏิทินกิจกรรม</button>
+          <button onclick="switchTab('faq-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">ติดต่อ</button>
           
           <button onclick="switchTab('register-tab')" id="btn-register-tab-custom" class="inline-flex items-center justify-center px-4 py-2 text-xs md:text-sm font-bold text-white bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 rounded-full hover:scale-105 hover:from-teal-500 hover:to-cyan-500 active:scale-95 transition-all shadow-md relative">
             <span class="absolute -top-1 -right-1 flex h-2 w-2">
@@ -366,8 +372,8 @@
           </button>
         </div>
 
-        <!-- Menu Links for Dashboard (Back-End) -->
-        <div id="nav-dashboard-menus" class="hidden flex items-center space-x-3">
+        <!-- Menu Links for Dashboard (Back-End) - Desktop -->
+        <div id="nav-dashboard-menus" class="hidden lg:flex items-center space-x-3">
           <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-150 rounded-lg px-2.5 py-1 flex items-center">
             <span class="w-2 h-2 rounded-full bg-indigo-500 mr-1.5 animate-pulse"></span>
             เจ้าหน้าที่ Admin/Staff
@@ -375,6 +381,71 @@
           <button onclick="switchTab('landing-page')" class="px-4 py-2 text-xs md:text-sm font-bold text-slate-600 hover:text-teal-600 bg-white border border-slate-200 rounded-xl hover:border-teal-400 hover:bg-slate-50 transition-all flex items-center shadow-sm">
             <i data-lucide="home" class="w-4 h-4 mr-1.5 text-slate-500"></i>
             กลับหน้าแรก Landing Page 🏠
+          </button>
+        </div>
+
+        <!-- Hamburger Menu Button -->
+        <button id="hamburger-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-slate-500 hover:text-teal-600 hover:bg-teal-50/50 transition-all flex items-center justify-center focus:outline-none" aria-label="เมนูหลัก">
+          <i data-lucide="menu" id="hamburger-icon" class="w-6 h-6 transition-transform duration-300"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= MOBILE MENU DRAWER ================= -->
+    <div id="mobile-menu" class="hidden lg:hidden w-full glassmorphism border-t border-teal-150/40 shadow-xl overflow-hidden transition-all duration-300 max-h-0 bg-white/95 backdrop-blur-xl">
+      <div class="px-4 py-4 space-y-2 flex flex-col">
+        <!-- Landing page mobile menus -->
+        <div id="mobile-landing-menus" class="flex flex-col space-y-1">
+          <button onclick="mobileSwitchTab('landing-page'); window.scrollTo({top:0, behavior:'smooth'})" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:text-teal-600 hover:bg-teal-50/50 transition-all">
+            <i data-lucide="home" class="w-4 h-4 text-teal-600"></i>
+            <span>หน้าแรก</span>
+          </button>
+          <button onclick="mobileSwitchTab('landing-page'); setTimeout(() => scrollToSection('about-section'), 100)" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:text-teal-600 hover:bg-teal-50/50 transition-all">
+            <i data-lucide="info" class="w-4 h-4 text-teal-600"></i>
+            <span>รายละเอียด</span>
+          </button>
+          <button onclick="mobileSwitchTab('venues-tab')" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:text-teal-600 hover:bg-teal-50/50 transition-all">
+            <i data-lucide="hospital" class="w-4 h-4 text-teal-600"></i>
+            <span>สถานที่ดูงาน</span>
+          </button>
+          <button onclick="mobileSwitchTab('edit-tab')" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:text-teal-600 hover:bg-teal-50/50 transition-all">
+            <i data-lucide="search" class="w-4 h-4 text-teal-600"></i>
+            <span>ค้นหา/แก้ไขประวัติ</span>
+          </button>
+          <button onclick="mobileSwitchTab('calendar-tab')" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:text-teal-600 hover:bg-teal-50/50 transition-all">
+            <i data-lucide="calendar" class="w-4 h-4 text-teal-600"></i>
+            <span>ปฏิทินกิจกรรม</span>
+          </button>
+          <button onclick="mobileSwitchTab('faq-tab')" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-600 hover:text-teal-600 hover:bg-teal-50/50 transition-all">
+            <i data-lucide="help-circle" class="w-4 h-4 text-teal-600"></i>
+            <span>ติดต่อสอบถาม</span>
+          </button>
+          
+          <button onclick="mobileSwitchTab('register-tab')" class="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-teal-600 to-cyan-600 shadow-md">
+            <span class="flex items-center space-x-3">
+              <i data-lucide="user-plus" class="w-4 h-4"></i>
+              <span>ลงทะเบียน (แก้ไขข้อมูล)</span>
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-amber-450 text-[10px] text-slate-900 font-extrabold animate-pulse">ปิดรับใหม่</span>
+          </button>
+          
+          <div class="h-[1px] bg-teal-100/50 my-2"></div>
+          
+          <button onclick="mobileSwitchTab('dashboard-page')" class="flex items-center justify-center space-x-2 px-4 py-3 rounded-xl text-sm font-bold text-teal-600 bg-teal-50 border border-teal-200 shadow-inner">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>สถิติ Dashboard 📊</span>
+          </button>
+        </div>
+        
+        <!-- Dashboard mobile menus -->
+        <div id="mobile-dashboard-menus" class="hidden flex flex-col space-y-2">
+          <div class="px-4 py-2 text-xs font-bold text-indigo-650 bg-indigo-50 border border-indigo-150 rounded-xl flex items-center">
+            <span class="w-2 h-2 rounded-full bg-indigo-500 mr-2 animate-pulse"></span>
+            เจ้าหน้าที่ Admin/Staff
+          </div>
+          <button onclick="mobileSwitchTab('landing-page')" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-600 hover:text-teal-600 hover:bg-teal-50/50 transition-all border border-slate-200 bg-white">
+            <i data-lucide="home" class="w-4 h-4 text-slate-500"></i>
+            <span>กลับหน้าแรก Landing Page 🏠</span>
           </button>
         </div>
       </div>
@@ -825,6 +896,23 @@
           <p class="text-sm text-slate-500 mt-1">กรุณากรอกข้อมูลของท่านตามความเป็นจริงให้ครบถ้วนเพื่อผลประโยชน์ในการจัดเก็บข้อมูล</p>
         </div>
 
+        <!-- กล่องแจ้งเตือนปิดรับลงทะเบียน (แสดงเฉพาะตอนไม่ได้แก้ไขข้อมูล) -->
+        <div id="registration-closed-container" class="hidden text-center py-8 space-y-6">
+          <div class="w-20 h-20 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto shadow-md">
+            <i data-lucide="alert-triangle" class="w-10 h-10 text-rose-600 animate-bounce"></i>
+          </div>
+          <div class="space-y-3">
+            <h3 class="text-xl font-extrabold text-slate-800">ปิดรับลงทะเบียนรายใหม่แล้ว 🚨</h3>
+            <p class="text-sm text-slate-550 max-w-md mx-auto leading-relaxed">
+              ขออภัยด้วยน้าน้องๆ โครงการได้ปิดรับการลงทะเบียนรายใหม่เป็นที่เรียบร้อยแล้ว<br>
+              แต่หากน้องๆ เคยลงทะเบียนเข้าร่วมโครงการแล้ว และต้องการ<b>แก้ไขข้อมูลการลงทะเบียน</b> หรือ<b>เปลี่ยนสถานที่ศึกษาดูงาน</b> ยังสามารถทำรายการได้อยู่จ้า!
+            </p>
+          </div>
+          <button onclick="switchTab('edit-tab')" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-extrabold shadow-lg hover:shadow-teal-500/25 hover:scale-105 active:scale-95 transition-all text-sm inline-flex items-center justify-center">
+            <i data-lucide="search" class="w-4 h-4 mr-2"></i> ค้นหาประวัติเพื่อแก้ไขข้อมูล
+          </button>
+        </div>
+
         <form id="reg-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
           <!-- ตัวระบุหากอยู่ระหว่างแก้ไข -->
           <input type="hidden" id="edit-row-number" value="">
@@ -1243,7 +1331,7 @@
     <div class="flex justify-center items-center gap-4 flex-wrap text-slate-400 mt-1">
       <span>ระบบลงทะเบียนศึกษาดูงาน Open House | เวอร์ชัน 2.1.1</span>
       <span class="text-slate-300">|</span>
-      <a href="https://www.facebook.com/Mootu00" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-teal-600 hover:text-teal-700 transition-colors font-medium">
+      <a href="https://www.facebook.com/hrsasuksatun" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-teal-600 hover:text-teal-700 transition-colors font-medium">
         <svg class="w-4 h-4 mr-1.5 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
         ติดต่อผู้จัดทำระบบ
       </a>
@@ -1730,6 +1818,25 @@
       // สั่งเลือกวันที่เริ่มต้นในปฏิทิน (วันที่ 10)
       selectCalendarDate(10);
 
+      // จัดการการปักหมุดและเปลี่ยนสไตล์ของแถบนำทางเมื่อสไลด์ผ่านส่วนหัวข้อเว็บ
+      const navbar = document.querySelector(".sticky");
+      const headerBanner = document.querySelector("header");
+      if (navbar && headerBanner) {
+        const handleScroll = () => {
+          if (window.scrollY > headerBanner.offsetHeight) {
+            navbar.style.backgroundColor = "rgba(255, 255, 255, 0.95)";
+            navbar.classList.add("shadow-lg");
+            navbar.classList.remove("shadow-md");
+          } else {
+            navbar.style.backgroundColor = "rgba(255, 255, 255, 0.85)";
+            navbar.classList.remove("shadow-lg");
+            navbar.classList.add("shadow-md");
+          }
+        };
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+      }
+
       // แสดงป๊อปอัพต้อนรับ (Welcome Poster Modal)
       const welcomeModal = document.getElementById("welcome-poster-modal");
       const posterContainer = document.getElementById("poster-modal-container");
@@ -2012,27 +2119,71 @@
     }
 
     // ================= TAB MANAGEMENT =================
+    let isMobileMenuOpen = false;
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobile-menu");
+      const icon = document.getElementById("hamburger-icon");
+      if (!menu || !icon) return;
+      
+      isMobileMenuOpen = !isMobileMenuOpen;
+      
+      if (isMobileMenuOpen) {
+        menu.classList.remove("hidden");
+        // Trigger reflow for transition
+        menu.offsetHeight; 
+        menu.style.maxHeight = "500px";
+        icon.setAttribute("data-lucide", "x");
+      } else {
+        menu.style.maxHeight = "0";
+        icon.setAttribute("data-lucide", "menu");
+        setTimeout(() => {
+          if (!isMobileMenuOpen) menu.classList.add("hidden");
+        }, 300);
+      }
+      initLucide();
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById("mobile-menu");
+      const icon = document.getElementById("hamburger-icon");
+      if (!menu || !icon || !isMobileMenuOpen) return;
+      
+      isMobileMenuOpen = false;
+      menu.style.maxHeight = "0";
+      icon.setAttribute("data-lucide", "menu");
+      setTimeout(() => {
+        if (!isMobileMenuOpen) menu.classList.add("hidden");
+      }, 300);
+      initLucide();
+    }
+
+    function mobileSwitchTab(tabId) {
+      closeMobileMenu();
+      switchTab(tabId);
+    }
+
     function switchTab(tabId) {
       // ซ่อนคอนเทนต์ทุกแท็บ
       document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
       // แสดงเฉพาะแท็บที่เลือก
       document.getElementById(tabId).classList.remove("hidden");
       
-      // ปรับแต่งคลาสของปุ่มเนวิเกชั่น
+      // ปรับแต่งคลาสของปุ่มเนวิเกชั่น (รองรับทั้งแบบปุ่มตรงและปุ่มแบบ Custom)
       document.querySelectorAll("[id^='btn-']").forEach(btn => {
-        if (btn.id === "btn-register-tab") return; // ข้ามปุ่มลงทะเบียนในลูปหลักเพื่อให้ฟังก์ชันพิเศษจัดการ
+        if (btn.id === "btn-register-tab" || btn.id === "btn-register-tab-custom") return; // ข้ามปุ่มลงทะเบียน
         btn.classList.remove("active-tab");
         btn.classList.add("text-slate-500");
       });
       
-      const activeBtn = document.getElementById(`btn-${tabId}`);
-      if (activeBtn && activeBtn.id !== "btn-register-tab") {
+      const activeBtn = document.getElementById(`btn-${tabId}`) || document.getElementById(`btn-${tabId}-custom`);
+      if (activeBtn && activeBtn.id !== "btn-register-tab" && activeBtn.id !== "btn-register-tab-custom") {
         activeBtn.classList.add("active-tab");
         activeBtn.classList.remove("text-slate-500");
       }
       
       // จัดการการไฮไลต์พิเศษของปุ่มลงทะเบียน (Capsule Highlight)
-      const regBtn = document.getElementById("btn-register-tab");
+      const regBtn = document.getElementById("btn-register-tab") || document.getElementById("btn-register-tab-custom");
       if (regBtn) {
         if (tabId === 'register-tab') {
           // โหมดกำลังทำงานแท็บลงทะเบียน: พื้นหลังไล่เฉดเขียวมรกต-ฟ้าพรีเมียม ตัวอักษรขาว โดดเด่นเป็นพิเศษ พร้อมเรืองแสง
@@ -2043,13 +2194,61 @@
         }
       }
 
+      // แสดง/ซ่อน เมนูของแดชบอร์ด/หน้าบ้านแบบตอบสนอง (Responsive)
+      const isDashboard = tabId === 'dashboard-page' || tabId === 'dashboard-tab';
+      const landingMenus = document.getElementById("nav-landing-menus");
+      const dashboardMenus = document.getElementById("nav-dashboard-menus");
+      const mobLandingMenus = document.getElementById("mobile-landing-menus");
+      const mobDashboardMenus = document.getElementById("mobile-dashboard-menus");
+      
+      if (isDashboard) {
+        // แดชบอร์ดโหมด: ซ่อนเมนูแลนดิ้งเพจเดสก์ท็อป และแสดงเมนูแดชบอร์ดเดสก์ท็อป (เฉพาะจอใหญ่ lg:flex)
+        if (landingMenus) landingMenus.className = "hidden";
+        if (dashboardMenus) dashboardMenus.className = "hidden lg:flex items-center space-x-3";
+        
+        // เมนูมือถือ
+        if (mobLandingMenus) mobLandingMenus.classList.add("hidden");
+        if (mobDashboardMenus) mobDashboardMenus.classList.remove("hidden");
+      } else {
+        // แลนดิ้งเพจโหมด: แสดงเมนูแลนดิ้งเพจเดสก์ท็อป (เฉพาะจอใหญ่ lg:flex) และซ่อนเมนูแดชบอร์ดเดสก์ท็อป
+        if (landingMenus) landingMenus.className = "hidden lg:flex items-center space-x-1 lg:space-x-4";
+        if (dashboardMenus) dashboardMenus.className = "hidden";
+        
+        // เมนูมือถือ
+        if (mobLandingMenus) mobLandingMenus.classList.remove("hidden");
+        if (mobDashboardMenus) mobDashboardMenus.classList.add("hidden");
+      }
+
+      // ตรวจสอบสถานะการปิดรับลงทะเบียน (การแก้ไขสามารถใช้แบบฟอร์มได้ปกติ)
+      const editRow = document.getElementById("edit-row-number") ? document.getElementById("edit-row-number").value : "";
+      const isEditing = editRow !== "";
+      
+      if (tabId === 'register-tab') {
+        const closedContainer = document.getElementById("registration-closed-container");
+        const formTitle = document.getElementById("form-title");
+        const formSubtitle = document.querySelector("#registration-section p.text-slate-500");
+        const formElement = document.getElementById("reg-form");
+        
+        if (isEditing) {
+          if (closedContainer) closedContainer.classList.add("hidden");
+          if (formTitle) formTitle.classList.remove("hidden");
+          if (formSubtitle) formSubtitle.classList.remove("hidden");
+          if (formElement) formElement.classList.remove("hidden");
+        } else {
+          if (closedContainer) closedContainer.classList.remove("hidden");
+          if (formTitle) formTitle.classList.add("hidden");
+          if (formSubtitle) formSubtitle.classList.add("hidden");
+          if (formElement) formElement.classList.add("hidden");
+        }
+      }
+
       // ถ้ารีเซ็ตเป็นแบบฟอร์มลงทะเบียนปกติ (กรณีเคยแก้ค้างไว้)
-      if (tabId === 'register-tab' && !document.getElementById("edit-row-number").value) {
+      if (tabId === 'register-tab' && !isEditing) {
         resetFormToRegister();
       }
 
       // ดึงสถิติล่าสุดทุกครั้งที่เข้าหน้าหลักหรือแท็บปฏิทิน
-      if (tabId === 'dashboard-tab' || tabId === 'calendar-tab') {
+      if (tabId === 'dashboard-page' || tabId === 'dashboard-tab' || tabId === 'calendar-tab') {
         refreshData();
       }
     }
@@ -3106,6 +3305,18 @@
 
       const editRowNumber = document.getElementById("edit-row-number").value;
       const isEditMode = editRowNumber !== "";
+
+      // บล็อกการลงทะเบียนรายใหม่ที่ระดับการกดยืนยัน (อนุญาตเฉพาะการแก้ไขข้อมูลที่มีอยู่แล้ว)
+      if (!isEditMode) {
+        Swal.fire({
+          icon: 'error',
+          title: 'ปิดรับลงทะเบียนรายใหม่ 🚨',
+          text: 'ขออภัยด้วยน้าน้องๆ ขณะนี้ระบบได้ปิดรับการลงทะเบียนผู้สมัครใหม่แล้วจ้า แต่หากน้องเคยสมัครไว้แล้ว สามารถไปที่เมนู "ค้นหาประวัติ" เพื่อแก้ไขข้อมูลหรือย้ายสถานที่ได้ปกตินะครับ 🏥💖',
+          confirmButtonColor: '#0d9488',
+          confirmButtonText: 'ตกลงครับ/ค่ะ 👌'
+        });
+        return;
+      }
 
       // ตรวจสอบข้อมูลซ้ำบนฝั่ง Client ก่อนลงทะเบียน/แก้ไข (เช็คใน sheetRecords)
       if (sheetRecords && sheetRecords.length > 0) {
