@@ -63,22 +63,32 @@
     }
     
     .glassmorphism {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(13, 148, 136, 0.1);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(20, 184, 166, 0.08);
     }
     
     .glassmorphism-full {
       background: rgba(254, 242, 242, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(239, 68, 68, 0.18);
     }
     
     .active-tab {
-      color: #0d9488;
-      border-bottom: 3px solid #0d9488;
+      color: #0d9488 !important;
+      background-color: rgba(20, 184, 166, 0.08) !important;
+      font-weight: 700 !important;
+      border-radius: 0.75rem;
+    }
+
+    @keyframes led-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+      50% { transform: scale(1.15); opacity: 0.8; box-shadow: 0 0 8px 2px rgba(99, 102, 241, 0.2); }
+    }
+    .led-indigo-pulse {
+      animation: led-pulse 2s infinite ease-in-out;
     }
 
     /* สไตล์คลาสแอนิเมชั่นเพิ่มเติมสำหรับ Logo & ปุ่มลงทะเบียน */
@@ -330,7 +340,7 @@
   </header>
 
   <!-- ================= NAVIGATION BAR ================= -->
-  <div class="sticky top-0 z-40 w-full glassmorphism shadow-md border-b border-teal-150/40">
+  <div class="sticky top-0 z-50 w-full glassmorphism shadow-md border-b border-teal-150/40" style="position: sticky; top: 0; z-index: 50;">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex justify-between items-center h-16">
         <!-- Logo & Title -->
@@ -347,16 +357,16 @@
           </div>
         </div>
 
-        <!-- Menu Links for Front-End (Landing Page) - Desktop -->
-        <div id="nav-landing-menus" class="hidden lg:flex items-center space-x-1 lg:space-x-4">
-          <button onclick="switchTab('landing-page'); window.scrollTo(0,0)" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">หน้าแรก</button>
-          <button onclick="switchTab('landing-page'); setTimeout(() => scrollToSection('about-section'), 100)" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">รายละเอียด</button>
-          <button onclick="switchTab('venues-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">สถานที่ดูงาน</button>
-          <button onclick="switchTab('edit-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">ค้นหาประวัติ</button>
-          <button onclick="switchTab('calendar-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">ปฏิทินกิจกรรม</button>
-          <button onclick="switchTab('faq-tab')" class="px-2.5 py-2 text-xs md:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-lg transition-all duration-200">ติดต่อ</button>
+        <!-- Menu Links for Front-End (Landing Page) - Desktop (Visible on xl screen and up) -->
+        <div id="nav-landing-menus" class="hidden xl:flex items-center space-x-1 xl:space-x-2.5">
+          <button id="btn-landing-page" onclick="switchTab('landing-page'); window.scrollTo(0,0)" class="px-3 py-2 text-xs xl:text-sm font-semibold text-slate-500 hover:text-teal-600 hover:bg-teal-55/40 rounded-xl transition-all duration-200">หน้าแรก</button>
+          <button id="btn-about-section" onclick="switchTab('landing-page'); setTimeout(() => scrollToSection('about-section'), 100)" class="px-3 py-2 text-xs xl:text-sm font-semibold text-slate-500 hover:text-teal-600 hover:bg-teal-55/40 rounded-xl transition-all duration-200">รายละเอียด</button>
+          <button id="btn-venues-tab" onclick="switchTab('venues-tab')" class="px-3 py-2 text-xs xl:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-xl hover:bg-teal-55/40 transition-all duration-200">สถานที่ดูงาน</button>
+          <button id="btn-edit-tab" onclick="switchTab('edit-tab')" class="px-3 py-2 text-xs xl:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-xl hover:bg-teal-55/40 transition-all duration-200">ค้นหาประวัติ</button>
+          <button id="btn-calendar-tab" onclick="switchTab('calendar-tab')" class="px-3 py-2 text-xs xl:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-xl hover:bg-teal-55/40 transition-all duration-200">ปฏิทิน</button>
+          <button id="btn-faq-tab" onclick="switchTab('faq-tab')" class="px-3 py-2 text-xs xl:text-sm font-semibold text-slate-500 hover:text-teal-650 rounded-xl hover:bg-teal-55/40 transition-all duration-200">ติดต่อ</button>
           
-          <button onclick="switchTab('register-tab')" id="btn-register-tab-custom" class="inline-flex items-center justify-center px-4 py-2 text-xs md:text-sm font-bold text-white bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 rounded-full hover:scale-105 hover:from-teal-500 hover:to-cyan-500 active:scale-95 transition-all shadow-md relative">
+          <button onclick="switchTab('register-tab')" id="btn-register-tab-custom" class="inline-flex items-center justify-center px-3.5 py-1.5 text-xs xl:text-sm font-bold text-white bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 rounded-full hover:scale-105 hover:from-teal-500 hover:to-cyan-500 active:scale-95 transition-all shadow-md relative shrink-0">
             <span class="absolute -top-1 -right-1 flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-300 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
@@ -365,27 +375,30 @@
             ลงทะเบียน
           </button>
           
-          <span class="h-5 w-[1px] bg-slate-200 mx-1"></span>
-          <button onclick="switchTab('dashboard-page')" class="px-2.5 py-2 text-xs md:text-sm font-bold text-teal-600 hover:text-teal-700 bg-teal-50 border border-teal-200 rounded-xl hover:bg-teal-100 transition-all flex items-center">
-            <i data-lucide="layout-dashboard" class="w-4 h-4 mr-1 text-teal-600 animate-pulse"></i>
-            สถิติ Dashboard 📊
+          <span class="h-5 w-[1px] bg-slate-200 mx-1 shrink-0"></span>
+          <button id="btn-dashboard-page" onclick="switchTab('dashboard-page')" class="inline-flex items-center justify-center px-4 py-2 text-xs xl:text-sm font-bold text-teal-700 hover:text-white bg-teal-50/80 hover:bg-teal-600 border border-teal-200/60 rounded-xl transition-all duration-200 shrink-0 shadow-sm hover:shadow-md active:scale-95">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 mr-1.5 text-teal-650 transition-colors"></i>
+            แดชบอร์ด
           </button>
         </div>
 
-        <!-- Menu Links for Dashboard (Back-End) - Desktop -->
-        <div id="nav-dashboard-menus" class="hidden lg:flex items-center space-x-3">
-          <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-150 rounded-lg px-2.5 py-1 flex items-center">
-            <span class="w-2 h-2 rounded-full bg-indigo-500 mr-1.5 animate-pulse"></span>
+        <!-- Menu Links for Dashboard (Back-End) - Desktop (Initially Hidden completely) -->
+        <div id="nav-dashboard-menus" class="hidden">
+          <div class="inline-flex items-center px-3 py-1.5 text-xs xl:text-sm font-semibold text-indigo-700 bg-indigo-50/70 border border-indigo-100 rounded-xl shadow-sm mr-2">
+            <span class="relative flex h-2 w-2 mr-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500 led-indigo-pulse"></span>
+            </span>
             เจ้าหน้าที่ Admin/Staff
-          </span>
-          <button onclick="switchTab('landing-page')" class="px-4 py-2 text-xs md:text-sm font-bold text-slate-600 hover:text-teal-600 bg-white border border-slate-200 rounded-xl hover:border-teal-400 hover:bg-slate-50 transition-all flex items-center shadow-sm">
+          </div>
+          <button id="btn-landing-page-back" onclick="switchTab('landing-page')" class="inline-flex items-center justify-center px-4 py-2 text-xs xl:text-sm font-bold text-slate-700 hover:text-teal-650 bg-white border border-slate-200 rounded-xl hover:border-teal-450 hover:bg-slate-50 transition-all duration-200 shadow-sm hover:shadow active:scale-95">
             <i data-lucide="home" class="w-4 h-4 mr-1.5 text-slate-500"></i>
-            กลับหน้าแรก Landing Page 🏠
+            กลับหน้าแรก
           </button>
         </div>
 
-        <!-- Hamburger Menu Button -->
-        <button id="hamburger-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-slate-500 hover:text-teal-600 hover:bg-teal-50/50 transition-all flex items-center justify-center focus:outline-none" aria-label="เมนูหลัก">
+        <!-- Hamburger Menu Button (Visible under xl screens) -->
+        <button id="hamburger-btn" onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-xl text-slate-500 hover:text-teal-600 hover:bg-teal-50/50 transition-all flex items-center justify-center focus:outline-none" aria-label="เมนูหลัก">
           <i data-lucide="menu" id="hamburger-icon" class="w-6 h-6 transition-transform duration-300"></i>
         </button>
       </div>
@@ -2187,10 +2200,10 @@
       if (regBtn) {
         if (tabId === 'register-tab') {
           // โหมดกำลังทำงานแท็บลงทะเบียน: พื้นหลังไล่เฉดเขียวมรกต-ฟ้าพรีเมียม ตัวอักษรขาว โดดเด่นเป็นพิเศษ พร้อมเรืองแสง
-          regBtn.className = "flex flex-col md:flex-row items-center py-2 px-5 my-1.5 text-white bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 rounded-full font-bold border-0 shadow-lg shadow-teal-500/40 transition-all duration-300 relative scale-105 ring-4 ring-teal-300/50 animate-pulse-glow";
+          regBtn.className = "inline-flex items-center justify-center px-4 py-2 my-1 text-xs xl:text-sm font-bold text-white bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 rounded-full shadow-lg shadow-teal-500/30 transition-all duration-300 relative scale-105 ring-2 ring-teal-300 animate-pulse-glow shrink-0";
         } else {
           // โหมดแท็บอื่น: พื้นหลังไล่เฉดเขียวมรกต-ฟ้า (จางลงเล็กน้อย) แต่ยังมีสีสันเด่นกว่าปุ่มอื่นอย่างชัดเจน
-          regBtn.className = "flex flex-col md:flex-row items-center py-2 px-5 my-1.5 text-white bg-gradient-to-r from-teal-600/90 via-emerald-600/90 to-cyan-600/90 rounded-full font-bold border border-teal-300/20 shadow-md transition-all duration-300 relative hover:scale-105 hover:from-teal-500 hover:to-cyan-500 active:scale-95";
+          regBtn.className = "inline-flex items-center justify-center px-3.5 py-1.5 my-1 text-xs xl:text-sm font-bold text-white bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 rounded-full hover:scale-105 hover:from-teal-500 hover:to-cyan-500 active:scale-95 transition-all shadow-md relative shrink-0";
         }
       }
 
@@ -2202,17 +2215,29 @@
       const mobDashboardMenus = document.getElementById("mobile-dashboard-menus");
       
       if (isDashboard) {
-        // แดชบอร์ดโหมด: ซ่อนเมนูแลนดิ้งเพจเดสก์ท็อป และแสดงเมนูแดชบอร์ดเดสก์ท็อป (เฉพาะจอใหญ่ lg:flex)
-        if (landingMenus) landingMenus.className = "hidden";
-        if (dashboardMenus) dashboardMenus.className = "hidden lg:flex items-center space-x-3";
+        // แดชบอร์ดโหมด: ซ่อนเมนูแลนดิ้งเพจเดสก์ท็อป และแสดงเมนูแดชบอร์ดเดสก์ท็อป (เฉพาะจอใหญ่ xl:flex)
+        if (landingMenus) {
+          landingMenus.classList.add("hidden");
+          landingMenus.classList.remove("xl:flex");
+        }
+        if (dashboardMenus) {
+          dashboardMenus.classList.remove("hidden");
+          dashboardMenus.classList.add("xl:flex", "items-center", "space-x-3");
+        }
         
         // เมนูมือถือ
         if (mobLandingMenus) mobLandingMenus.classList.add("hidden");
         if (mobDashboardMenus) mobDashboardMenus.classList.remove("hidden");
       } else {
-        // แลนดิ้งเพจโหมด: แสดงเมนูแลนดิ้งเพจเดสก์ท็อป (เฉพาะจอใหญ่ lg:flex) และซ่อนเมนูแดชบอร์ดเดสก์ท็อป
-        if (landingMenus) landingMenus.className = "hidden lg:flex items-center space-x-1 lg:space-x-4";
-        if (dashboardMenus) dashboardMenus.className = "hidden";
+        // แลนดิ้งเพจโหมด: แสดงเมนูแลนดิ้งเพจเดสก์ท็อป (เฉพาะจอใหญ่ xl:flex) และซ่อนเมนูแดชบอร์ดเดสก์ท็อป
+        if (landingMenus) {
+          landingMenus.classList.remove("hidden");
+          landingMenus.classList.add("xl:flex", "items-center", "space-x-1", "xl:space-x-2.5");
+        }
+        if (dashboardMenus) {
+          dashboardMenus.classList.add("hidden");
+          dashboardMenus.classList.remove("xl:flex");
+        }
         
         // เมนูมือถือ
         if (mobLandingMenus) mobLandingMenus.classList.remove("hidden");
